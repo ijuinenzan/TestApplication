@@ -10,6 +10,19 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/linearLayout"
+            android:layout_centerHorizontal="true"
+            android:padding="@dimen/padding_average"
+            style="@style/regular_buttons"
+            android:text="Find partner"
+            android:onClick="@{() -> viewModel.findPartner()}"
+            android:visibility="@{viewModel.isAuthDone ? View.VISIBLE : View.GONE}"/>
+
         <Button
             android:layout_width="@dimen/long_width"
             android:layout_height="@dimen/small_height"
@@ -19,7 +32,8 @@
             android:onClick="@{() -> viewModel.firebaseAnonymousAuth()}"
             android:padding="@dimen/padding_average"
             android:visibility="@{viewModel.isAuthDone ? View.GONE : View.VISIBLE}"
-            style="@style/regular_buttons"/>
+            style="@style/regular_buttons"
+            android:id="@+id/button4" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,13 +42,15 @@
             android:layout_marginTop="@dimen/margin_extra_large"
             android:visibility="@{viewModel.isAuthDone ? View.VISIBLE : View.GONE}"
             android:layout_centerHorizontal="true"
-            style="@style/info_textviews"/>
+            style="@style/info_textviews"
+            android:id="@+id/textView" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/long_height"
             android:layout_alignParentBottom="true"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:id="@+id/linearLayout">
 
             <Button
                 android:layout_width="@dimen/small_width"
@@ -56,6 +72,28 @@
                 android:visibility="@{viewModel.isAuthDone ? View.VISIBLE : View.GONE}"
                 style="@style/regular_buttons"/>
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar4"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/button3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="12dp"
+            android:visibility="@{viewModel.finding ? View.VISIBLE : View.INVISIBLE}"/>
+
+        <Spinner
+            android:id="@+id/spinner3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/progressBar4"
+            android:layout_alignEnd="@+id/button4"
+            android:layout_alignStart="@+id/button4"
+            android:entries="@array/array_gender"
+            android:selectedItemPosition="@={viewModel._selectedGender}"
+            android:visibility="@{viewModel.isAuthDone ? View.VISIBLE : View.GONE}"
+            android:layout_marginBottom="30dp" />
 
     </RelativeLayout>
 </layout>

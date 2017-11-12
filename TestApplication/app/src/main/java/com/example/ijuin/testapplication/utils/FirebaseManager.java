@@ -14,7 +14,6 @@ import java.util.Map;
 /**
  * Created by ijuin on 11/12/2017.
  */
-
 public class FirebaseManager implements ChildEventListener
 {
     private volatile static FirebaseManager sFirebaseManager;

@@ -31,7 +31,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
 
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(mContext).inflate(R.layout.row_chat_adapter, parent, false);
         RowChatAdapterBinding binding= DataBindingUtil.bind(view);
         return new BindingHolder(binding);

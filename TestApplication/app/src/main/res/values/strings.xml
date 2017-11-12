@@ -1,4 +1,9 @@
 <resources>
+    <string-array name="array_gender">
+        <item>MALE</item>
+        <item>FEMALE</item>
+        <item>GAY</item>
+    </string-array>
     <string name="app_name">Chat Application</string>
     <string name="authentication_label">Authentication with Firebase</string>
     <string name="create_room_label">Create room</string>

@@ -21,10 +21,18 @@ public class LoginViewModel extends BaseObservable
 {
     private boolean isAuthDone;
     private boolean isAuthInProgress;
+    private boolean isFinding;
+    private int _selectedGender;
+
+
     public ArrayList<Observer> observers;
 
+
+
     public LoginViewModel() {
+        _selectedGender = 0;
         observers=new ArrayList<>();
+        isFinding = false;
     }
 
     @Bindable
@@ -63,6 +71,12 @@ public class LoginViewModel extends BaseObservable
                 });
     }
 
+    public void findPartner()
+    {
+        setFinding(true);
+
+    }
+
     public void invalidateRoomName(String roomName) {
 
         if (roomName.trim().isEmpty()){
@@ -90,5 +104,23 @@ public class LoginViewModel extends BaseObservable
         }
     }
 
+    @Bindable
+    public int get_selectedGender() {
+        return _selectedGender;
+    }
 
+    public void set_selectedGender(int _selectedGender) {
+        this._selectedGender = _selectedGender;
+        notifyPropertyChanged(BR._selectedGender);
+    }
+
+    @Bindable
+    public boolean isFinding() {
+        return isFinding;
+    }
+
+    public void setFinding(boolean finding) {
+        isFinding = finding;
+        notifyPropertyChanged(BR.finding);
+    }
 }

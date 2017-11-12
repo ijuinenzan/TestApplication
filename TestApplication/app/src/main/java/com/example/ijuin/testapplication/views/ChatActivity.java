@@ -44,6 +44,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
     @Override
     public void onObserve(int event, ArrayList<MessageItemModel> eventMessage) {
+
         ChatAdapter chatAdapter=new ChatAdapter(this,eventMessage);
         mBinding.recyclerView.setAdapter(chatAdapter);
         mBinding.recyclerView.scrollToPosition(eventMessage.size()-1);
