@@ -15,58 +15,63 @@ import java.util.HashMap;
 
 public class MessageItemModel extends BaseObservable
 {
-    private String messageKey;
-    private String timeStamp;
-    private String message;
-    private Boolean isMine;
+    //region DECLARE VARIABLE
+    private String _messageKey;
+    private String _timeStamp;
+    private String _message;
+    private String _type;
+    private Boolean _isMine;
+    //endregion
 
     public MessageItemModel(DataSnapshot dataSnapshot)
     {
         HashMap<String, Object> object = (HashMap<String, Object>) dataSnapshot.getValue();
-        this.messageKey=dataSnapshot.getKey();
-        this.message=object.get("text").toString();
+        this._messageKey=dataSnapshot.getKey();
+        this._message=object.get("text").toString();
         if (object.get("senderId").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-            isMine = true;
+            _isMine = true;
         }
         else
         {
-            isMine = false;
+            _isMine = false;
         }
-        this.timeStamp= MyUtils.convertTime(Long.parseLong(object.get("time").toString()));
+        this._timeStamp= MyUtils.convertTime(Long.parseLong(object.get("time").toString()));
 
     }
 
     @Bindable
-    public String getMessage() {
-        return message;
-    }
+    public String getMessage() { return _message;   }
 
     public void setMessage(String message) {
-        this.message = message;
+        this._message = message;
     }
 
     public String getMsgKey() {
-        return messageKey;
+        return _messageKey;
     }
 
     public void setMsgKey(String msgKey) {
-        this.messageKey = msgKey;
+        this._messageKey = msgKey;
     }
 
     public String getTimeStamp() {
-        return timeStamp;
+        return _timeStamp;
     }
 
-    public void setTimeStamp(String timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setTimeStamp(String _timeStamp) {
+        this._timeStamp = _timeStamp;
     }
 
     public boolean isMine() {
-        return isMine;
+        return _isMine;
     }
 
     public void setMine(boolean mine) {
-        isMine = mine;
+        _isMine = mine;
     }
+
+    public String getType() {return _type;}
+
+    public void setType(String type) {this._type = type;}
 
 }

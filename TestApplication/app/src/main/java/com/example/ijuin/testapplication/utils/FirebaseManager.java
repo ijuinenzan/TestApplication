@@ -68,13 +68,16 @@ public class FirebaseManager implements ChildEventListener
 
     }
 
-    public void sendMessageToFirebase(String message) {
+    public void sendMessageToFirebase(String message, String type) {
         Map<String,Object> map=new HashMap<>();
+
         map.put("text",message);
         map.put("time",System.currentTimeMillis());
         map.put("senderId", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        map.put("type", type );
 
         String keyToPush= mMessageReference.push().getKey();
+
         mMessageReference.child(keyToPush).setValue(map);
     }
 
