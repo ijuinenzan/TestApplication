@@ -15,6 +15,7 @@ public class MyUtils
     public static String MESSAGE_AUTHENTICATION_FAILED = "Firebase authentication failed, please check your internet connection";
     public static String MESSAGE_INVALIDE_ROOM_NAME= "Enter a valid Name";
 
+    public static String TEXT_TYPE = "text";
     public static String EXTRA_ROOM_NAME="EXTRA_ROOM_NAME";
 
     public static final int OPEN_ACTIVITY = 1;

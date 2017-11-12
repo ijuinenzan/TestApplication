@@ -32,7 +32,7 @@ public class ChatViewModel extends BaseObservable implements FirebaseCallbacks,M
 
     public void sendMessageToFirebase(String message) {
         if (!message.trim().equals("")){
-            FirebaseManager.getInstance(mRoomName,this).sendMessageToFirebase(message);
+            FirebaseManager.getInstance(mRoomName,this).sendMessageToFirebase(message,"text");
         }
     }
 
