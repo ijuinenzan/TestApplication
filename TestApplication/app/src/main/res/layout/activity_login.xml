@@ -1,99 +1,182 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="viewModel" type="com.example.ijuin.testapplication.viewmodels.LoginViewModel"/>
-        <variable name="activity" type="com.example.ijuin.testapplication.views.LoginActivity"/>
-        <import type="android.view.View"/>
+
+        <variable
+            name="viewModel"
+            type="com.example.ijuin.testapplication.viewmodels.LoginViewModel" />
+
+        <variable
+            name="activity"
+            type="com.example.ijuin.testapplication.views.LoginActivity" />
+
+        <import type="android.view.View" />
     </data>
 
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/spinner3"
+        app:layout_constraintTop_toTopOf="@+id/spinner3">
+
+
+        <Spinner
+            android:id="@+id/spinner3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="21dp"
+            android:entries="@array/array_gender"
+            android:selectedItemPosition="@={viewModel._selectedGender}"
+            android:visibility="@{viewModel.isAuthDone ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@+id/progressBar4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/regular_buttons"
+            android:layout_width="@dimen/small_width"
+            android:layout_height="@dimen/small_height"
+            android:layout_marginBottom="96dp"
+            android:layout_marginStart="80dp"
+            android:onClick="@{() -> activity.showRoomDialog()}"
+            android:padding="@dimen/padding_small"
+            android:text="@string/create_room_label"
+            android:visibility="@{viewModel.isAuthDone ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/button6"
+            style="@style/regular_buttons"
+            android:layout_width="@dimen/small_width"
+            android:layout_height="0dp"
+            android:layout_marginEnd="71dp"
+            android:layout_marginStart="71dp"
+            android:onClick="@{() -> activity.showRoomDialog()}"
+            android:padding="@dimen/padding_small"
+            android:text="@string/existing_room_label"
+            android:visibility="@{viewModel.isAuthDone ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/button2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/sign_in_button"
+            app:layout_constraintTop_toTopOf="@+id/button2"
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="MissingConstraints" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="120dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="21dp"
+            android:visibility="@{viewModel.isAuthDone ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/button5"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/button5"
+            tools:ignore="MissingConstraints">
+
+        </com.google.android.gms.common.SignInButton>
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/linearLayout"
-            android:layout_centerHorizontal="true"
-            android:padding="@dimen/padding_average"
             style="@style/regular_buttons"
-            android:text="Find partner"
+            android:layout_width="wrap_content"
+            android:layout_height="57dp"
+            android:layout_marginBottom="24dp"
             android:onClick="@{() -> viewModel.findPartner()}"
-            android:visibility="@{viewModel.isAuthDone ? View.VISIBLE : View.GONE}"/>
+            android:padding="@dimen/padding_average"
+            android:text="Find partner"
+            android:visibility="@{viewModel.isAuthDone ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@+id/spinner3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
 
         <Button
-            android:layout_width="@dimen/long_width"
-            android:layout_height="@dimen/small_height"
-            android:layout_marginTop="@dimen/margin_extra_large"
-            android:layout_centerHorizontal="true"
-            android:text="@{viewModel.authInProgress ? @string/text_waiting_for_auth :  @string/authentication_label}"
+            android:id="@+id/button4"
+            style="@style/regular_buttons"
+            android:layout_width="199dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="92dp"
             android:onClick="@{() -> viewModel.firebaseAnonymousAuth()}"
             android:padding="@dimen/padding_average"
+            android:text="@{viewModel.authInProgress ? @string/text_waiting_for_auth :  @string/authentication_label}"
             android:visibility="@{viewModel.isAuthDone ? View.GONE : View.VISIBLE}"
-            style="@style/regular_buttons"
-            android:id="@+id/button4" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/small_height"
-            android:text="@string/success_message_authentication"
-            android:layout_marginTop="@dimen/margin_extra_large"
-            android:visibility="@{viewModel.isAuthDone ? View.VISIBLE : View.GONE}"
-            android:layout_centerHorizontal="true"
-            style="@style/info_textviews"
-            android:id="@+id/textView" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/long_height"
-            android:layout_alignParentBottom="true"
-            android:gravity="center_horizontal"
-            android:id="@+id/linearLayout">
-
-            <Button
-                android:layout_width="@dimen/small_width"
-                android:layout_height="@dimen/small_height"
-                android:layout_margin="@dimen/margin_extra_large"
-                android:text="@string/create_room_label"
-                android:padding="@dimen/padding_small"
-                android:onClick="@{() -> activity.showRoomDialog()}"
-                android:visibility="@{viewModel.isAuthDone ? View.VISIBLE : View.GONE}"
-                style="@style/regular_buttons"/>
-
-            <Button
-                android:layout_width="@dimen/small_width"
-                android:layout_height="@dimen/small_height"
-                android:layout_margin="@dimen/margin_extra_large"
-                android:text="@string/existing_room_label"
-                android:padding="@dimen/padding_small"
-                android:onClick="@{() -> activity.showRoomDialog()}"
-                android:visibility="@{viewModel.isAuthDone ? View.VISIBLE : View.GONE}"
-                style="@style/regular_buttons"/>
-        </LinearLayout>
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            tools:ignore="MissingConstraints" />
 
         <ProgressBar
             android:id="@+id/progressBar4"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/button3"
-            android:layout_centerHorizontal="true"
             android:layout_marginBottom="12dp"
-            android:visibility="@{viewModel.finding ? View.VISIBLE : View.INVISIBLE}"/>
+            android:layout_marginStart="8dp"
+            android:visibility="@{viewModel.finding ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintStart_toEndOf="@+id/button2"
+            tools:ignore="MissingConstraints" />
 
-        <Spinner
-            android:id="@+id/spinner3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/progressBar4"
-            android:layout_alignEnd="@+id/button4"
-            android:layout_alignStart="@+id/button4"
-            android:entries="@array/array_gender"
-            android:selectedItemPosition="@={viewModel._selectedGender}"
+        <Button
+            android:id="@+id/button5"
+            style="@style/regular_buttons"
+            android:layout_width="114dp"
+            android:layout_height="47dp"
+            android:layout_marginBottom="89dp"
+            android:layout_marginEnd="52dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="94dp"
+            android:padding="@dimen/padding_average"
+            android:text="Login Facebook"
+            android:visibility="@{viewModel.isAuthDone ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/button3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/info_textviews"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/small_height"
+            android:layout_marginBottom="28dp"
+            android:layout_marginTop="16dp"
+            android:text="FACEBOOK"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:visibility="@{viewModel.isAuthDone ? View.VISIBLE : View.GONE}"
-            android:layout_marginBottom="30dp" />
+            app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
+            app:layout_constraintStart_toEndOf="@+id/sign_in_button"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
 
-    </RelativeLayout>
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="91dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/button4"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </android.support.constraint.ConstraintLayout>
 </layout>
