@@ -1,5 +1,8 @@
 package com.example.ijuin.testapplication.utils;
 
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,5 +32,6 @@ public class MyUtils
         sdf.setTimeZone(TimeZone.getDefault());
         return sdf.format(date);
     }
+
 
 }

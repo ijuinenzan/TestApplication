@@ -1,12 +1,15 @@
 package com.example.ijuin.testapplication.views;
 
 import android.content.Context;
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.ijuin.testapplication.BR;
 import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.databinding.RowChatAdapterBinding;
@@ -27,6 +30,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
     public ChatAdapter(Context context, ArrayList<MessageItemModel> chatList) {
         this.chatList =chatList;
         this.mContext =context;
+    }
+
+    @BindingAdapter({"app:image_url"})
+    public static void loadImage(ImageView imageView,String url)
+    {
+        Glide.with(imageView.getContext()).load(url).into(imageView);
     }
 
     @Override

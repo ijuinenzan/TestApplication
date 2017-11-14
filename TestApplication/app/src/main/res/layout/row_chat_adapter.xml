@@ -34,22 +34,20 @@
                 android:background="@drawable/left_node_bg">
 
                 <TextView
-                    style="@style/textview_message_right"
+                    style="@style/textview_message_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:visibility='@{chatMessage.message.equals("g")? View.VISIBLE: View.GONE}'
-                    android:textColor="@android:color/holo_red_light"
-                    android:text="@{chatMessage.message}" />
-
-                <TextView
-                    style="@style/textview_message_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:visibility='@{chatMessage.message.equals("g") ? View.GONE: View.VISIBLE}'
+                    android:visibility='@{chatMessage.isIcon ? View.GONE: View.VISIBLE}'
                     android:textColor="@android:color/holo_orange_dark"
                     android:text="@{chatMessage.message}"/>
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="0dp"
+                    android:visibility='@{chatMessage.isIcon ? View.VISIBLE: View.GONE}'
+                    app:image_url="@{chatMessage.srcIcon}"/>
 
             </LinearLayout>
             <TextView
@@ -93,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:visibility='@{chatMessage.message.equals("mvvm") ? View.GONE: View.VISIBLE}'
+                    android:visibility='@{chatMessage.isIcon ? View.GONE: View.VISIBLE}'
                     android:textColor="@android:color/holo_orange_dark"
                     android:text="@{chatMessage.message}"/>
 
@@ -101,9 +99,8 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginTop="0dp"
-                    android:visibility='@{chatMessage.message.equals("mvvm")? View.VISIBLE: View.GONE}'
-                    android:src="@drawable/app_icon" />
-
+                    android:visibility='@{chatMessage.isIcon ? View.VISIBLE: View.GONE}'
+                    app:image_url="@{chatMessage.srcIcon}"/>
             </LinearLayout>
 
             <ImageView
@@ -111,7 +108,8 @@
                 android:layout_height="@dimen/small_image"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/margin_small"
-                android:src="@drawable/purple_node_bg" />
+                android:src="@drawable/purple_node_bg"
+                />
 
         </LinearLayout>
 
