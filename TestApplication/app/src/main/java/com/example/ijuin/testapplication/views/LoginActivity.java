@@ -16,12 +16,14 @@ import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.databinding.ActivityLoginBinding;
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.utils.MyUtils;
+import com.example.ijuin.testapplication.viewmodels.ConnectionDetector;
 import com.example.ijuin.testapplication.viewmodels.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity implements Observer<String> {
 
     private LoginViewModel mViewModel;
     private Dialog mChatRoomDialog;
+    public ConnectionDetector _checkInternet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<String>
 
         ActivityLoginBinding activityLoginBinding= DataBindingUtil.setContentView(this, R.layout.activity_login);
         mViewModel= new LoginViewModel();
+        _checkInternet = new ConnectionDetector(this);
         activityLoginBinding.setViewModel(mViewModel);
         activityLoginBinding.setActivity(this);
 
@@ -44,7 +47,13 @@ public class LoginActivity extends AppCompatActivity implements Observer<String>
         submitRoomName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewModel.invalidateRoomName(editTextRoomName.getText().toString());
+                if (_checkInternet.isConnected() == true) {
+                    mViewModel.invalidateRoomName(editTextRoomName.getText().toString());
+                }
+                else
+                {
+                    Toast.makeText(LoginActivity.this,"Check your Internet Connection!",Toast.LENGTH_LONG).show();
+                }
             }
         });
 
