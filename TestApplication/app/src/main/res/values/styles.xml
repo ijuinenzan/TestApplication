@@ -85,5 +85,11 @@
         <item name="android:background">@color/colorAccent</item>
     </style>
 
+    <!--Login Activity Button style-->
+    <style name="LoginButtonsStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
 
 </resources>

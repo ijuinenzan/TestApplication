@@ -2,10 +2,17 @@ package com.example.ijuin.testapplication.viewmodels;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.ObservableField;
+import android.support.annotation.NonNull;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 
 import com.example.ijuin.testapplication.utils.MyUtils;
+import com.example.ijuin.testapplication.utils.TextWatcherAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -13,48 +20,83 @@ import java.util.ArrayList;
 
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.BR;
+import com.google.firebase.auth.FirebaseUser;
+
 /**
  * Created by ijuin on 11/12/2017.
  */
 
 public class LoginViewModel extends BaseObservable
 {
-    private boolean isAuthDone;
-    private boolean isAuthInProgress;
-    private boolean isFinding;
-    private int _selectedGender;
+    private boolean _isAuthDone;
+    private boolean _isAuthInProgress;
 
+    private ObservableField<String> _email  = new ObservableField<>();
+    private ObservableField<String> _password = new ObservableField<>();
+
+    private TextWatcher _emailWatcher = new TextWatcherAdapter(){
+    @Override public void afterTextChanged(Editable s)
+    {
+            _email.set(s.toString());
+    }
+};
+    private TextWatcher _passwordWatcher = new TextWatcherAdapter(){
+        @Override public void afterTextChanged(Editable s)
+        {
+                _password.set(s.toString());
+        }
+    };
 
     public ArrayList<Observer> observers;
 
-
-
     public LoginViewModel() {
-        _selectedGender = 0;
         observers=new ArrayList<>();
-        isFinding = false;
+        _email.set("");
+        _password.set("");
     }
 
     @Bindable
     public boolean isAuthDone() {
-        return isAuthDone;
+        return _isAuthDone;
     }
 
     public void setAuthDone(boolean authDone) {
-        isAuthDone = authDone;
+        _isAuthDone = authDone;
         notifyPropertyChanged(BR.authDone);
     }
 
     @Bindable
     public boolean isAuthInProgress() {
-        return isAuthInProgress;
+        return _isAuthInProgress;
     }
 
     public void setAuthInProgress(boolean authInProgress) {
-        isAuthInProgress = authInProgress;
+        _isAuthInProgress = authInProgress;
         notifyPropertyChanged(BR.authInProgress);
     }
 
+    @Bindable
+    public ObservableField<String> getEmail()
+    {
+        return _email;
+    }
+
+    @Bindable
+    public ObservableField<String> getPassword()
+    {
+        return _password;
+    }
+
+    @Bindable
+    public TextWatcher getEmailWatcher()
+    {
+        return _emailWatcher;
+    }
+
+    public TextWatcher getPasswordWatcher()
+    {
+        return _passwordWatcher;
+    }
     public void firebaseAnonymousAuth() {
         setAuthInProgress(true);
         FirebaseAuth.getInstance().signInAnonymously()
@@ -71,21 +113,37 @@ public class LoginViewModel extends BaseObservable
                 });
     }
 
-    public void findPartner()
+    public void loginWithEmail() {
+        setAuthInProgress(true);
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(_email.get(), _password.get())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(Task<AuthResult> task) {
+                        setAuthInProgress(false);
+                        if (!task.isSuccessful()) {
+                            notifyObservers(MyUtils.SHOW_TOAST, MyUtils.MESSAGE_AUTHENTICATION_FAILED);
+                        } else {
+                            setAuthDone(true);
+                        }
+                    }
+        });
+    }
+
+    public void register()
     {
-        setFinding(true);
-
+        setAuthInProgress(true);
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(_email.get(), _password.get())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        setAuthInProgress(false);
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        user.sendEmailVerification();
+                    }
+                });
     }
 
-    public void invalidateRoomName(String roomName) {
-
-        if (roomName.trim().isEmpty()){
-            notifyObservers(MyUtils.SHOW_TOAST, MyUtils.MESSAGE_INVALIDE_ROOM_NAME);
-        } else {
-            notifyObservers(MyUtils.OPEN_ACTIVITY, roomName);
-        }
-    }
-
+    TwitterAuthToken
     public void addObserver(Observer client) {
         if (!observers.contains(client)) {
             observers.add(client);
@@ -102,25 +160,5 @@ public class LoginViewModel extends BaseObservable
         for (int i=0; i< observers.size(); i++) {
             observers.get(i).onObserve(eventType, message);
         }
-    }
-
-    @Bindable
-    public int get_selectedGender() {
-        return _selectedGender;
-    }
-
-    public void set_selectedGender(int _selectedGender) {
-        this._selectedGender = _selectedGender;
-        notifyPropertyChanged(BR._selectedGender);
-    }
-
-    @Bindable
-    public boolean isFinding() {
-        return isFinding;
-    }
-
-    public void setFinding(boolean finding) {
-        isFinding = finding;
-        notifyPropertyChanged(BR.finding);
     }
 }

@@ -38,29 +38,9 @@ public class LoginActivity extends AppCompatActivity implements Observer<String>
 
     }
 
-    public void showRoomDialog() {
-        mChatRoomDialog=new Dialog(this);
-        mChatRoomDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_room,null);
-        Button submitRoomName= (Button) view.findViewById(R.id.button_room_submit);
-        final EditText editTextRoomName=(EditText) view.findViewById(R.id.edittext_room_name);
-        submitRoomName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (_checkInternet.isConnected() == true) {
-                    mViewModel.invalidateRoomName(editTextRoomName.getText().toString());
-                }
-                else
-                {
-                    Toast.makeText(LoginActivity.this,"Check your Internet Connection!",Toast.LENGTH_LONG).show();
-                }
-            }
-        });
 
-        mChatRoomDialog.setContentView(view);
-        mChatRoomDialog.show();
 
-    }
+
 
     public void startChatActivity(String roomName) {
         mChatRoomDialog.dismiss();

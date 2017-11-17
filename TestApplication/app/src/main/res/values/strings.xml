@@ -17,4 +17,10 @@
     <string name="hint_typing">Type here</string>
     <string name="send_text">Send</string>
     <string name="text_waiting_for_auth">Authenticating, this may take 1 minute</string>
+
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="anonymous_login">Anonymous Login</string>
 </resources>
