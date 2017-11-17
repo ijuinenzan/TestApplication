@@ -18,6 +18,13 @@ import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.viewmodels.ConnectionDetector;
 import com.example.ijuin.testapplication.viewmodels.LoginViewModel;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterAuthToken;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 public class LoginActivity extends AppCompatActivity implements Observer<String> {
 
@@ -36,11 +43,31 @@ public class LoginActivity extends AppCompatActivity implements Observer<String>
         activityLoginBinding.setViewModel(mViewModel);
         activityLoginBinding.setActivity(this);
 
+        Button btnFirebaseTwitterLogin = (Button) findViewById(R.id.btnFirebaseTwitterLogin);
+        final TwitterLoginButton btnLoginTwitter = (TwitterLoginButton) findViewById(R.id.btnTwitterLogin);
+
+        btnFirebaseTwitterLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnLoginTwitter.setCallback(new Callback<TwitterSession>() {
+                    @Override
+                    public void success(Result<TwitterSession> result) {
+                        // TwitterSession will contain a token, secret, username, and user ID of the user
+                        // and becomes the active session and is automatically persisted.
+//                        TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
+//                        TwitterAuthToken authToken = session.getAuthToken();
+                        mViewModel.loginTwitter(result.data);
+                    }
+
+                    @Override
+                    public void failure(TwitterException exception) {
+
+                    } });
+            }
+        });
+
+
     }
-
-
-
-
 
     public void startChatActivity(String roomName) {
         mChatRoomDialog.dismiss();

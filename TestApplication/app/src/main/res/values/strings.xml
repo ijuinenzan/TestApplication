@@ -23,4 +23,7 @@
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="anonymous_login">Anonymous Login</string>
+
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">3tthcMuyzCWDqbUTtkb3hv9Xg</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">sHnnYfZU7WCGQmRrRInkrduALhhxST99G8l92ENHAGdYIp8Ygs</string>
 </resources>

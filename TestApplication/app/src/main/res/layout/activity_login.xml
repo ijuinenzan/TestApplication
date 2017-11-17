@@ -129,7 +129,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnTwitterLogin"
+                    android:id="@+id/btnFirebaseTwitterLogin"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginLeft="8dp"
@@ -144,6 +144,13 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/ic_facebook" />
+
+                <com.twitter.sdk.android.core.identity.TwitterLoginButton
+                    android:id="@+id/btnTwitterLogin"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"/>
 
             </LinearLayout>
         </LinearLayout>
