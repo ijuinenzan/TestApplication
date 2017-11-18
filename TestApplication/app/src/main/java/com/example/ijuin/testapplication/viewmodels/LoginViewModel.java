@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.utils.TextWatcherAdapter;
@@ -24,6 +26,16 @@ import java.util.ArrayList;
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.BR;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.TwitterAuthProvider;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthToken;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 /**
  * Created by ijuin on 11/12/2017.
@@ -167,6 +179,26 @@ public class LoginViewModel extends BaseObservable
                             {
                                 user.sendEmailVerification();
                             }
+                        }
+                    }
+                });
+    }
+
+    public void loginWithTwitter (String token, String secret) {
+        setAuthInProgress(true);
+        AuthCredential credential = TwitterAuthProvider.getCredential(
+                token,
+                secret);
+
+        FirebaseAuth.getInstance().signInWithCredential(credential)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(Task<AuthResult> task) {
+                        setAuthInProgress(false);
+                        if (!task.isSuccessful()) {
+                            notifyObservers(MyUtils.SHOW_TOAST, MyUtils.MESSAGE_AUTHENTICATION_FAILED);
+                        } else {
+                            setAuthDone(true);
                         }
                     }
                 });
