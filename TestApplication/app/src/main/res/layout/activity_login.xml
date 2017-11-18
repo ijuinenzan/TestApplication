@@ -106,7 +106,7 @@
                     android:text="@string/register"
                     android:layout_marginTop="8dp"
                     app:layout_constraintTop_toBottomOf="@+id/edtPassword"
-                    android:onClick="@{() -> viewModel.register()}"/>
+                    android:onClick="@{() -> viewModel.registerWithEmail()}"/>
 
             </LinearLayout>
 
@@ -137,8 +137,16 @@
                     android:background="@drawable/ic_twitter"
                     app:layout_constraintLeft_toLeftOf="parent" />
 
-                <Button
+                <com.facebook.login.widget.LoginButton
                     android:id="@+id/btnFacebookLogin"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/btnFirebaseFacebookLogin"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginLeft="8dp"

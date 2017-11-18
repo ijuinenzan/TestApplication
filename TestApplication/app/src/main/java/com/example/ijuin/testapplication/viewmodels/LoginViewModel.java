@@ -10,10 +10,13 @@ import android.util.Log;
 
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.utils.TextWatcherAdapter;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.ActionCodeSettings;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -113,6 +116,26 @@ public class LoginViewModel extends BaseObservable
                 });
     }
 
+    public void loginWithFacebook(String token)
+    {
+        AuthCredential credential = FacebookAuthProvider.getCredential(token);
+
+        setAuthInProgress(true);
+        FirebaseAuth.getInstance().signInWithCredential(credential)
+                .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete( Task<AuthResult> task) {
+                        setAuthInProgress(false);
+                        if (!task.isSuccessful()) {
+                            notifyObservers(MyUtils.SHOW_TOAST, MyUtils.MESSAGE_AUTHENTICATION_FAILED);
+                        } else {
+                            setAuthDone(true);
+                        }
+                    }
+                });
+    }
+
+
     public void loginWithEmail() {
         setAuthInProgress(true);
         FirebaseAuth.getInstance().signInWithEmailAndPassword(_email.get(), _password.get())
@@ -129,7 +152,7 @@ public class LoginViewModel extends BaseObservable
         });
     }
 
-    public void register()
+    public void registerWithEmail()
     {
         setAuthInProgress(true);
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(_email.get(), _password.get())
@@ -137,13 +160,18 @@ public class LoginViewModel extends BaseObservable
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         setAuthInProgress(false);
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        user.sendEmailVerification();
+
+                        if(task.isSuccessful()) {
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            if(user != null)
+                            {
+                                user.sendEmailVerification();
+                            }
+                        }
                     }
                 });
     }
 
-    TwitterAuthToken
     public void addObserver(Observer client) {
         if (!observers.contains(client)) {
             observers.add(client);

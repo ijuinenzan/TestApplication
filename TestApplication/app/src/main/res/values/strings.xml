@@ -4,6 +4,10 @@
         <item>FEMALE</item>
         <item>GAY</item>
     </string-array>
+    
+    <string name="facebook_app_id">1762185093822622</string>
+    <string name="fb_login_protocol_scheme">fb1762185093822622</string>
+    
     <string name="app_name">Chat Application</string>
     <string name="authentication_label">Authentication with Firebase</string>
     <string name="create_room_label">Create room</string>
