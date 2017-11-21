@@ -53,7 +53,11 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:4.28.0'
     implementation 'com.github.bumptech.glide:glide:4.3.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
+
+    implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    implementation 'com.android.support:design:26.1.0'
 }
+
 
 
 

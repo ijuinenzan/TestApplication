@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/profileFragment"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.ijuin.testapplication.views.ViewPagerTest$ProfileFragment">
+
+    <LinearLayout
+        android:id="@+id/linear_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/img_UserIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:minHeight="100dp"
+            android:maxWidth="100dp"
+            android:maxHeight="100dp"
+            android:src="@drawable/ic_profile"/>
+
+        <Button
+            android:id="@+id/btn_ChangeUserImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/changeUserImg"
+            android:layout_marginStart="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_userName"
+                android:layout_marginStart="@dimen/marginStart_col1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:text="@string/userName"
+                android:textSize="@dimen/fontsize"/>
+
+            <EditText
+                android:id="@+id/edtText_userName"
+                android:layout_marginStart="@dimen/marginStart_col2"
+                android:layout_width="@dimen/widthContent"
+                android:layout_height="wrap_content"
+                android:hint="Gia Khang"
+                android:textSize="@dimen/fontsize"
+                />
+
+            <CheckBox
+                android:id="@+id/cBox_userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/marginStart_col3"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/userAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_userAge"
+                android:layout_marginStart="@dimen/marginStart_col1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:text="@string/userAge"
+                android:textSize="@dimen/fontsize"/>
+
+            <EditText
+                android:id="@+id/edtText_userAge"
+                android:layout_marginStart="@dimen/marginStart_col2"
+                android:layout_width="@dimen/widthContent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/fontsize"
+                android:hint="19"
+                />
+
+            <CheckBox
+                android:id="@+id/cBox_userAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/marginStart_col3"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/userGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_userGender"
+                android:layout_marginStart="@dimen/marginStart_col1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:text="@string/userGender"
+                android:textSize="@dimen/fontsize"/>
+
+            <RadioGroup
+                android:id="@+id/rGr_userGender"
+                android:layout_width="@dimen/widthContent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="125dp"
+                android:layout_marginTop="8dp">
+                <TextView
+                    android:id="@+id/txtView_Male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male"
+                    android:textSize="@dimen/fontsize"/>
+                <RadioButton
+                    android:id="@+id/rBtn_Male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/txtView_Female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female"
+                    android:textSize="@dimen/fontsize"
+                    android:layout_marginStart="30dp"/>
+                <RadioButton
+                    android:id="@+id/rBtn_Female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+
+            <CheckBox
+                android:id="@+id/cBox_userGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/marginStart_col3"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/userPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_userPhone"
+                android:layout_marginStart="@dimen/marginStart_col1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:text="@string/userPhone"
+                android:textSize="@dimen/fontsize"/>
+
+            <EditText
+                android:id="@+id/edtText_userPhone"
+                android:layout_marginStart="@dimen/marginStart_col2"
+                android:layout_width="@dimen/widthContent"
+                android:layout_height="wrap_content"
+                android:hint="0868242564"
+                android:textSize="@dimen/fontsize"
+                android:ems="10"
+                android:inputType="phone"/>
+
+            <CheckBox
+                android:id="@+id/cBox_userPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/marginStart_col3"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/userAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_userAddress"
+                android:layout_marginStart="@dimen/marginStart_col1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:text="@string/userAddress"
+                android:textSize="@dimen/fontsize"/>
+
+            <EditText
+                android:id="@+id/edtText_userAddress"
+                android:layout_marginStart="@dimen/marginStart_col2"
+                android:layout_width="@dimen/widthContent"
+                android:layout_height="wrap_content"
+                android:hint="Ktx B DHQG HCM"
+                android:textSize="@dimen/fontsize"
+                />
+
+            <CheckBox
+                android:id="@+id/cBox_userAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/marginStart_col3"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/userCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_userCompany"
+                android:layout_marginStart="@dimen/marginStart_col1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:text="@string/userCompany"
+                android:textSize="@dimen/fontsize"/>
+
+            <EditText
+                android:id="@+id/edtText_userCompany"
+                android:layout_marginStart="@dimen/marginStart_col2"
+                android:layout_width="@dimen/widthContent"
+                android:layout_height="wrap_content"
+                android:hint="Univercity of Infomation Technology"
+                android:textSize="@dimen/fontsize"
+                />
+
+            <CheckBox
+                android:id="@+id/cBox_userCompany"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/marginStart_col3"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/userCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_userCity"
+                android:layout_marginStart="@dimen/marginStart_col1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:text="@string/userCity"
+                android:textSize="@dimen/fontsize"/>
+
+            <EditText
+                android:id="@+id/edtText_userCity"
+                android:layout_marginStart="@dimen/marginStart_col2"
+                android:layout_width="@dimen/widthContent"
+                android:layout_height="wrap_content"
+                android:hint="HoChiMinh city"
+                android:textSize="@dimen/fontsize"
+                />
+
+            <CheckBox
+                android:id="@+id/cBox_userCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/marginStart_col3"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/userCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_userCountry"
+                android:layout_marginStart="@dimen/marginStart_col1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:text="@string/userCountry"
+                android:textSize="@dimen/fontsize"/>
+
+            <EditText
+                android:id="@+id/edtText_userCountry"
+                android:layout_marginStart="@dimen/marginStart_col2"
+                android:layout_width="@dimen/widthContent"
+                android:layout_height="wrap_content"
+                android:hint="VietNam"
+                android:textSize="@dimen/fontsize"/>
+
+            <CheckBox
+                android:id="@+id/cBox_userCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/marginStart_col3"/>
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/userWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_userWeight"
+                android:layout_marginStart="@dimen/marginStart_col1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:text="@string/userWeight"
+                android:textSize="@dimen/fontsize"/>
+
+            <EditText
+                android:id="@+id/edtText_userWeight"
+                android:layout_marginStart="@dimen/marginStart_col2"
+                android:layout_width="@dimen/widthContent"
+                android:layout_height="wrap_content"
+                android:hint="90kg"
+                android:textSize="@dimen/fontsize"/>
+
+            <CheckBox
+                android:id="@+id/cBox_userWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/marginStart_col3"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/userHeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_userHeight"
+                android:layout_marginStart="@dimen/marginStart_col1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:text="@string/userHeight"
+                android:textSize="@dimen/fontsize"/>
+
+            <EditText
+                android:id="@+id/edtText_userHeight"
+                android:layout_marginStart="@dimen/marginStart_col2"
+                android:layout_width="@dimen/widthContent"
+                android:layout_height="wrap_content"
+                android:hint="180cm"
+                android:textSize="@dimen/fontsize"/>
+
+            <CheckBox
+                android:id="@+id/cBox_userHeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/marginStart_col3"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/userFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_userFacebook"
+                android:layout_marginStart="@dimen/marginStart_col1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:text="@string/userFacebook"
+                android:textSize="@dimen/fontsize"/>
+
+            <EditText
+                android:id="@+id/edtText_userFacebook"
+                android:layout_width="@dimen/widthContent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="33dp"
+                android:layout_toEndOf="@+id/txtView_userFacebook"
+                android:hint="LeVoGiaKhang"
+                android:textSize="@dimen/fontsize" />
+
+            <CheckBox
+                android:id="@+id/cBox_userFacebook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/marginStart_col3"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/userTwitter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_userTwitter"
+                android:layout_marginStart="@dimen/marginStart_col1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:text="@string/userTwitter"
+                android:textSize="@dimen/fontsize"/>
+
+            <EditText
+                android:id="@+id/edtText_userTwitter"
+                android:layout_marginStart="@dimen/marginStart_col2"
+                android:layout_width="@dimen/widthContent"
+                android:layout_height="wrap_content"
+                android:hint="JaKa"
+                android:textSize="@dimen/fontsize"
+                />
+
+            <CheckBox
+                android:id="@+id/cBox_userTwitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/marginStart_col3"/>
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/btn_LogOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/logout"
+            android:gravity="center"/>
+    </LinearLayout>
+</LinearLayout >

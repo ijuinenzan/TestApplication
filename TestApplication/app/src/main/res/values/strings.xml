@@ -1,5 +1,5 @@
 <resources>
-    
+
     <string name="facebook_app_id">1762185093822622</string>
     <string name="fb_login_protocol_scheme">fb1762185093822622</string>
 
@@ -22,4 +22,21 @@
     <string name="login">Login</string>
     <string name="anonymous_login">Anonymous Login</string>
 
+    <string name="changeUserImg">Change</string>
+
+    <string name="userName">Name:</string>
+    <string name="userAge">Age:</string>
+    <string name="userGender">Gender:</string>
+    <string name="userCity">City:</string>
+    <string name="userCountry">Country:</string>
+    <string name="userWeight">Weight:</string>
+    <string name="userHeight">Height:</string>
+    <string name="userPhone">Phone:</string>
+    <string name="userFacebook">Facebook:</string>
+    <string name="userTwitter">Twitter:</string>
+    <string name="userAddress">Address:</string>
+    <string name="userCompany">Company:</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="logout">Log Out</string>
 </resources>
