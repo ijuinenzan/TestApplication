@@ -1,5 +1,6 @@
 package com.example.ijuin.testapplication.views;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,8 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
 import com.example.ijuin.testapplication.R;
+import com.example.ijuin.testapplication.databinding.ProfileFragmentBinding;
+import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
 
 /**
  * Created by Khang Le on 11/21/2017.
@@ -27,6 +30,8 @@ public class MainActivity extends AppCompatActivity
     private ViewPager _viewPager;
     private TabLayout tabLayout;
     private PagerSlidingTabStrip _customTab;
+
+    private static ProfileViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +105,12 @@ public class MainActivity extends AppCompatActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.profile_fragment, container, false);
+            ProfileFragmentBinding binding = DataBindingUtil.inflate(inflater,
+                    R.layout.profile_fragment, container, false);
+            View view = binding.getRoot();
+
+            mViewModel= new ProfileViewModel();
+            binding.setViewModel(mViewModel);
 
             return view;
         }

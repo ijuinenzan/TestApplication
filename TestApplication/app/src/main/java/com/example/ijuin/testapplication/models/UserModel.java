@@ -8,83 +8,90 @@ import android.databinding.Bindable;
  */
 
 public class UserModel extends BaseObservable {
-    private String _displayName;
-    private String _email;
-    private String _linkFb;
-    private String _firstName;
-    private String _lastName;
-    private String _localId;
-    private String _photoUrl;
-    private int _state;
-    private int _gender;
-    private int _age;
-    private int _targetGender;
+    private FieldModel<String> _displayName;
+    private FieldModel<String> _yearBorn;
+    private FieldModel<Integer> _gender;
+    private FieldModel<String> _city;
+    private FieldModel<String> _country;
+    private FieldModel<String> _weight;
+    private FieldModel<String> _height;
+    private FieldModel<String> _phoneNumber;
+    private FieldModel<String> _facebook;
+    private FieldModel<String> _twitter;
+    private FieldModel<String> _address;
+    private FieldModel<String> _job;
 
     @Bindable
-    public String get_displayName() {
+    public FieldModel<String> get_displayName() {
         return _displayName;
     }
-    public void set_displayName(String _displayName) {
+    public void set_displayName(FieldModel<String> _displayName) {
         this._displayName = _displayName;
     }
-    public String get_email() {
-        return _email;
+    public FieldModel<String> get_yearBorn() {
+        return _yearBorn;
     }
-    public void set_email(String _email) {
-        this._email = _email;
+    public void set_yearBorn(FieldModel<String> _yearBorn) {
+        this._yearBorn = _yearBorn;
     }
-    public String get_linkFb() {
-        return _linkFb;
-    }
-    public void set_linkFb(String _linkFb) {
-        this._linkFb = _linkFb;
-    }
-    public String get_firstName() {
-        return _firstName;
-    }
-    public void set_firstName(String _firstName) {
-        this._firstName = _firstName;
-    }
-    public String get_lastName() {
-        return _lastName;
-    }
-    public void set_lastName(String _lastName) {
-        this._lastName = _lastName;
-    }
-    public String get_localId() {
-        return _localId;
-    }
-    public void set_localId(String _localId) {
-        this._localId = _localId;
-    }
-    public String get_photoUrl() {
-        return _photoUrl;
-    }
-    public void set_photoUrl(String _photoUrl) {
-        this._photoUrl = _photoUrl;
-    }
-    public int get_state() {
-        return _state;
-    }
-    public void set_state(int _state) {
-        this._state = _state;
-    }
-    public int get_gender() {
+    public FieldModel<Integer> get_gender() {
         return _gender;
     }
-    public void set_gender(int _gender) {
+    public void set_gender(FieldModel<Integer> _gender) {
         this._gender = _gender;
     }
-    public int get_age() {
-        return _age;
+    public FieldModel<String> get_city() {
+        return _city;
     }
-    public void set_age(int _age) {
-        this._age = _age;
+    public void set_city(FieldModel<String> _city) {
+        this._city = _city;
     }
-    public int get_targetGender() {
-        return _targetGender;
+    public FieldModel<String> get_country() {
+        return _country;
     }
-    public void set_targetGender(int _targetGender) {
-        this._targetGender = _targetGender;
+    public void set_country(FieldModel<String> _country) {
+        this._country = _country;
+    }
+    public FieldModel<String> get_weight() {
+        return _weight;
+    }
+    public void set_weight(FieldModel<String> _weight) {
+        this._weight = _weight;
+    }
+    public FieldModel<String> get_height() {
+        return _height;
+    }
+    public void set_height(FieldModel<String> _height) {
+        this._height = _height;
+    }
+    public FieldModel<String> get_phoneNumber() {
+        return _phoneNumber;
+    }
+    public void set_phoneNumber(FieldModel<String> _phoneNumber) {
+        this._phoneNumber = _phoneNumber;
+    }
+    public FieldModel<String> get_facebook() {
+        return _facebook;
+    }
+    public void set_facebook(FieldModel<String> _facebook) {
+        this._facebook = _facebook;
+    }
+    public FieldModel<String> get_twitter() {
+        return _twitter;
+    }
+    public void set_twitter(FieldModel<String> _twitter) {
+        this._twitter = _twitter;
+    }
+    public FieldModel<String> get_address() {
+        return _address;
+    }
+    public void set_address(FieldModel<String> _address) {
+        this._address = _address;
+    }
+    public FieldModel<String> get_job() {
+        return _job;
+    }
+    public void set_job(FieldModel<String> _job) {
+        this._job = _job;
     }
 }

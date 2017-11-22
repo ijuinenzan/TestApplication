@@ -25,6 +25,9 @@ public class MyUtils
     public static final int SHOW_TOAST = 2;
     public static final int UPDATE_MESSAGES=1;
 
+    public static Integer MALE = 0;
+    public static Integer FEMALE = 1;
+
     public static String convertTime(long timestamp) {
         SimpleDateFormat sdf;
         sdf = new SimpleDateFormat("HH:mm");
