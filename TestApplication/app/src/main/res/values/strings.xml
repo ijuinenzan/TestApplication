@@ -39,4 +39,16 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="logout">Log Out</string>
+
+    <string name="hintUserName">User Name</string>
+    <string name="hintPhone">0868242564</string>
+    <string name="hintAddress">Ktx B DHQG HCM</string>
+    <string name="hintCompany">University of Infomation Technology</string>
+    <string name="hintCity">HoChiMinh city</string>
+    <string name="hintCountry">VietNam</string>
+    <string name="hintWeight">90kg</string>
+    <string name="hintHeight">180cm</string>
+    <string name="hintFacebook">LeVoGiaKhang</string>
+    <string name="hintTwitter">JaKa</string>
+    <string name="aboutUs">About Us</string>
 </resources>

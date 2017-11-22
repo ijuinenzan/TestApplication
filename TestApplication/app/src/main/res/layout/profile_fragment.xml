@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.ijuin.testapplication.views.ViewPagerTest$ProfileFragment">
+    tools:context="com.example.ijuin.testapplication.views.MainActivity$ProfileFragment">
 
     <LinearLayout
         android:id="@+id/linear_user"
@@ -59,7 +59,7 @@
                 android:layout_marginStart="@dimen/marginStart_col2"
                 android:layout_width="@dimen/widthContent"
                 android:layout_height="wrap_content"
-                android:hint="Gia Khang"
+                android:hint="@string/hintUserName"
                 android:textSize="@dimen/fontsize"
                 />
 
@@ -92,9 +92,7 @@
                 android:layout_marginStart="@dimen/marginStart_col2"
                 android:layout_width="@dimen/widthContent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/fontsize"
-                android:hint="19"
-                />
+                android:textSize="@dimen/fontsize"/>
 
             <CheckBox
                 android:id="@+id/cBox_userAge"
@@ -179,7 +177,7 @@
                 android:layout_marginStart="@dimen/marginStart_col2"
                 android:layout_width="@dimen/widthContent"
                 android:layout_height="wrap_content"
-                android:hint="0868242564"
+                android:hint="@string/hintPhone"
                 android:textSize="@dimen/fontsize"
                 android:ems="10"
                 android:inputType="phone"/>
@@ -213,7 +211,7 @@
                 android:layout_marginStart="@dimen/marginStart_col2"
                 android:layout_width="@dimen/widthContent"
                 android:layout_height="wrap_content"
-                android:hint="Ktx B DHQG HCM"
+                android:hint="@string/hintAddress"
                 android:textSize="@dimen/fontsize"
                 />
 
@@ -246,7 +244,7 @@
                 android:layout_marginStart="@dimen/marginStart_col2"
                 android:layout_width="@dimen/widthContent"
                 android:layout_height="wrap_content"
-                android:hint="Univercity of Infomation Technology"
+                android:hint="@string/hintCompany"
                 android:textSize="@dimen/fontsize"
                 />
 
@@ -279,7 +277,7 @@
                 android:layout_marginStart="@dimen/marginStart_col2"
                 android:layout_width="@dimen/widthContent"
                 android:layout_height="wrap_content"
-                android:hint="HoChiMinh city"
+                android:hint="@string/hintCity"
                 android:textSize="@dimen/fontsize"
                 />
 
@@ -312,7 +310,7 @@
                 android:layout_marginStart="@dimen/marginStart_col2"
                 android:layout_width="@dimen/widthContent"
                 android:layout_height="wrap_content"
-                android:hint="VietNam"
+                android:hint="@string/hintCountry"
                 android:textSize="@dimen/fontsize"/>
 
             <CheckBox
@@ -344,7 +342,7 @@
                 android:layout_marginStart="@dimen/marginStart_col2"
                 android:layout_width="@dimen/widthContent"
                 android:layout_height="wrap_content"
-                android:hint="90kg"
+                android:hint="@string/hintWeight"
                 android:textSize="@dimen/fontsize"/>
 
             <CheckBox
@@ -376,7 +374,7 @@
                 android:layout_marginStart="@dimen/marginStart_col2"
                 android:layout_width="@dimen/widthContent"
                 android:layout_height="wrap_content"
-                android:hint="180cm"
+                android:hint="@string/hintHeight"
                 android:textSize="@dimen/fontsize"/>
 
             <CheckBox
@@ -410,7 +408,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="33dp"
                 android:layout_toEndOf="@+id/txtView_userFacebook"
-                android:hint="LeVoGiaKhang"
+                android:hint="@string/hintFacebook"
                 android:textSize="@dimen/fontsize" />
 
             <CheckBox
@@ -442,7 +440,7 @@
                 android:layout_marginStart="@dimen/marginStart_col2"
                 android:layout_width="@dimen/widthContent"
                 android:layout_height="wrap_content"
-                android:hint="JaKa"
+                android:hint="@string/hintTwitter"
                 android:textSize="@dimen/fontsize"
                 />
 

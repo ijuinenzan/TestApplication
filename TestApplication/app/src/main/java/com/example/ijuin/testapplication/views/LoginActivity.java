@@ -1,6 +1,5 @@
 package com.example.ijuin.testapplication.views;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
@@ -30,8 +29,6 @@ import com.twitter.sdk.android.core.TwitterConfig;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
-
-import java.util.concurrent.ExecutorService;
 
 public class LoginActivity extends AppCompatActivity implements Observer<String> {
 
@@ -119,7 +116,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<String>
     }
 
     public void startMainActivity() {
-        Intent intent=new Intent(this,ViewPagerTest.class);
+        Intent intent=new Intent(this,MainActivity.class);
         startActivity(intent);
     }
 

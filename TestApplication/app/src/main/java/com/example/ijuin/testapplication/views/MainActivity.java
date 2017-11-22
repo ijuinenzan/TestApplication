@@ -19,7 +19,7 @@ import com.example.ijuin.testapplication.R;
  * Created by Khang Le on 11/21/2017.
  */
 
-public class ViewPagerTest extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
 {
     private PagerAdapter _pagerAdapter;
     private ViewPager _viewPager;
@@ -29,7 +29,7 @@ public class ViewPagerTest extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_pager__test);
+        setContentView(R.layout.activity_main);
 
         addControls();
     }
@@ -87,6 +87,19 @@ public class ViewPagerTest extends AppCompatActivity
 
     }
 
+    public static class AboutUsFragment extends Fragment {
+
+        public AboutUsFragment() {        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.about_us_fragment, container, false);
+
+            return view;
+        }
+
+    }
 
 
 
@@ -109,6 +122,9 @@ public class ViewPagerTest extends AppCompatActivity
                 case 1:
                     frag = new ProfileFragment();
                     break;
+                case 2:
+                    frag = new AboutUsFragment();
+                    break;
             }
             return frag;
         }
@@ -117,7 +133,7 @@ public class ViewPagerTest extends AppCompatActivity
         @Override
         public int getCount()
         {
-            return 2;
+            return 3;
         }
 
 
@@ -145,6 +161,8 @@ public class ViewPagerTest extends AppCompatActivity
                     return R.drawable.ic_search_heart;
                 case 1:
                     return R.drawable.ic_profile;
+                case 2:
+                    return R.drawable.ic_our_logo;
             }
             return -1;
         }
