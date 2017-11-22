@@ -123,6 +123,7 @@ public class LoginViewModel extends BaseObservable
                             notifyObservers(MyUtils.SHOW_TOAST, MyUtils.MESSAGE_AUTHENTICATION_FAILED);
                         } else {
                             setAuthDone(true);
+                            notifyObservers(MyUtils.OPEN_ACTIVITY, "");
                         }
                     }
                 });
@@ -142,9 +143,12 @@ public class LoginViewModel extends BaseObservable
                             notifyObservers(MyUtils.SHOW_TOAST, MyUtils.MESSAGE_AUTHENTICATION_FAILED);
                         } else {
                             setAuthDone(true);
+                            notifyObservers(MyUtils.OPEN_ACTIVITY, "");
+
                         }
                     }
                 });
+
     }
 
 
@@ -159,6 +163,7 @@ public class LoginViewModel extends BaseObservable
                             notifyObservers(MyUtils.SHOW_TOAST, MyUtils.MESSAGE_AUTHENTICATION_FAILED);
                         } else {
                             setAuthDone(true);
+                            notifyObservers(MyUtils.OPEN_ACTIVITY, "");
                         }
                     }
         });
@@ -199,6 +204,7 @@ public class LoginViewModel extends BaseObservable
                             notifyObservers(MyUtils.SHOW_TOAST, MyUtils.MESSAGE_AUTHENTICATION_FAILED);
                         } else {
                             setAuthDone(true);
+                            notifyObservers(MyUtils.OPEN_ACTIVITY, "");
                         }
                     }
                 });

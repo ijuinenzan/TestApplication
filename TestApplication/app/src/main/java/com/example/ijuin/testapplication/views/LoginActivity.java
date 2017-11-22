@@ -36,7 +36,6 @@ import java.util.concurrent.ExecutorService;
 public class LoginActivity extends AppCompatActivity implements Observer<String> {
 
     private LoginViewModel mViewModel;
-    private Dialog mChatRoomDialog;
 
     private Button _facebookFirebaseLoginButton;
     private LoginButton _facebookLoginButon;
@@ -119,12 +118,8 @@ public class LoginActivity extends AppCompatActivity implements Observer<String>
 
     }
 
-    public void startChatActivity(String roomName) {
-        mChatRoomDialog.dismiss();
-        mChatRoomDialog=null;
-
-        Intent intent=new Intent(this,ChatActivity.class);
-        intent.putExtra(MyUtils.EXTRA_ROOM_NAME,roomName);
+    public void startMainActivity() {
+        Intent intent=new Intent(this,ViewPagerTest.class);
         startActivity(intent);
     }
 
@@ -146,7 +141,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<String>
         if (event == MyUtils.SHOW_TOAST) {
             Toast.makeText(this,eventString,Toast.LENGTH_SHORT).show();
         } else if (event == MyUtils.OPEN_ACTIVITY) {
-            startChatActivity(eventString);
+            startMainActivity();
         }
     }
 

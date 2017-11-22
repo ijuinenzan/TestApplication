@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.example.ijuin.testapplication.R;
 
 /**
  * Created by Khang Le on 11/21/2017.
