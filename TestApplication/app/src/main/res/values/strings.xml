@@ -51,4 +51,11 @@
     <string name="hintFacebook">LeVoGiaKhang</string>
     <string name="hintTwitter">JaKa</string>
     <string name="aboutUs">About Us</string>
+    <string name="helpandsupport"><![CDATA[Help & Support]]></string>
+    <string name="reportandfeedback"><![CDATA[Report & Feedback]]></string>
+    <string name="version">Version</string>
+    <string name="versionID">1.0.0</string>
+    <string name="search">Search</string>
+    <string name="agerange">Age Range</string>
+    <string name="donate">Donate</string>
 </resources>

@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
+import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
 import com.example.ijuin.testapplication.R;
 
 /**
@@ -66,9 +68,27 @@ public class MainActivity extends AppCompatActivity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.search_fragment, container, false);
-            TextView txtSearchView = (TextView) view.findViewById(R.id.txtSearch);
-            txtSearchView.setText("hello Search View");
+            setRangeSeekbar(view);
             return view;
+        }
+        private void setRangeSeekbar(View rootView)
+        {
+            // get seekbar from view
+            final BubbleThumbRangeSeekbar rangeSeekbar = (BubbleThumbRangeSeekbar) rootView.findViewById(R.id.rangeSeekbar);
+
+            // get min and max text view
+            final TextView txtAgeMin = (TextView) rootView.findViewById(R.id.txtAgeMin);
+            final TextView txtAgeMax = (TextView) rootView.findViewById(R.id.txtAgeMax);
+
+            // set listener
+            rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                @Override
+                public void valueChanged(Number minValue, Number maxValue)
+                {
+                    txtAgeMin.setText(String.valueOf(minValue));
+                    txtAgeMax.setText(String.valueOf(maxValue));
+                }
+            });
         }
 
     }

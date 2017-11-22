@@ -41,15 +41,12 @@ public class LoginActivity extends AppCompatActivity implements Observer<String>
     private TwitterLoginButton _twitterLoginButton;
 
     private CallbackManager _callbackManager;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        ActivityLoginBinding activityLoginBinding= DataBindingUtil.setContentView(this, R.layout.activity_login);
-        mViewModel= new LoginViewModel();
-        activityLoginBinding.setViewModel(mViewModel);
-        activityLoginBinding.setActivity(this);
 
         TwitterAuthConfig authConfig =  new TwitterAuthConfig(
                 getString(R.string.com_twitter_sdk_android_CONSUMER_KEY),
@@ -60,6 +57,15 @@ public class LoginActivity extends AppCompatActivity implements Observer<String>
                 .build();
 
         Twitter.initialize(twitterConfig);
+
+        setContentView(R.layout.activity_login);
+
+
+
+        ActivityLoginBinding activityLoginBinding= DataBindingUtil.setContentView(this, R.layout.activity_login);
+        mViewModel= new LoginViewModel();
+        activityLoginBinding.setViewModel(mViewModel);
+        activityLoginBinding.setActivity(this);
 
 
         _facebookFirebaseLoginButton = (Button) findViewById(R.id.btnFirebaseFacebookLogin);
@@ -116,7 +122,8 @@ public class LoginActivity extends AppCompatActivity implements Observer<String>
     }
 
     public void startMainActivity() {
-        Intent intent=new Intent(this,MainActivity.class);
+
+        Intent intent=new Intent(LoginActivity.this,MainActivity.class);
         startActivity(intent);
     }
 

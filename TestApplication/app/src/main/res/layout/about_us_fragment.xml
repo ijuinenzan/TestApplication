@@ -1,24 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     android:id="@+id/searchFragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
     tools:context="com.example.ijuin.testapplication.views.MainActivity$AboutUsFragment">
 
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    
-    <TextView
-        android:id="@+id/txtAboutUs"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/aboutUs"/>
+        android:src="@drawable/ic_our_logo_1"
+        android:minWidth="150dp"
+        android:minHeight="150dp"
+        android:adjustViewBounds="true"
+        android:maxWidth="150dp"
+        android:maxHeight="150dp"
+        android:scaleType="fitCenter"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/helpAndSupport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/helpandsupport"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/reportAndFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reportandfeedback"/>
+
+    <Button
+        android:id="@+id/btnDonate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/donate"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/version"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/txtVersionID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/txtVersion"
+            android:text="@string/versionID"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"/>
+
+    </RelativeLayout>
 
 
-
-</RelativeLayout>
+</LinearLayout>
