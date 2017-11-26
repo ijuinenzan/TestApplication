@@ -18,14 +18,12 @@ import java.util.ArrayList;
 
 public class ProfileViewModel extends BaseObservable {
 
-    private UserModel user;
+    private UserModel _user;
     public ArrayList<Observer> observers;
 
-    public ProfileViewModel() {
+    public ProfileViewModel(UserModel user) {
         observers=new ArrayList<>();
-        user = new UserModel();
-        user.set_displayName(new FieldModel<String>("KIENG", true));
-        user.set_gender(new FieldModel<Integer>(MyUtils.MALE, true));
+        _user = user;
     }
 
     public void addObserver(Observer client) {
@@ -48,11 +46,7 @@ public class ProfileViewModel extends BaseObservable {
 
     @Bindable
     public UserModel getUser() {
-        return user;
-    }
-    public void setUser(UserModel user) {
-        this.user = user;
-        notifyPropertyChanged(BR.user);
+        return _user;
     }
 
     public void Change()

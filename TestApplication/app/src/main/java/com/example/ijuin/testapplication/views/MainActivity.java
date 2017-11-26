@@ -18,7 +18,10 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
 import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.databinding.ProfileFragmentBinding;
+import com.example.ijuin.testapplication.factories.UserFactory;
+import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
+import com.twitter.sdk.android.core.models.User;
 
 /**
  * Created by Khang Le on 11/21/2017.
@@ -30,8 +33,6 @@ public class MainActivity extends AppCompatActivity
     private ViewPager _viewPager;
     private TabLayout tabLayout;
     private PagerSlidingTabStrip _customTab;
-
-    private static ProfileViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,8 @@ public class MainActivity extends AppCompatActivity
 
         public ProfileFragment() {        }
 
+        private ProfileViewModel mViewModel;
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -109,7 +112,9 @@ public class MainActivity extends AppCompatActivity
                     R.layout.profile_fragment, container, false);
             View view = binding.getRoot();
 
-            mViewModel= new ProfileViewModel();
+            Bundle extras = getActivity().getIntent().getExtras();
+
+            mViewModel= new ProfileViewModel((UserModel)extras.getSerializable("User"));
             binding.setViewModel(mViewModel);
 
             return view;

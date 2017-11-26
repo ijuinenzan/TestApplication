@@ -2,96 +2,153 @@ package com.example.ijuin.testapplication.models;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.net.Uri;
+
+import java.io.Serializable;
 
 /**
  * Created by ASUS on 11/17/2017.
  */
 
-public class UserModel extends BaseObservable {
+public class UserModel extends BaseObservable implements Serializable {
+    private FieldModel<String> _imageUrl;
     private FieldModel<String> _displayName;
-    private FieldModel<String> _yearBorn;
+    private FieldModel<Integer> _yearBorn;
     private FieldModel<Integer> _gender;
     private FieldModel<String> _city;
     private FieldModel<String> _country;
-    private FieldModel<String> _weight;
-    private FieldModel<String> _height;
+    private FieldModel<Float> _weight;
+    private FieldModel<Float> _height;
     private FieldModel<String> _phoneNumber;
     private FieldModel<String> _facebook;
     private FieldModel<String> _twitter;
     private FieldModel<String> _address;
     private FieldModel<String> _job;
+    private String _state;
+    private Boolean _isFindingMale;
+    private Boolean _isFindingFemale;
+    private Integer _minTargetYearBorn;
+    private Integer _maxTargetYearBorn;
 
     @Bindable
-    public FieldModel<String> get_displayName() {
+    public FieldModel<String> getImageUrl()
+    {
+        return _imageUrl;
+    }
+    public void setImageUrl(FieldModel<String> _imageUrl)
+    {
+        this._imageUrl = _imageUrl;
+    }
+    public FieldModel<String> getDisplayName() {
         return _displayName;
     }
-    public void set_displayName(FieldModel<String> _displayName) {
+    public void setDisplayName(FieldModel<String> _displayName) {
         this._displayName = _displayName;
     }
-    public FieldModel<String> get_yearBorn() {
+    public FieldModel<Integer> getYearBorn() {
         return _yearBorn;
     }
-    public void set_yearBorn(FieldModel<String> _yearBorn) {
+    public void setYearBorn(FieldModel<Integer> _yearBorn) {
         this._yearBorn = _yearBorn;
     }
-    public FieldModel<Integer> get_gender() {
+    public FieldModel<Integer> getGender() {
         return _gender;
     }
-    public void set_gender(FieldModel<Integer> _gender) {
+    public void setGender(FieldModel<Integer> _gender) {
         this._gender = _gender;
     }
-    public FieldModel<String> get_city() {
+    public FieldModel<String> getCity() {
         return _city;
     }
-    public void set_city(FieldModel<String> _city) {
+    public void setCity(FieldModel<String> _city) {
         this._city = _city;
     }
-    public FieldModel<String> get_country() {
+    public FieldModel<String> getCountry() {
         return _country;
     }
-    public void set_country(FieldModel<String> _country) {
+    public void setCountry(FieldModel<String> _country) {
         this._country = _country;
     }
-    public FieldModel<String> get_weight() {
+    public FieldModel<Float> getWeight() {
         return _weight;
     }
-    public void set_weight(FieldModel<String> _weight) {
+    public void setWeight(FieldModel<Float> _weight) {
         this._weight = _weight;
     }
-    public FieldModel<String> get_height() {
+    public FieldModel<Float> getHeight() {
         return _height;
     }
-    public void set_height(FieldModel<String> _height) {
+    public void setHeight(FieldModel<Float> _height) {
         this._height = _height;
     }
-    public FieldModel<String> get_phoneNumber() {
+    public FieldModel<String> getPhoneNumber() {
         return _phoneNumber;
     }
-    public void set_phoneNumber(FieldModel<String> _phoneNumber) {
+    public void setPhoneNumber(FieldModel<String> _phoneNumber) {
         this._phoneNumber = _phoneNumber;
     }
-    public FieldModel<String> get_facebook() {
+    public FieldModel<String> getFacebook() {
         return _facebook;
     }
-    public void set_facebook(FieldModel<String> _facebook) {
+    public void setFacebook(FieldModel<String> Facebook) {
         this._facebook = _facebook;
     }
-    public FieldModel<String> get_twitter() {
+    public FieldModel<String> getTwitter() {
         return _twitter;
     }
-    public void set_twitter(FieldModel<String> _twitter) {
+    public void setTwitter(FieldModel<String> _twitter) {
         this._twitter = _twitter;
     }
-    public FieldModel<String> get_address() {
+    public FieldModel<String> getAddress() {
         return _address;
     }
-    public void set_address(FieldModel<String> _address) {
+    public void setAddress(FieldModel<String> _address) {
         this._address = _address;
     }
-    public FieldModel<String> get_job() {
+    public FieldModel<String> getJob() {
         return _job;
     }
-    public void set_job(FieldModel<String> _job) {
+    public void setJob(FieldModel<String> _job) {
         this._job = _job;
+    }
+
+    public String getState() {
+        return _state;
+    }
+
+    public void setState(String _state) {
+        this._state = _state;
+    }
+
+    public Boolean getIsFindingFemale() {
+        return _isFindingFemale;
+    }
+
+    public void setIsFindingFemale(Boolean _isFindingFemale) {
+        this._isFindingFemale = _isFindingFemale;
+    }
+
+    public Boolean getIsFindingMale() {
+        return _isFindingMale;
+    }
+
+    public void setIsFindingMale(Boolean _isFindingMale) {
+        this._isFindingMale = _isFindingMale;
+    }
+
+    public Integer getMaxTargetYearBorn() {
+        return _maxTargetYearBorn;
+    }
+
+    public void setMaxTargetYearBorn(Integer _maxTargetYearBorn) {
+        this._maxTargetYearBorn = _maxTargetYearBorn;
+    }
+
+    public Integer getMinTargetYearBorn() {
+        return _minTargetYearBorn;
+    }
+
+    public void setMinTargetYearBorn(Integer _minTargetYearBorn) {
+        this._minTargetYearBorn = _minTargetYearBorn;
     }
 }

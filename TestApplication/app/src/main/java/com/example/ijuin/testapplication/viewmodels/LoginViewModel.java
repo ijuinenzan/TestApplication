@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.ijuin.testapplication.factories.UserFactory;
+import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.utils.TextWatcherAdapter;
 import com.facebook.login.LoginManager;
@@ -27,6 +29,11 @@ import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.BR;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.TwitterAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
@@ -62,12 +69,16 @@ public class LoginViewModel extends BaseObservable
         }
     };
 
+    private DatabaseReference _userReference;
+
     public ArrayList<Observer> observers;
 
     public LoginViewModel() {
         observers=new ArrayList<>();
         _email.set("");
         _password.set("");
+
+        _userReference = FirebaseDatabase.getInstance().getReference("users");
     }
 
     @Bindable
@@ -122,8 +133,30 @@ public class LoginViewModel extends BaseObservable
                         if (!task.isSuccessful()) {
                             notifyObservers(MyUtils.SHOW_TOAST, MyUtils.MESSAGE_AUTHENTICATION_FAILED);
                         } else {
-                            setAuthDone(true);
-                            notifyObservers(MyUtils.OPEN_ACTIVITY, "");
+                            _userReference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid()))
+                                    {
+                                    }
+                                    else
+                                    {
+                                        UserModel user = UserFactory.createNewUser();
+                                        _userReference.child(FirebaseAuth.getInstance().getUid()).setValue(UserFactory.createNewUser());
+
+                                        setAuthDone(true);
+
+                                        _userReference.removeEventListener(this);
+
+                                        notifyObservers(MyUtils.OPEN_ACTIVITY, user);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
                         }
                     }
                 });
@@ -142,9 +175,30 @@ public class LoginViewModel extends BaseObservable
                         if (!task.isSuccessful()) {
                             notifyObservers(MyUtils.SHOW_TOAST, MyUtils.MESSAGE_AUTHENTICATION_FAILED);
                         } else {
-                            setAuthDone(true);
-                            notifyObservers(MyUtils.OPEN_ACTIVITY, "");
+                            _userReference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid()))
+                                    {
+                                    }
+                                    else
+                                    {
+                                        UserModel user = UserFactory.createNewUser();
+                                        _userReference.child(FirebaseAuth.getInstance().getUid()).setValue(UserFactory.createNewUser());
 
+                                        setAuthDone(true);
+
+                                        _userReference.removeEventListener(this);
+
+                                        notifyObservers(MyUtils.OPEN_ACTIVITY, user);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
                         }
                     }
                 });
@@ -162,8 +216,30 @@ public class LoginViewModel extends BaseObservable
                         if (!task.isSuccessful()) {
                             notifyObservers(MyUtils.SHOW_TOAST, MyUtils.MESSAGE_AUTHENTICATION_FAILED);
                         } else {
-                            setAuthDone(true);
-                            notifyObservers(MyUtils.OPEN_ACTIVITY, "");
+                            _userReference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid()))
+                                    {
+                                    }
+                                    else
+                                    {
+                                        UserModel user = UserFactory.createNewUser();
+                                        _userReference.child(FirebaseAuth.getInstance().getUid()).setValue(UserFactory.createNewUser());
+
+                                        setAuthDone(true);
+
+                                        _userReference.removeEventListener(this);
+
+                                        notifyObservers(MyUtils.OPEN_ACTIVITY, user);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
                         }
                     }
         });
@@ -203,8 +279,30 @@ public class LoginViewModel extends BaseObservable
                         if (!task.isSuccessful()) {
                             notifyObservers(MyUtils.SHOW_TOAST, MyUtils.MESSAGE_AUTHENTICATION_FAILED);
                         } else {
-                            setAuthDone(true);
-                            notifyObservers(MyUtils.OPEN_ACTIVITY, "");
+                            _userReference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid()))
+                                    {
+                                    }
+                                    else
+                                    {
+                                        UserModel user = UserFactory.createNewUser();
+                                        _userReference.child(FirebaseAuth.getInstance().getUid()).setValue(UserFactory.createNewUser());
+
+                                        setAuthDone(true);
+
+                                        _userReference.removeEventListener(this);
+
+                                        notifyObservers(MyUtils.OPEN_ACTIVITY, user);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
                         }
                     }
                 });
@@ -221,6 +319,13 @@ public class LoginViewModel extends BaseObservable
             observers.remove(clientToRemove);
         }
     }
+
+    public void notifyObservers(int eventType, UserModel userModel) {
+        for (int i=0; i< observers.size(); i++) {
+            observers.get(i).onObserve(eventType, userModel);
+        }
+    }
+
 
     public void notifyObservers(int eventType, String message) {
         for (int i=0; i< observers.size(); i++) {

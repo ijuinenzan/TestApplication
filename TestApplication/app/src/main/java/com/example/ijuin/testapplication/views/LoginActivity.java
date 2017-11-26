@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.databinding.ActivityLoginBinding;
 import com.example.ijuin.testapplication.interfaces.Observer;
+import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.viewmodels.LoginViewModel;
 
@@ -30,7 +31,7 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
-public class LoginActivity extends AppCompatActivity implements Observer<String> {
+public class LoginActivity extends AppCompatActivity implements Observer<Object>  {
 
     private LoginViewModel mViewModel;
 
@@ -121,9 +122,10 @@ public class LoginActivity extends AppCompatActivity implements Observer<String>
 
     }
 
-    public void startMainActivity() {
+    public void startMainActivity(UserModel user) {
 
         Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+        intent.putExtra("User", user);
         startActivity(intent);
     }
 
@@ -140,12 +142,14 @@ public class LoginActivity extends AppCompatActivity implements Observer<String>
     }
 
     @Override
-    public void onObserve(int event, String eventString) {
-
-        if (event == MyUtils.SHOW_TOAST) {
-            Toast.makeText(this,eventString,Toast.LENGTH_SHORT).show();
-        } else if (event == MyUtils.OPEN_ACTIVITY) {
-            startMainActivity();
+    public void onObserve(int event, Object content) {
+        if(event == MyUtils.SHOW_TOAST)
+        {
+            Toast.makeText(this,content.toString(),Toast.LENGTH_SHORT).show();
+        }
+        else if(event == MyUtils.OPEN_ACTIVITY)
+        {
+            startMainActivity((UserModel)content);
         }
     }
 
