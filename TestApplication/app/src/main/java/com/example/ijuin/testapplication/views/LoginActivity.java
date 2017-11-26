@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
     TextView _txtLogin;
     private DisplayMetrics dm;
     RelativeLayout _layoutLogin;
+    private ValueAnimator _valueAnimator;
     //endregion
 
     @Override
@@ -151,10 +152,10 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         _pBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
 
 
-        final ValueAnimator va=new ValueAnimator();
-        va.setDuration(1500);
-        va.setInterpolator(new DecelerateInterpolator());
-        va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener(){
+        _valueAnimator=new ValueAnimator();
+        _valueAnimator.setDuration(1500);
+        _valueAnimator.setInterpolator(new DecelerateInterpolator());
+        _valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener(){
             @Override
             public void onAnimationUpdate(ValueAnimator p1) {
                 RelativeLayout.LayoutParams button_login_lp= (RelativeLayout.LayoutParams) _layoutLogin.getLayoutParams();
@@ -164,59 +165,50 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         });
 
         _layoutLogin.animate().translationX(dm.widthPixels+_layoutLogin.getMeasuredWidth()).setDuration(0).setStartDelay(0).start();
-        _layoutLogin.animate().translationX(0).setStartDelay(6500).setDuration(1500).setInterpolator(new OvershootInterpolator()).start();
-        _layoutLogin.setOnClickListener(new View.OnClickListener(){
+        _layoutLogin.animate().translationX(0).setStartDelay(200).setDuration(300).setInterpolator(new OvershootInterpolator()).start();
+        //endregion
+    }
+
+    public void startMainActivity(UserModel user) {
+        final UserModel userModel = user;
+        if((int)_layoutLogin.getTag()==1){
+            return;
+        }else if((int)_layoutLogin.getTag()==2){
+            _layoutLogin.animate().x(dm.widthPixels/2).y(dm.heightPixels/2).setInterpolator(new EasingInterpolator(Ease.CUBIC_IN)).setListener(null).setDuration(1000).setStartDelay(0).start();
+            _layoutLogin.animate().setStartDelay(600).setDuration(1000).scaleX(40).scaleY(40).setInterpolator(new EasingInterpolator(Ease.CUBIC_IN_OUT)).start();
+            _imgView.animate().alpha(0).rotation(90).setStartDelay(0).setDuration(800).start();
+        }
+        _layoutLogin.setTag(1);
+        _valueAnimator.setFloatValues(_layoutLogin.getMeasuredWidth(), _layoutLogin.getMeasuredHeight());
+        _valueAnimator.start();
+        _pBar.animate().setStartDelay(300).setDuration(1000).alpha(1).start();
+        _txtLogin.animate().setStartDelay(100).setDuration(500).alpha(0).start();
+        _layoutLogin.animate().setInterpolator(new FastOutSlowInInterpolator()).setStartDelay(4000).setDuration(1000).scaleX(30).scaleY(30).setListener(new Animator.AnimatorListener(){
             @Override
-            public void onClick(View p1) {
-                if((int)_layoutLogin.getTag()==1){
-                    return;
-                }else if((int)_layoutLogin.getTag()==2){
-                    _layoutLogin.animate().x(dm.widthPixels/2).y(dm.heightPixels/2).setInterpolator(new EasingInterpolator(Ease.CUBIC_IN)).setListener(null).setDuration(1000).setStartDelay(0).start();
-                    _layoutLogin.animate().setStartDelay(600).setDuration(1000).scaleX(40).scaleY(40).setInterpolator(new EasingInterpolator(Ease.CUBIC_IN_OUT)).start();
-                    _imgView.animate().alpha(0).rotation(90).setStartDelay(0).setDuration(800).start();
-                }
-                _layoutLogin.setTag(1);
-                va.setFloatValues(_layoutLogin.getMeasuredWidth(), _layoutLogin.getMeasuredHeight());
-                va.start();
-                _pBar.animate().setStartDelay(300).setDuration(1000).alpha(1).start();
-                _txtLogin.animate().setStartDelay(100).setDuration(500).alpha(0).start();
-                _layoutLogin.animate().setInterpolator(new FastOutSlowInInterpolator()).setStartDelay(4000).setDuration(1000).scaleX(30).scaleY(30).setListener(new Animator.AnimatorListener(){
+            public void onAnimationStart(Animator p1) {
+                _pBar.animate().setStartDelay(0).setDuration(0).alpha(0).start();
+            }
+
+            @Override
+            public void onAnimationEnd(Animator p1) {
+                try{
+                    // getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, frag_dashboard).disallowAddToBackStack().commitAllowingStateLoss();
+                    Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                    intent.putExtra("User", userModel);
+                    startActivity(intent);
+                }catch(Exception e){}
+                _layoutLogin.animate().setStartDelay(0).alpha(1).setDuration(1000).scaleX(1).scaleY(1).x(dm.widthPixels-_layoutLogin.getMeasuredWidth()-100).y(dm.heightPixels-_layoutLogin.getMeasuredHeight()-100).setListener(new Animator.AnimatorListener(){
+
                     @Override
                     public void onAnimationStart(Animator p1) {
-                        _pBar.animate().setStartDelay(0).setDuration(0).alpha(0).start();
+                        // TODO: Implement this method
                     }
 
                     @Override
                     public void onAnimationEnd(Animator p1) {
-                        try{
-                            // getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, frag_dashboard).disallowAddToBackStack().commitAllowingStateLoss();
-                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                            startActivity(intent);
-                        }catch(Exception e){}
-                        _layoutLogin.animate().setStartDelay(0).alpha(1).setDuration(1000).scaleX(1).scaleY(1).x(dm.widthPixels-_layoutLogin.getMeasuredWidth()-100).y(dm.heightPixels-_layoutLogin.getMeasuredHeight()-100).setListener(new Animator.AnimatorListener(){
-
-                            @Override
-                            public void onAnimationStart(Animator p1) {
-                                // TODO: Implement this method
-                            }
-
-                            @Override
-                            public void onAnimationEnd(Animator p1) {
-                                _imgView.animate().setDuration(0).setStartDelay(0).rotation(85).alpha(1).start();
-                                _imgView.animate().setDuration(2000).setInterpolator(new BounceInterpolator()).setStartDelay(0).rotation(0).start();
-                                _layoutLogin.setTag(2);
-                            }
-
-                            @Override
-                            public void onAnimationCancel(Animator p1) {
-                                // TODO: Implement this method
-                            }
-
-                            @Override
-                            public void onAnimationRepeat(Animator p1) {
-                                // TODO: Implement this method
-                            }
-                        }).start();
+                        _imgView.animate().setDuration(0).setStartDelay(0).rotation(85).alpha(1).start();
+                        _imgView.animate().setDuration(2000).setInterpolator(new BounceInterpolator()).setStartDelay(0).rotation(0).start();
+                        _layoutLogin.setTag(2);
                     }
 
                     @Override
@@ -229,18 +221,20 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
                         // TODO: Implement this method
                     }
                 }).start();
-
-
             }
-        });
-        //endregion
-    }
 
-    public void startMainActivity(UserModel user) {
+            @Override
+            public void onAnimationCancel(Animator p1) {
+                // TODO: Implement this method
+            }
 
-        Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-        intent.putExtra("User", user);
-        startActivity(intent);
+            @Override
+            public void onAnimationRepeat(Animator p1) {
+                // TODO: Implement this method
+            }
+        }).start();
+
+
     }
 
     @Override
