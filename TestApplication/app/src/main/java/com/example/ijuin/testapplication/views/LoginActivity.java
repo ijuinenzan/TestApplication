@@ -1,13 +1,28 @@
 package com.example.ijuin.testapplication.views;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daasuu.ei.Ease;
+import com.daasuu.ei.EasingInterpolator;
 import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.databinding.ActivityLoginBinding;
 import com.example.ijuin.testapplication.interfaces.Observer;
@@ -33,21 +48,27 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 public class LoginActivity extends AppCompatActivity implements Observer<Object>  {
 
+    //region DECLARE VARIABLE
     private LoginViewModel mViewModel;
-
     private Button _facebookFirebaseLoginButton;
     private LoginButton _facebookLoginButon;
-
     private Button _twitterFirebaseLoginButton;
     private TwitterLoginButton _twitterLoginButton;
-
     private CallbackManager _callbackManager;
 
-
+    // Login
+    ProgressBar _pBar;
+    ImageView _imgView;
+    TextView _txtLogin;
+    private DisplayMetrics dm;
+    RelativeLayout _layoutLogin;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_login);
 
         TwitterAuthConfig authConfig =  new TwitterAuthConfig(
                 getString(R.string.com_twitter_sdk_android_CONSUMER_KEY),
@@ -58,8 +79,6 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
                 .build();
 
         Twitter.initialize(twitterConfig);
-
-        setContentView(R.layout.activity_login);
 
 
 
@@ -120,6 +139,101 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
             }
         });
 
+
+        //region new Login page
+        _pBar = (ProgressBar) findViewById(R.id.mainProgressBar);
+        _imgView = (ImageView) findViewById(R.id.button_icon);
+        _txtLogin = (TextView) findViewById(R.id.button_label);
+
+        dm=getResources().getDisplayMetrics();
+        _layoutLogin = (RelativeLayout) findViewById(R.id.button_login);
+        _layoutLogin.setTag(0);
+        _pBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+
+
+        final ValueAnimator va=new ValueAnimator();
+        va.setDuration(1500);
+        va.setInterpolator(new DecelerateInterpolator());
+        va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener(){
+            @Override
+            public void onAnimationUpdate(ValueAnimator p1) {
+                RelativeLayout.LayoutParams button_login_lp= (RelativeLayout.LayoutParams) _layoutLogin.getLayoutParams();
+                button_login_lp.width=Math.round(200);
+                _layoutLogin.setLayoutParams(button_login_lp);
+            }
+        });
+
+        _layoutLogin.animate().translationX(dm.widthPixels+_layoutLogin.getMeasuredWidth()).setDuration(0).setStartDelay(0).start();
+        _layoutLogin.animate().translationX(0).setStartDelay(6500).setDuration(1500).setInterpolator(new OvershootInterpolator()).start();
+        _layoutLogin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View p1) {
+                if((int)_layoutLogin.getTag()==1){
+                    return;
+                }else if((int)_layoutLogin.getTag()==2){
+                    _layoutLogin.animate().x(dm.widthPixels/2).y(dm.heightPixels/2).setInterpolator(new EasingInterpolator(Ease.CUBIC_IN)).setListener(null).setDuration(1000).setStartDelay(0).start();
+                    _layoutLogin.animate().setStartDelay(600).setDuration(1000).scaleX(40).scaleY(40).setInterpolator(new EasingInterpolator(Ease.CUBIC_IN_OUT)).start();
+                    _imgView.animate().alpha(0).rotation(90).setStartDelay(0).setDuration(800).start();
+                }
+                _layoutLogin.setTag(1);
+                va.setFloatValues(_layoutLogin.getMeasuredWidth(), _layoutLogin.getMeasuredHeight());
+                va.start();
+                _pBar.animate().setStartDelay(300).setDuration(1000).alpha(1).start();
+                _txtLogin.animate().setStartDelay(100).setDuration(500).alpha(0).start();
+                _layoutLogin.animate().setInterpolator(new FastOutSlowInInterpolator()).setStartDelay(4000).setDuration(1000).scaleX(30).scaleY(30).setListener(new Animator.AnimatorListener(){
+                    @Override
+                    public void onAnimationStart(Animator p1) {
+                        _pBar.animate().setStartDelay(0).setDuration(0).alpha(0).start();
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator p1) {
+                        try{
+                            // getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, frag_dashboard).disallowAddToBackStack().commitAllowingStateLoss();
+                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                            startActivity(intent);
+                        }catch(Exception e){}
+                        _layoutLogin.animate().setStartDelay(0).alpha(1).setDuration(1000).scaleX(1).scaleY(1).x(dm.widthPixels-_layoutLogin.getMeasuredWidth()-100).y(dm.heightPixels-_layoutLogin.getMeasuredHeight()-100).setListener(new Animator.AnimatorListener(){
+
+                            @Override
+                            public void onAnimationStart(Animator p1) {
+                                // TODO: Implement this method
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator p1) {
+                                _imgView.animate().setDuration(0).setStartDelay(0).rotation(85).alpha(1).start();
+                                _imgView.animate().setDuration(2000).setInterpolator(new BounceInterpolator()).setStartDelay(0).rotation(0).start();
+                                _layoutLogin.setTag(2);
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator p1) {
+                                // TODO: Implement this method
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator p1) {
+                                // TODO: Implement this method
+                            }
+                        }).start();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator p1) {
+                        // TODO: Implement this method
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator p1) {
+                        // TODO: Implement this method
+                    }
+                }).start();
+
+
+            }
+        });
+        //endregion
     }
 
     public void startMainActivity(UserModel user) {
@@ -160,4 +274,8 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         _twitterLoginButton.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 }
