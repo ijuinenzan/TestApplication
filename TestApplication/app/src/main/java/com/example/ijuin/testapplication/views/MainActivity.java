@@ -6,8 +6,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,13 +51,15 @@ public class MainActivity extends AppCompatActivity
         _pagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
         _viewPager = (ViewPager) findViewById(R.id.viewPagerContainer);
-        _viewPager.setAdapter(_pagerAdapter);
+        _viewPager.setAdapter(_pagerAdapter) ;
+
         ViewPager.PageTransformer transformer = new ViewPager.PageTransformer() {
             @Override
             public void transformPage(View page, float position) {
                 page.findViewById(R.id.profileFragment);
             }
         };
+
         _viewPager.setPageTransformer(true,transformer);
         //_viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -138,12 +143,12 @@ public class MainActivity extends AppCompatActivity
 
 
 
+
     // ============================================================================================
     // Pager Adapter tuong tu nhu RecyclerView Adapter
     // ============================================================================================
     public class PagerAdapter extends FragmentStatePagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
-        public PagerAdapter(FragmentManager fm)
-        {
+        public PagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -166,15 +171,13 @@ public class MainActivity extends AppCompatActivity
 
 
         @Override
-        public int getCount()
-        {
+        public int getCount() {
             return 3;
         }
 
 
         @Override
-        public CharSequence getPageTitle(int position)
-        {
+        public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
                     return "Day la Search View";
@@ -185,14 +188,12 @@ public class MainActivity extends AppCompatActivity
         }
 
         @Override
-        public int getPageIconResId(int position)
-        {
+        public int getPageIconResId(int position) {
             // List<Tab> tabs;
             // return tabs.get(position).icon;
 
-            switch (position)
-            {
-                case 0 :
+            switch (position) {
+                case 0:
                     return R.drawable.ic_search_heart;
                 case 1:
                     return R.drawable.ic_profile;
