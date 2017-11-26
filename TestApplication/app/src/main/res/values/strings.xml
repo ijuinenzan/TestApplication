@@ -39,6 +39,7 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="logout">Log Out</string>
+    <string name="save">Save</string>
 
     <string name="hintUserName">User Name</string>
     <string name="hintPhone">0868242564</string>

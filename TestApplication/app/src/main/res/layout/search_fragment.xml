@@ -85,6 +85,13 @@
         app:min_value="15"/>
 
 
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:indicatorName="BallSpinFadeLoaderIndicator"
+        android:layout_gravity="center"/>
+
     <Button
         android:id="@+id/btnSearch"
         android:layout_gravity="center"
