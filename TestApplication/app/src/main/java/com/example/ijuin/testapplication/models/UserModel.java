@@ -90,8 +90,8 @@ public class UserModel extends BaseObservable implements Serializable {
     public FieldModel<String> getFacebook() {
         return _facebook;
     }
-    public void setFacebook(FieldModel<String> Facebook) {
-        this._facebook = _facebook;
+    public void setFacebook(FieldModel<String> facebook) {
+        this._facebook = facebook;
     }
     public FieldModel<String> getTwitter() {
         return _twitter;

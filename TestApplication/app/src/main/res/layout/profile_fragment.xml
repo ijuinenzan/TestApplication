@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/changeUserImg"
                 android:layout_marginStart="20dp"
-                android:onClick="@{() -> viewModel.Change()}"/>
+                android:onClick="@{() -> viewModel.Save()}"/>
         </LinearLayout>
 
         <LinearLayout
@@ -69,6 +69,7 @@
                     android:hint="@string/hintUserName"
                     android:textSize="@dimen/fontsize"
                     android:text="@{viewModel.user.displayName.value}"
+                    android:addTextChangedListener="@{viewModel.displayNameWatcher}"
                     />
 
                 <CheckBox
