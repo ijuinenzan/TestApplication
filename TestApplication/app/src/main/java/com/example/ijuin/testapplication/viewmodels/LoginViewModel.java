@@ -138,6 +138,14 @@ public class LoginViewModel extends BaseObservable
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if(dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid()))
                                     {
+                                        DataSnapshot childRef = dataSnapshot.child(FirebaseAuth.getInstance().getUid());
+                                        UserModel user = childRef.getValue(UserModel.class);
+
+                                        setAuthDone(true);
+
+                                        _userReference.removeEventListener(this);
+
+                                        notifyObservers(MyUtils.OPEN_ACTIVITY, user);
                                     }
                                     else
                                     {
@@ -180,6 +188,14 @@ public class LoginViewModel extends BaseObservable
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if(dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid()))
                                     {
+                                        DataSnapshot childRef = dataSnapshot.child(FirebaseAuth.getInstance().getUid());
+                                        UserModel user = childRef.getValue(UserModel.class);
+
+                                        setAuthDone(true);
+
+                                        _userReference.removeEventListener(this);
+
+                                        notifyObservers(MyUtils.OPEN_ACTIVITY, user);
                                     }
                                     else
                                     {
@@ -221,6 +237,14 @@ public class LoginViewModel extends BaseObservable
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if(dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid()))
                                     {
+                                        DataSnapshot childRef = dataSnapshot.child(FirebaseAuth.getInstance().getUid());
+                                        UserModel user = childRef.getValue(UserModel.class);
+
+                                        setAuthDone(true);
+
+                                        _userReference.removeEventListener(this);
+
+                                        notifyObservers(MyUtils.OPEN_ACTIVITY, user);
                                     }
                                     else
                                     {
@@ -284,6 +308,14 @@ public class LoginViewModel extends BaseObservable
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if(dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid()))
                                     {
+                                        DataSnapshot childRef = dataSnapshot.child(FirebaseAuth.getInstance().getUid());
+                                        UserModel user = childRef.getValue(UserModel.class);
+
+                                        setAuthDone(true);
+
+                                        _userReference.removeEventListener(this);
+
+                                        notifyObservers(MyUtils.OPEN_ACTIVITY, user);
                                     }
                                     else
                                     {
