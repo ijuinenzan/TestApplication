@@ -13,6 +13,10 @@ public class FieldModel <T> extends BaseObservable implements Serializable {
     private T _value;
     private Boolean _isPublic;
 
+    public FieldModel()
+    {
+    }
+
     public FieldModel (T value, Boolean isPublic)
     {
         _value = value;
