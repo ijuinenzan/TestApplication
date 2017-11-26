@@ -57,6 +57,17 @@ dependencies {
     // Custom Seekbar
     implementation 'com.crystal:crystalrangeseekbar:1.0.0'
 
+    // Login page
+    implementation 'com.flaviofaria:kenburnsview:1.0.7'
+
+    // per
+    implementation 'com.android.support:percent:26.1.0'
+
+    // for login page
+    compile 'com.daasuu:EasingInterpolator:1.0.0'
+
+    // for progress bar in Search
+    implementation 'com.wang.avi:library:2.1.3'
 }
 
 
