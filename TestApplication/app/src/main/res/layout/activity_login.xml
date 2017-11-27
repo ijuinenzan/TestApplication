@@ -175,9 +175,9 @@
         <Button
             android:id="@+id/btnAnonymousLogin"
             style="@style/LoginButtonsStyle"
+            android:background="@drawable/btn_anonymous"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/chat_sdk_login_anonymously_button_selector"
             android:onClick="@{() -> viewModel.firebaseAnonymousAuth()}"
             android:text="@string/anonymous_login"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -201,7 +201,7 @@
                 android:id="@+id/btnFirebaseTwitterLogin"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 android:background="@drawable/ic_twitter" />
 
             <com.facebook.login.widget.LoginButton
@@ -214,7 +214,7 @@
                 android:id="@+id/btnFirebaseFacebookLogin"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginStart="30dp"
                 android:background="@drawable/ic_facebook" />
 
