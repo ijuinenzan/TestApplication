@@ -22,7 +22,9 @@ import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
 import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.databinding.ProfileFragmentBinding;
 import com.example.ijuin.testapplication.factories.UserFactory;
+import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.models.UserModel;
+import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
 import com.twitter.sdk.android.core.models.User;
 
@@ -30,7 +32,7 @@ import com.twitter.sdk.android.core.models.User;
  * Created by Khang Le on 11/21/2017.
  */
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements Observer<Object>
 {
     private PagerAdapter _pagerAdapter;
     private ViewPager _viewPager;
@@ -70,6 +72,14 @@ public class MainActivity extends AppCompatActivity
 
         _customTab = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         _customTab.setViewPager(_viewPager);
+    }
+
+    @Override
+    public void onObserve(int event, Object eventMessage) {
+        if(event == MyUtils.CHANGE_PICTURE)
+        {
+            //change picture
+        }
     }
 
 

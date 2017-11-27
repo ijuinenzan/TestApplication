@@ -25,7 +25,8 @@ public class MyUtils
 
     public static final int OPEN_ACTIVITY = 1;
     public static final int SHOW_TOAST = 2;
-    public static final int UPDATE_MESSAGES=1;
+    public static final int UPDATE_MESSAGES=3;
+    public static final int CHANGE_PICTURE = 4;
 
     public static Integer MALE = 0;
     public static Integer FEMALE = 1;
