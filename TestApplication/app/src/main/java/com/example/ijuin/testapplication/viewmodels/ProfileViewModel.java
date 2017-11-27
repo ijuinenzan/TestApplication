@@ -29,68 +29,6 @@ public class ProfileViewModel extends BaseObservable {
     private UserModel newUser;
     public ArrayList<Observer> observers;
 
-    private TextWatcher _displayNameWatcher = new TextWatcherAdapter(){
-        @Override public void afterTextChanged(Editable s)
-        {
-            newUser.setDisplayName(new FieldModel<String>(s.toString(), newUser.getDisplayName().getIsPublic()));
-        }
-    };
-
-    private TextWatcher __city= new TextWatcherAdapter(){
-        @Override public void afterTextChanged(Editable s)
-        {
-            newUser.setCity(new FieldModel<String>(s.toString(), newUser.getCity().getIsPublic()));
-        }
-    };
-
-    private TextWatcher _country = new TextWatcherAdapter(){
-        @Override public void afterTextChanged(Editable s)
-        {
-            newUser.setCountry(new FieldModel<String>(s.toString(), newUser.getCountry().getIsPublic()));
-        }
-    };
-
-    private TextWatcher _phoneNumber = new TextWatcherAdapter(){
-        @Override public void afterTextChanged(Editable s)
-        {
-            newUser.setPhoneNumber(new FieldModel<String>(s.toString(), newUser.getPhoneNumber().getIsPublic()));
-        }
-    };
-
-    private TextWatcher _facebook = new TextWatcherAdapter(){
-        @Override public void afterTextChanged(Editable s)
-        {
-            newUser.setFacebook(new FieldModel<String>(s.toString(), newUser.getFacebook().getIsPublic()));
-        }
-    };
-
-    private TextWatcher _twitter = new TextWatcherAdapter(){
-        @Override public void afterTextChanged(Editable s)
-        {
-            newUser.setTwitter(new FieldModel<String>(s.toString(), newUser.getTwitter().getIsPublic()));
-        }
-    };
-
-    private TextWatcher _address = new TextWatcherAdapter(){
-        @Override public void afterTextChanged(Editable s)
-        {
-            newUser.setAddress(new FieldModel<String>(s.toString(), newUser.getAddress().getIsPublic()));
-        }
-    };
-
-    private TextWatcher _job = new TextWatcherAdapter(){
-        @Override public void afterTextChanged(Editable s)
-        {
-            newUser.setJob(new FieldModel<String>(s.toString(), newUser.getJob().getIsPublic()));
-        }
-    };
-
-    @Bindable
-    public TextWatcher getDisplayNameWatcher()
-    {
-        return _displayNameWatcher;
-    }
-
     public ProfileViewModel(UserModel user) {
         observers=new ArrayList<>();
         _user = user;
@@ -98,7 +36,7 @@ public class ProfileViewModel extends BaseObservable {
 
         newUser.setDisplayName(new FieldModel<String>(_user.getDisplayName().getValue(),_user.getDisplayName().getIsPublic()));
         newUser.setYearBorn(new FieldModel<Integer>(_user.getYearBorn().getValue(),_user.getYearBorn().getIsPublic()));
-        newUser.setGender(new FieldModel<Integer>(_user.getGender().getValue(),_user.getGender().getIsPublic()));
+        newUser.setGender(new FieldModel<Boolean>(_user.getGender().getValue(),_user.getGender().getIsPublic()));
         newUser.setCity(new FieldModel<String>(_user.getCity().getValue(),_user.getCity().getIsPublic()));
         newUser.setCountry(new FieldModel<String>(_user.getCountry().getValue(),_user.getCountry().getIsPublic()));
         newUser.setWeight(new FieldModel<Float>(_user.getWeight().getValue(),_user.getWeight().getIsPublic()));

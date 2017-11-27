@@ -14,7 +14,7 @@ public class UserModel extends BaseObservable implements Serializable {
     private FieldModel<String> _imageUrl;
     private FieldModel<String> _displayName;
     private FieldModel<Integer> _yearBorn;
-    private FieldModel<Integer> _gender;
+    private FieldModel<Boolean> _gender;
     private FieldModel<String> _city;
     private FieldModel<String> _country;
     private FieldModel<Float> _weight;
@@ -51,10 +51,10 @@ public class UserModel extends BaseObservable implements Serializable {
     public void setYearBorn(FieldModel<Integer> _yearBorn) {
         this._yearBorn = _yearBorn;
     }
-    public FieldModel<Integer> getGender() {
+    public FieldModel<Boolean> getGender() {
         return _gender;
     }
-    public void setGender(FieldModel<Integer> _gender) {
+    public void setGender(FieldModel<Boolean> _gender) {
         this._gender = _gender;
     }
     public FieldModel<String> getCity() {
