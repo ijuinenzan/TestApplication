@@ -206,13 +206,14 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
 
             switch (position) {
                 case 0:
-                    return R.drawable.ic_search_heart;
+                    return R.drawable.heart;
                 case 1:
-                    return R.drawable.ic_profile;
+                    return R.drawable.profile;
                 case 2:
-                    return R.drawable.ic_our_logo;
+                    return R.drawable.logo;
+                default:
+                    return -1;
             }
-            return -1;
         }
 
     }

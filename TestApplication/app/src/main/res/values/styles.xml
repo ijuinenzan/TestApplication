@@ -16,6 +16,14 @@
         <item name="android:windowSoftInputMode">adjustPan|stateVisible</item>
     </style>
 
+    <style name="KhangTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/TWITTER</item>
+        <item name="colorPrimaryDark">@color/TWITTER</item>
+        <item name="colorAccent">@color/LIME</item>
+        <item name="android:windowSoftInputMode">adjustPan|stateVisible</item>
+    </style>
+
     <style name="regular_buttons">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/small_font_size</item>

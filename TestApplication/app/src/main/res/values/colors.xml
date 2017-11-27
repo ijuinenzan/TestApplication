@@ -28,7 +28,11 @@
 
     <color name="SILVER">#C0C0C0</color>
 
+    <color name="CRIMSON">#DC143C</color>
 
+    <color name="BLACK">#000000</color>
+
+    <color name="TWITTER">#DB4C2C</color>
 
     <!-- Login Page-->
     <color name="color_login_button">#FF3366</color>
