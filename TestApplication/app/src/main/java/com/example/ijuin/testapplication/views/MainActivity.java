@@ -45,10 +45,7 @@ public class MainActivity extends AppCompatActivity
         addControls();
     }
 
-    @Override
-    public void onBackPressed() {
 
-    }
 
     public void addControls()
     {

@@ -188,7 +188,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_marginTopPercent="90%">
+            app:layout_marginTopPercent="90%"
+            android:gravity="center">
 
             <com.twitter.sdk.android.core.identity.TwitterLoginButton
                 android:id="@+id/btnTwitterLogin"
@@ -200,7 +201,6 @@
                 android:id="@+id/btnFirebaseTwitterLogin"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="150dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/ic_twitter" />
 
@@ -214,8 +214,8 @@
                 android:id="@+id/btnFirebaseFacebookLogin"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="30dp"
                 android:background="@drawable/ic_facebook" />
 
         </LinearLayout>
