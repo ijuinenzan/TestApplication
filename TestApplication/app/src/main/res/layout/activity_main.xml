@@ -26,7 +26,11 @@
         android:id="@+id/tabs"
         android:layout_width="wrap_content"
         android:layout_gravity="center"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@color/TWITTER"
+        app:pstsUnderlineColor="@color/TWITTER"
+        app:pstsDividerColor="@color/TWITTER"
+        app:pstsIndicatorColor="@color/TWITTER"/>
 
 </android.support.design.widget.AppBarLayout>
 

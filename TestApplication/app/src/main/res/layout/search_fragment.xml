@@ -9,85 +9,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:layout_marginTop="20dp"
+        android:text="What other's sex do you want to find?"
+        android:textSize="25sp"
+        android:fontFamily="@font/signature_of_the_ancient"/>
 
-        <TextView
-            android:id="@+id/txtMale"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/thelightfont"
-            android:textSize="30sp"
-            android:text="@string/male"/>
+    <include layout="@layout/gender_in_search_fragment"/>
 
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/txtFemale"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/thelightfont"
-            android:textSize="30sp"
-            android:text="@string/female"/>
-
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"/>
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/txtAddRange"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/agerange"/>
-
-        <TextView
-            android:id="@+id/txtAgeMin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:layout_marginStart="250dp"/>
-
-        <TextView
-            android:id="@+id/txtAgeMax"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:layout_toEndOf="@id/txtAgeMin"
-            android:layout_marginStart="20dp"/>
-
-    </RelativeLayout>
-
-    <com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar
-        android:id="@+id/rangeSeekbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:bar_color="@color/RED"
-        app:bar_highlight_color="@color/AQUA"
-        app:left_thumb_color="@color/FUCHSIA"
-        app:left_thumb_color_pressed="@color/LIME"
-        app:right_thumb_color="@color/SILVER"
-        app:right_thumb_color_pressed="@color/YELLOW"
-        app:max_value="55"
-        app:min_value="15"/>
+    <include layout="@layout/age_range_in_search_fragment"/>
 
 
     <com.wang.avi.AVLoadingIndicatorView
@@ -96,14 +28,18 @@
         android:layout_height="wrap_content"
         app:indicatorName="BallSpinFadeLoaderIndicator"
         app:indicatorColor="@color/AQUA"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"/>
 
     <Button
         android:id="@+id/btnSearch"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/search"/>
+        android:text="@string/search"
+        android:background="@drawable/theme1"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"/>
 
 
 
