@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
     private Button _twitterFirebaseLoginButton;
     private TwitterLoginButton _twitterLoginButton;
     private CallbackManager _callbackManager;
+    private Button _btnAnonymousLogin;
 
     // Login
     ProgressBar _pBar;
@@ -145,6 +146,9 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         });
 
 
+
+        _btnAnonymousLogin = (Button)  findViewById(R.id.btnAnonymousLogin);
+
         //region new Login page
         _pBar = (ProgressBar) findViewById(R.id.mainProgressBar);
         _imgView = (ImageView) findViewById(R.id.button_icon);
@@ -175,9 +179,12 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
 
     public void startMainActivity(UserModel user) {
         final UserModel userModel = user;
-        if((int)_layoutLogin.getTag()==1){
+        if((int)_layoutLogin.getTag()==1)
+        {
             return;
-        }else if((int)_layoutLogin.getTag()==2){
+        }
+        else if((int)_layoutLogin.getTag()==2)
+        {
             _layoutLogin.animate().x(dm.widthPixels/2).y(dm.heightPixels/2).setInterpolator(new EasingInterpolator(Ease.CUBIC_IN)).setListener(null).setDuration(1000).setStartDelay(0).start();
             _layoutLogin.animate().setStartDelay(600).setDuration(1000).scaleX(40).scaleY(40).setInterpolator(new EasingInterpolator(Ease.CUBIC_IN_OUT)).start();
             _imgView.animate().alpha(0).rotation(90).setStartDelay(0).setDuration(800).start();
@@ -189,18 +196,25 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         _txtLogin.animate().setStartDelay(100).setDuration(500).alpha(0).start();
         _layoutLogin.animate().setInterpolator(new FastOutSlowInInterpolator()).setStartDelay(4000).setDuration(1000).scaleX(30).scaleY(30).setListener(new Animator.AnimatorListener(){
             @Override
-            public void onAnimationStart(Animator p1) {
+            public void onAnimationStart(Animator p1)
+            {
                 _pBar.animate().setStartDelay(0).setDuration(0).alpha(0).start();
+                _btnAnonymousLogin.setAlpha(0);
+                _twitterFirebaseLoginButton.setAlpha(0);
+                _facebookFirebaseLoginButton.setAlpha(0);
             }
 
             @Override
             public void onAnimationEnd(Animator p1) {
-                try{
+                try
+                {
                     // getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, frag_dashboard).disallowAddToBackStack().commitAllowingStateLoss();
                     Intent intent=new Intent(LoginActivity.this,MainActivity.class);
                     intent.putExtra("User", userModel);
                     startActivity(intent);
-                }catch(Exception e){}
+                }
+                catch(Exception e){}
+
                 _layoutLogin.animate().setStartDelay(0).alpha(1).setDuration(1000).scaleX(1).scaleY(1).x(dm.widthPixels-_layoutLogin.getMeasuredWidth()-100).y(dm.heightPixels-_layoutLogin.getMeasuredHeight()-100).setListener(new Animator.AnimatorListener(){
 
                     @Override

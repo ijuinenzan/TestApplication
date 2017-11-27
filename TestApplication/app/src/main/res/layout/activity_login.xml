@@ -194,32 +194,27 @@
                 android:id="@+id/btnTwitterLogin"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btnFirebaseTwitterLogin"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="150dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/ic_twitter"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                android:background="@drawable/ic_twitter" />
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/btnFacebookLogin"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btnFirebaseFacebookLogin"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/ic_facebook" />
 
