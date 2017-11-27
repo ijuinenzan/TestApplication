@@ -38,36 +38,4 @@ public class MyUtils
         return sdf.format(date);
     }
 
-    @BindingAdapter("android:text")
-    public static void setFloat(TextView view, float value) {
-        if (Float.isNaN(value)) view.setText("");
-        else view.setText(String.valueOf(value));
-    }
-
-    @InverseBindingAdapter(attribute = "android:text")
-    public static float getFloat(TextView view) {
-        String num = view.getText().toString();
-        if(num.isEmpty()) return 0.0F;
-        try {
-            return Float.parseFloat(num);
-        } catch (NumberFormatException e) {
-            return 0.0F;
-        }
-    }
-
-    @BindingAdapter("android:text")
-    public static void setInt(TextView view, int value) {
-        view.setText(String.valueOf(value));
-    }
-
-    @InverseBindingAdapter(attribute = "android:text")
-    public static int getInt(TextView view) {
-        String num = view.getText().toString();
-        if(num.isEmpty()) return 0;
-        try {
-            return Integer.parseInt(num);
-        } catch (NumberFormatException e) {
-            return 0;
-        }
-    }
 }

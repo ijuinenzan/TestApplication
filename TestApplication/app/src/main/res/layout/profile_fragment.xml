@@ -40,8 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/changeUserImg"
-                    android:layout_marginStart="20dp"
-                    android:onClick="@{() -> viewModel.Save()}"/>
+                    android:layout_marginStart="20dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -73,8 +72,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hintUserName"
                         android:textSize="@dimen/fontsize"
-                        android:text="@{viewModel.user.displayName.value}"
-                        android:addTextChangedListener="@{viewModel.displayNameWatcher}"
+                        android:text="@={viewModel.user.displayName.value}"
                         />
 
                     <CheckBox
@@ -109,7 +107,7 @@
                         android:inputType="number"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/fontsize"
-                        android:text="@{viewModel.user.yearBorn.value}"/>
+                        android:text="@={`` + viewModel.user.yearBorn.value}"/>
 
                     <CheckBox
                         android:id="@+id/cBox_userAge"
@@ -202,7 +200,7 @@
                         android:textSize="@dimen/fontsize"
                         android:ems="10"
                         android:inputType="phone"
-                        android:text="@{viewModel.user.phoneNumber.value}"/>
+                        android:text="@={viewModel.user.phoneNumber.value}"/>
 
                     <CheckBox
                         android:id="@+id/cBox_userPhone"
@@ -236,7 +234,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hintAddress"
                         android:textSize="@dimen/fontsize"
-                        android:text="@{viewModel.user.address.value}"/>
+                        android:text="@={viewModel.user.address.value}"/>
 
                     <CheckBox
                         android:id="@+id/cBox_userAddress"
@@ -270,7 +268,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hintCompany"
                         android:textSize="@dimen/fontsize"
-                        android:text="@{viewModel.user.job.value}"/>
+                        android:text="@={viewModel.user.job.value}"/>
 
                     <CheckBox
                         android:id="@+id/cBox_userCompany"
@@ -304,7 +302,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hintCity"
                         android:textSize="@dimen/fontsize"
-                        android:text="@{viewModel.user.city.value}"/>
+                        android:text="@={viewModel.user.city.value}"/>
 
                     <CheckBox
                         android:id="@+id/cBox_userCity"
@@ -338,7 +336,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hintCountry"
                         android:textSize="@dimen/fontsize"
-                        android:text="@{viewModel.user.country.value}"/>
+                        android:text="@={viewModel.user.country.value}"/>
 
                     <CheckBox
                         android:id="@+id/cBox_userCountry"
@@ -373,7 +371,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hintWeight"
                         android:textSize="@dimen/fontsize"
-                        android:text="@{viewModel.user.weight.value}"/>
+                        android:text="@={`` + viewModel.user.weight.value}"/>
 
                     <CheckBox
                         android:id="@+id/cBox_userWeight"
@@ -408,7 +406,7 @@
                         android:hint="@string/hintHeight"
                         android:inputType="numberDecimal"
                         android:textSize="@dimen/fontsize"
-                        android:text="@{viewModel.user.height.value}"/>
+                        android:text="@={`` + viewModel.user.height.value}"/>
 
                     <CheckBox
                         android:id="@+id/cBox_userHeight"
@@ -443,7 +441,7 @@
                         android:layout_marginStart="@dimen/marginStart_col2"
                         android:hint="@string/hintFacebook"
                         android:textSize="@dimen/fontsize"
-                        android:text="@{viewModel.user.facebook.value}"/>
+                        android:text="@={viewModel.user.facebook.value}"/>
 
                     <CheckBox
                         android:id="@+id/cBox_userFacebook"
@@ -477,7 +475,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hintTwitter"
                         android:textSize="@dimen/fontsize"
-                        android:text="@{viewModel.user.twitter.value}"/>
+                        android:text="@={viewModel.user.twitter.value}"/>
 
                     <CheckBox
                         android:id="@+id/cBox_userTwitter"
@@ -508,6 +506,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/save"
+                        android:onClick="@{() -> viewModel.Save()}"
                         android:layout_gravity="center"/>
                 </LinearLayout>
 
