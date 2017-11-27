@@ -108,6 +108,11 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
                 mViewModel.loginWithFacebook(loginResult.getAccessToken().getToken());
                 _pBar.animate().setStartDelay(300).setDuration(1000).alpha(1).start();
                 _txtLogin.animate().setStartDelay(100).setDuration(500).alpha(0).start();
+
+                // Scale button Login smaller
+                RelativeLayout.LayoutParams button_login_lp= (RelativeLayout.LayoutParams) _layoutLogin.getLayoutParams();
+                button_login_lp.width=Math.round(200);
+                _layoutLogin.setLayoutParams(button_login_lp);
             }
 
             @Override
@@ -138,6 +143,11 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
                 mViewModel.loginWithTwitter(result.data.getAuthToken().token, result.data.getAuthToken().secret);
                 _pBar.animate().setStartDelay(300).setDuration(1000).alpha(1).start();
                 _txtLogin.animate().setStartDelay(100).setDuration(500).alpha(0).start();
+
+                // Scale button Login smaller
+                RelativeLayout.LayoutParams button_login_lp= (RelativeLayout.LayoutParams) _layoutLogin.getLayoutParams();
+                button_login_lp.width=Math.round(200);
+                _layoutLogin.setLayoutParams(button_login_lp);
             }
 
             @Override
