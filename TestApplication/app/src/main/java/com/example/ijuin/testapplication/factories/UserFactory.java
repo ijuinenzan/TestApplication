@@ -34,7 +34,7 @@ public class UserFactory {
             userModel.setDisplayName(new FieldModel<String>("", false));
         }
         userModel.setYearBorn(new FieldModel<Integer>(0, false));
-        userModel.setGender(new FieldModel<Integer>(MyUtils.MALE, false));
+        userModel.setGender(new FieldModel<Boolean>(MyUtils.MALE, false));
         userModel.setCity(new FieldModel<String>("", false));
         userModel.setCountry(new FieldModel<String>("", false));
         userModel.setWeight(new FieldModel<Float>(0.f, false));

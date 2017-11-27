@@ -36,7 +36,7 @@ public class ProfileViewModel extends BaseObservable {
 
         newUser.setDisplayName(new FieldModel<String>(_user.getDisplayName().getValue(),_user.getDisplayName().getIsPublic()));
         newUser.setYearBorn(new FieldModel<Integer>(_user.getYearBorn().getValue(),_user.getYearBorn().getIsPublic()));
-        newUser.setGender(new FieldModel<Integer>(_user.getGender().getValue(),_user.getGender().getIsPublic()));
+        newUser.setGender(new FieldModel<Boolean>(_user.getGender().getValue(),_user.getGender().getIsPublic()));
         newUser.setCity(new FieldModel<String>(_user.getCity().getValue(),_user.getCity().getIsPublic()));
         newUser.setCountry(new FieldModel<String>(_user.getCountry().getValue(),_user.getCountry().getIsPublic()));
         newUser.setWeight(new FieldModel<Float>(_user.getWeight().getValue(),_user.getWeight().getIsPublic()));
