@@ -105,6 +105,8 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
             @Override
             public void onSuccess(LoginResult loginResult) {
                 mViewModel.loginWithFacebook(loginResult.getAccessToken().getToken());
+                _pBar.animate().setStartDelay(300).setDuration(1000).alpha(1).start();
+                _txtLogin.animate().setStartDelay(100).setDuration(500).alpha(0).start();
             }
 
             @Override
@@ -133,6 +135,8 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
             @Override
             public void success(Result<TwitterSession> result) {
                 mViewModel.loginWithTwitter(result.data.getAuthToken().token, result.data.getAuthToken().secret);
+                _pBar.animate().setStartDelay(300).setDuration(1000).alpha(1).start();
+                _txtLogin.animate().setStartDelay(100).setDuration(500).alpha(0).start();
             }
 
             @Override
