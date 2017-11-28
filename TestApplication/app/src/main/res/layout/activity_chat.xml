@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:emojicon="http://schemas.android.com/tools">
 
     <data>
         <variable name="viewModel" type="com.example.ijuin.testapplication.viewmodels.ChatViewModel"/>
@@ -46,21 +47,23 @@
                     android:backgroundTint="@color/TWITTER"
                     android:src="@drawable/ic_up_24dp"/>
 
-                <EditText
-                    android:id="@+id/edittext_chat_message"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+
+                <io.github.rockerhieu.emojicon.EmojiconEditText
+                    android:id="@+id/editEmojicon"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:hint="@string/hint_typing"
-                    android:layout_marginEnd="@dimen/margin_average"
-                    android:layout_marginStart="5dp"
-                    style="@style/regular_editTexts"/>
+                    android:hint="@string/typehere"
+                    emojicon:emojiconSize="20sp" />
+
                 <Button
+                    android:layout_marginStart="6dp"
                     android:layout_width="@dimen/small_width"
                     android:layout_height="match_parent"
                     android:text="@string/send_text"
                     android:onClick="@{() -> activity.sendMessage()}"
-                    style="@style/regular_buttons"/>
+                    style="@style/KhangTheme"/>
 
 
             </LinearLayout>
