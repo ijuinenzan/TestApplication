@@ -24,20 +24,15 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
 import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.databinding.ProfileFragmentBinding;
-<<<<<<< HEAD
-=======
+
 import com.example.ijuin.testapplication.databinding.SearchFragmentBinding;
-import com.example.ijuin.testapplication.factories.UserFactory;
->>>>>>> a20fca30d92ca41fb60d50f9d19b36f1066d0102
+
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
-<<<<<<< HEAD
-=======
+
 import com.example.ijuin.testapplication.viewmodels.SearchViewModel;
-import com.twitter.sdk.android.core.models.User;
->>>>>>> a20fca30d92ca41fb60d50f9d19b36f1066d0102
 
 import java.io.File;
 import java.io.FileInputStream;
