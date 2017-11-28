@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.example.ijuin.testapplication.factories.UserFactory;
 import com.example.ijuin.testapplication.models.UserModel;
+import com.example.ijuin.testapplication.utils.FirebaseManager;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.utils.TextWatcherAdapter;
 import com.facebook.login.LoginManager;
@@ -53,21 +54,9 @@ public class LoginViewModel extends BaseObservable
     private boolean _isAuthDone;
     private boolean _isAuthInProgress;
 
-    private ObservableField<String> _email  = new ObservableField<>();
-    private ObservableField<String> _password = new ObservableField<>();
+    private String _email  = "";
+    private String _password = "";
 
-    private TextWatcher _emailWatcher = new TextWatcherAdapter(){
-    @Override public void afterTextChanged(Editable s)
-    {
-            _email.set(s.toString());
-    }
-};
-    private TextWatcher _passwordWatcher = new TextWatcherAdapter(){
-        @Override public void afterTextChanged(Editable s)
-        {
-                _password.set(s.toString());
-        }
-    };
 
     private DatabaseReference _userReference;
 
@@ -75,8 +64,6 @@ public class LoginViewModel extends BaseObservable
 
     public LoginViewModel() {
         observers=new ArrayList<>();
-        _email.set("");
-        _password.set("");
 
         _userReference = FirebaseDatabase.getInstance().getReference("users");
     }
@@ -102,27 +89,29 @@ public class LoginViewModel extends BaseObservable
     }
 
     @Bindable
-    public ObservableField<String> getEmail()
+    public String getEmail()
     {
         return _email;
     }
 
+    public void setEmail(String value)
+    {
+        _email = value;
+        notifyPropertyChanged(BR.email);
+    }
+
     @Bindable
-    public ObservableField<String> getPassword()
+    public String getPassword()
     {
         return _password;
     }
 
-    @Bindable
-    public TextWatcher getEmailWatcher()
+    public void setPassword(String value)
     {
-        return _emailWatcher;
+        _password = value;
+        notifyPropertyChanged(BR.password);
     }
 
-    public TextWatcher getPasswordWatcher()
-    {
-        return _passwordWatcher;
-    }
     public void firebaseAnonymousAuth() {
         setAuthInProgress(true);
         FirebaseAuth.getInstance().signInAnonymously()
@@ -140,6 +129,8 @@ public class LoginViewModel extends BaseObservable
                                     {
                                         DataSnapshot childRef = dataSnapshot.child(FirebaseAuth.getInstance().getUid());
                                         UserModel user = childRef.getValue(UserModel.class);
+                                        FirebaseManager.getInstance().updateUser(user);
+
 
                                         setAuthDone(true);
 
@@ -150,7 +141,7 @@ public class LoginViewModel extends BaseObservable
                                     else
                                     {
                                         UserModel user = UserFactory.createNewUser();
-                                        _userReference.child(FirebaseAuth.getInstance().getUid()).setValue(UserFactory.createNewUser());
+                                        FirebaseManager.getInstance().updateUser(user);
 
                                         setAuthDone(true);
 
@@ -170,9 +161,9 @@ public class LoginViewModel extends BaseObservable
                 });
     }
 
-    public void loginWithFacebook(String token)
+    public void loginWithFacebook(String token, final String facebookId)
     {
-        AuthCredential credential = FacebookAuthProvider.getCredential(token);
+        final AuthCredential credential = FacebookAuthProvider.getCredential(token);
 
         setAuthInProgress(true);
         FirebaseAuth.getInstance().signInWithCredential(credential)
@@ -190,6 +181,7 @@ public class LoginViewModel extends BaseObservable
                                     {
                                         DataSnapshot childRef = dataSnapshot.child(FirebaseAuth.getInstance().getUid());
                                         UserModel user = childRef.getValue(UserModel.class);
+                                        FirebaseManager.getInstance().updateUser(user);
 
                                         setAuthDone(true);
 
@@ -199,8 +191,8 @@ public class LoginViewModel extends BaseObservable
                                     }
                                     else
                                     {
-                                        UserModel user = UserFactory.createNewUser();
-                                        _userReference.child(FirebaseAuth.getInstance().getUid()).setValue(UserFactory.createNewUser());
+                                        UserModel user = UserFactory.createNewUserFromFacebook(facebookId);
+                                        FirebaseManager.getInstance().updateUser(user);
 
                                         setAuthDone(true);
 
@@ -224,7 +216,7 @@ public class LoginViewModel extends BaseObservable
 
     public void loginWithEmail() {
         setAuthInProgress(true);
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(_email.get(), _password.get())
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(_email, _password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(Task<AuthResult> task) {
@@ -239,6 +231,8 @@ public class LoginViewModel extends BaseObservable
                                     {
                                         DataSnapshot childRef = dataSnapshot.child(FirebaseAuth.getInstance().getUid());
                                         UserModel user = childRef.getValue(UserModel.class);
+                                        FirebaseManager.getInstance().updateUser(user);
+
 
                                         setAuthDone(true);
 
@@ -249,7 +243,7 @@ public class LoginViewModel extends BaseObservable
                                     else
                                     {
                                         UserModel user = UserFactory.createNewUser();
-                                        _userReference.child(FirebaseAuth.getInstance().getUid()).setValue(UserFactory.createNewUser());
+                                        FirebaseManager.getInstance().updateUser(user);
 
                                         setAuthDone(true);
 
@@ -272,7 +266,7 @@ public class LoginViewModel extends BaseObservable
     public void registerWithEmail()
     {
         setAuthInProgress(true);
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(_email.get(), _password.get())
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(_email, _password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -289,7 +283,7 @@ public class LoginViewModel extends BaseObservable
                 });
     }
 
-    public void loginWithTwitter (String token, String secret) {
+    public void loginWithTwitter (String token, String secret, final String twitterId) {
         setAuthInProgress(true);
         AuthCredential credential = TwitterAuthProvider.getCredential(
                 token,
@@ -310,6 +304,8 @@ public class LoginViewModel extends BaseObservable
                                     {
                                         DataSnapshot childRef = dataSnapshot.child(FirebaseAuth.getInstance().getUid());
                                         UserModel user = childRef.getValue(UserModel.class);
+                                        FirebaseManager.getInstance().updateUser(user);
+
 
                                         setAuthDone(true);
 
@@ -319,8 +315,8 @@ public class LoginViewModel extends BaseObservable
                                     }
                                     else
                                     {
-                                        UserModel user = UserFactory.createNewUser();
-                                        _userReference.child(FirebaseAuth.getInstance().getUid()).setValue(UserFactory.createNewUser());
+                                        UserModel user = UserFactory.createNewUserFromTwitter(twitterId);
+                                        FirebaseManager.getInstance().updateUser(user);
 
                                         setAuthDone(true);
 

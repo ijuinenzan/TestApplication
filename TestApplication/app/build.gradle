@@ -65,7 +65,7 @@ dependencies {
     implementation 'com.android.support:percent:26.1.0'
 
     // for login page
-    compile 'com.daasuu:EasingInterpolator:1.0.0'
+    implementation 'com.daasuu:EasingInterpolator:1.0.0'
 
     // for progress bar in Search
     implementation 'com.wang.avi:library:2.1.3'

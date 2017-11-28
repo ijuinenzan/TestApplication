@@ -27,8 +27,8 @@ public class UserModel extends BaseObservable implements Serializable {
     private String _state;
     private Boolean _isFindingMale;
     private Boolean _isFindingFemale;
-    private Integer _minTargetYearBorn;
-    private Integer _maxTargetYearBorn;
+    private Integer _minAge;
+    private Integer _maxAge;
 
     @Bindable
     public FieldModel<String> getImageUrl()
@@ -136,19 +136,19 @@ public class UserModel extends BaseObservable implements Serializable {
         this._isFindingMale = _isFindingMale;
     }
 
-    public Integer getMaxTargetYearBorn() {
-        return _maxTargetYearBorn;
+    public Integer getMaxAge() {
+        return _maxAge;
     }
 
-    public void setMaxTargetYearBorn(Integer _maxTargetYearBorn) {
-        this._maxTargetYearBorn = _maxTargetYearBorn;
+    public void setMaxAge(Integer _maxAge) {
+        this._maxAge = _maxAge;
     }
 
-    public Integer getMinTargetYearBorn() {
-        return _minTargetYearBorn;
+    public Integer getMinAge() {
+        return _minAge;
     }
 
-    public void setMinTargetYearBorn(Integer _minTargetYearBorn) {
-        this._minTargetYearBorn = _minTargetYearBorn;
+    public void setMinAge(Integer _minAge) {
+        this._minAge = _minAge;
     }
 }

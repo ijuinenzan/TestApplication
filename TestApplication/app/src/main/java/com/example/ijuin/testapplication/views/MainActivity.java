@@ -60,7 +60,10 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
         addControls();
     }
 
-
+    public void back()
+    {
+        super.onBackPressed();
+    }
 
     public void addControls()
     {
@@ -89,11 +92,12 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
     }
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     public void onObserve(int event, Object eventMessage) {
-        if(event == MyUtils.CHANGE_PICTURE)
-        {
-            //change picture
-        }
     }
 
 
@@ -110,36 +114,25 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
                     R.layout.search_fragment, container, false);
             View view = binding.getRoot();
 
-            Bundle extras = getActivity().getIntent().getExtras();
-
             mViewModel= new SearchViewModel();
             binding.setViewModel(mViewModel);
 
-            return view;
-        }
-        private void setRangeSeekbar(View rootView)
-        {
-            // get seekbar from view
-            final BubbleThumbRangeSeekbar rangeSeekbar = (BubbleThumbRangeSeekbar) rootView.findViewById(R.id.rangeSeekbar);
+            final BubbleThumbRangeSeekbar rangeSeekbar = (BubbleThumbRangeSeekbar) view.findViewById(R.id.rangeSeekbar);
 
-            // get min and max text view
-            final TextView txtAgeMin = (TextView) rootView.findViewById(R.id.txtAgeMin);
-            final TextView txtAgeMax = (TextView) rootView.findViewById(R.id.txtAgeMax);
-
-            // set listener
             rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                 @Override
                 public void valueChanged(Number minValue, Number maxValue)
                 {
-                    txtAgeMin.setText(String.valueOf(minValue));
-                    txtAgeMax.setText(String.valueOf(maxValue));
+                    mViewModel.setMinAge(minValue.intValue());
+                    mViewModel.setMaxAge(maxValue.intValue());
                 }
             });
-        }
 
+            return view;
+        }
     }
 
-    public static class ProfileFragment extends Fragment {
+    public static class ProfileFragment extends Fragment implements Observer<Object> {
 
         public ProfileFragment() {        }
 
@@ -156,9 +149,9 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
 
             _imgProfile = (ImageView) view.findViewById(R.id.img_UserIcon);
             _btnChangeProfileImg = (Button) view.findViewById(R.id.btn_ChangeUserImg);
-            Bundle extras = getActivity().getIntent().getExtras();
 
-            mViewModel= new ProfileViewModel((UserModel)extras.getSerializable("User"));
+            mViewModel= new ProfileViewModel();
+            mViewModel.addObserver(this);
             binding.setViewModel(mViewModel);
 
             return view;
@@ -223,6 +216,13 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
 
         }
 
+        @Override
+        public void onObserve(int event, Object eventMessage) {
+            if(event == MyUtils.LOG_OUT)
+            {
+                ((MainActivity)getActivity()).back();
+            }
+        }
     }
 
     public static class AboutUsFragment extends Fragment {

@@ -51,11 +51,107 @@ public class UserFactory {
         userModel.setTwitter(new FieldModel<String>("", false));
         userModel.setAddress(new FieldModel<String>("", false));
         userModel.setJob(new FieldModel<String>("", false));
-        userModel.setState("0");
+        userModel.setState("Not Finding");
         userModel.setIsFindingFemale(true);
         userModel.setIsFindingMale(true);
-        userModel.setMinTargetYearBorn(0);
-        userModel.setMaxTargetYearBorn(0);
+        userModel.setMinAge(0);
+        userModel.setMaxAge(80);
+
+        return userModel;
+    }
+
+    public static UserModel createNewUserFromTwitter(String twitterId)
+    {
+        UserModel userModel = new UserModel();
+
+        if(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() != null)
+        {
+            userModel.setImageUrl(new FieldModel<String>(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString(), false));
+        }
+        else
+        {
+            userModel.setImageUrl(new FieldModel<String>("", false));
+        }
+
+        if(FirebaseAuth.getInstance().getCurrentUser().getDisplayName() != null)
+        {
+            userModel.setDisplayName(new FieldModel<String>(FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), false));
+        }
+        else
+        {
+            userModel.setDisplayName(new FieldModel<String>("", false));
+        }
+        userModel.setYearBorn(new FieldModel<Integer>(0, false));
+        userModel.setGender(new FieldModel<Boolean>(MyUtils.MALE, false));
+        userModel.setCity(new FieldModel<String>("", false));
+        userModel.setCountry(new FieldModel<String>("", false));
+        userModel.setWeight(new FieldModel<Float>(0.f, false));
+        userModel.setHeight(new FieldModel<Float>(0.f, false));
+        if(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber() != null)
+        {
+            userModel.setPhoneNumber(new FieldModel<String>(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber(), false));
+        }
+        else
+        {
+            userModel.setPhoneNumber(new FieldModel<String>("", false));
+        }
+        userModel.setFacebook(new FieldModel<String>("", false));
+        userModel.setTwitter(new FieldModel<String>("https://www.twitter.com/" + twitterId, false));
+        userModel.setAddress(new FieldModel<String>("", false));
+        userModel.setJob(new FieldModel<String>("", false));
+        userModel.setState("Not Finding");
+        userModel.setIsFindingFemale(true);
+        userModel.setIsFindingMale(true);
+        userModel.setMinAge(0);
+        userModel.setMaxAge(80);
+
+        return userModel;
+    }
+
+    public static UserModel createNewUserFromFacebook(String facebookId)
+    {
+        UserModel userModel = new UserModel();
+
+        if(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() != null)
+        {
+            userModel.setImageUrl(new FieldModel<String>(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString(), false));
+        }
+        else
+        {
+            userModel.setImageUrl(new FieldModel<String>("", false));
+        }
+
+        if(FirebaseAuth.getInstance().getCurrentUser().getDisplayName() != null)
+        {
+            userModel.setDisplayName(new FieldModel<String>(FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), false));
+        }
+        else
+        {
+            userModel.setDisplayName(new FieldModel<String>("", false));
+        }
+        userModel.setYearBorn(new FieldModel<Integer>(0, false));
+        userModel.setGender(new FieldModel<Boolean>(MyUtils.MALE, false));
+        userModel.setCity(new FieldModel<String>("", false));
+        userModel.setCountry(new FieldModel<String>("", false));
+        userModel.setWeight(new FieldModel<Float>(0.f, false));
+        userModel.setHeight(new FieldModel<Float>(0.f, false));
+        if(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber() != null)
+        {
+            userModel.setPhoneNumber(new FieldModel<String>(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber(), false));
+        }
+        else
+        {
+            userModel.setPhoneNumber(new FieldModel<String>("", false));
+        }
+        userModel.setFacebook(new FieldModel<String>("https://www.facebook.com/" + facebookId, false));
+        userModel.setTwitter(new FieldModel<String>("", false));
+        userModel.setAddress(new FieldModel<String>("", false));
+        userModel.setJob(new FieldModel<String>("", false));
+        userModel.setState("Not Finding");
+        userModel.setIsFindingFemale(true);
+        userModel.setIsFindingMale(true);
+        userModel.setMinAge(0);
+        userModel.setMaxAge(80);
 
         return userModel;
     }

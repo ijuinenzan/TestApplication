@@ -8,4 +8,5 @@ import com.google.firebase.database.DataSnapshot;
 public interface FirebaseCallbacks
 {
     void onNewMessage(DataSnapshot dataSnapshot);
+    void onUserUpdate(DataSnapshot dataSnapshot);
 }
