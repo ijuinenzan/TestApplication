@@ -10,11 +10,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +24,10 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
 import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.databinding.ProfileFragmentBinding;
-import com.example.ijuin.testapplication.factories.UserFactory;
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
-import com.twitter.sdk.android.core.models.User;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -178,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
             catch (Exception e)
             {
                 e.printStackTrace();
-            } 
+            }
             finally
             {
                 try

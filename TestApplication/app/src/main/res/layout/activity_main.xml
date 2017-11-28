@@ -29,8 +29,8 @@
         android:layout_height="wrap_content"
         android:background="@color/TWITTER"
         app:pstsUnderlineColor="@color/TWITTER"
-        app:pstsDividerColor="@color/TWITTER"
-        app:pstsIndicatorColor="@color/TWITTER"/>
+        app:pstsDividerColor="@color/BLACK"
+        app:pstsIndicatorColor="@color/YELLOW"/>
 
 </android.support.design.widget.AppBarLayout>
 
