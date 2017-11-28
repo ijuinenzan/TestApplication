@@ -21,9 +21,11 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
 import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.databinding.ProfileFragmentBinding;
+import com.example.ijuin.testapplication.databinding.SearchFragmentBinding;
 import com.example.ijuin.testapplication.factories.UserFactory;
 import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
+import com.example.ijuin.testapplication.viewmodels.SearchViewModel;
 import com.twitter.sdk.android.core.models.User;
 
 /**
@@ -77,11 +79,20 @@ public class MainActivity extends AppCompatActivity
 
         public SearchFragment() {        }
 
+        private SearchViewModel mViewModel;
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.search_fragment, container, false);
-            setRangeSeekbar(view);
+           SearchFragmentBinding binding = DataBindingUtil.inflate(inflater,
+                    R.layout.search_fragment, container, false);
+            View view = binding.getRoot();
+
+            Bundle extras = getActivity().getIntent().getExtras();
+
+            mViewModel= new SearchViewModel();
+            binding.setViewModel(mViewModel);
+
             return view;
         }
         private void setRangeSeekbar(View rootView)
