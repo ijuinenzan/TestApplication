@@ -58,7 +58,7 @@
                     app:layout_marginTopPercent="3%"
                     app:layout_marginBottomPercent="3%"
                     android:textColorHint="#ff0000"
-                    android:checked="@={viewModel._selectedGender}"/>
+                    android:checked="@={viewModel.isFindingMale}"/>
             </android.support.percent.PercentRelativeLayout>
 
 
@@ -85,14 +85,14 @@
                     app:layout_marginLeftPercent="80%"
                     app:layout_marginBottomPercent="3%"
                     android:shadowColor="@color/YELLOW"
-                    android:checked="@={viewModel._selectedGender2}"/>
+                    android:checked="@={viewModel.isFindingFemale}"/>
             </android.support.percent.PercentRelativeLayout>
 
 
         </LinearLayout>
 
 
-        <LinearLayout android:id="@+id/searchFragment2"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:orientation="vertical"
@@ -121,7 +121,7 @@
                     android:id="@+id/txtAgeMin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@={`` + viewModel._selectedMinAge}"
+                    android:text="@{`` + viewModel.minAge}"
                     app:layout_marginLeftPercent="81%"
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -142,7 +142,7 @@
                     android:id="@+id/txtAgeMax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@={`` + viewModel._selectedMaxAge}"
+                    android:text="@{`` + viewModel.maxAge}"
                     android:textSize="15sp"
                     app:layout_marginLeftPercent="90%"
                     android:textStyle="bold"
@@ -161,7 +161,10 @@
                 app:left_thumb_color_pressed="@color/CRIMSON"
                 app:right_thumb_color="@color/CRIMSON"
                 app:right_thumb_color_pressed="@color/CRIMSON"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                app:data_type="_integer"
+                app:min_start_value="0"
+                app:max_start_value="100"/>
         </LinearLayout>
 
 

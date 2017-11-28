@@ -83,8 +83,7 @@
                 android:id="@+id/mainEditText1"
                 android:hint="Email"
                 android:typeface="serif"
-                android:text="@{viewModel.email}"
-                android:addTextChangedListener="@{viewModel.emailWatcher}"/>
+                android:text="@={viewModel.email}"/>
 
             <View
                 android:layout_height="1dp"
@@ -108,8 +107,7 @@
                 android:id="@+id/mainEditText2"
                 android:hint="Password"
                 android:typeface="serif"
-                android:text="@{viewModel.password}"
-                android:addTextChangedListener="@{viewModel.passwordWatcher}"/>
+                android:text="@={viewModel.password}"/>
 
             <View
                 android:layout_height="1dp"
@@ -128,6 +126,7 @@
             android:layout_marginRight="30dp"
             app:layout_marginTopPercent="65%"
             android:layout_centerHorizontal="true"
+            android:onClick="@{() -> viewModel.loginWithEmail()}"
             android:id="@+id/button_login">
             <TextView
                 android:layout_width="wrap_content"

@@ -54,8 +54,8 @@ public class UserFactory {
         userModel.setState("0");
         userModel.setIsFindingFemale(true);
         userModel.setIsFindingMale(true);
-        userModel.setMinTargetYearBorn(0);
-        userModel.setMaxTargetYearBorn(0);
+        userModel.setMinAge(0);
+        userModel.setMaxAge(80);
 
         return userModel;
     }

@@ -112,31 +112,22 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
 
             Bundle extras = getActivity().getIntent().getExtras();
 
-            mViewModel= new SearchViewModel();
+            mViewModel= new SearchViewModel((UserModel)extras.getSerializable("User"));
             binding.setViewModel(mViewModel);
 
-            return view;
-        }
-        private void setRangeSeekbar(View rootView)
-        {
-            // get seekbar from view
-            final BubbleThumbRangeSeekbar rangeSeekbar = (BubbleThumbRangeSeekbar) rootView.findViewById(R.id.rangeSeekbar);
+            final BubbleThumbRangeSeekbar rangeSeekbar = (BubbleThumbRangeSeekbar) view.findViewById(R.id.rangeSeekbar);
 
-            // get min and max text view
-            final TextView txtAgeMin = (TextView) rootView.findViewById(R.id.txtAgeMin);
-            final TextView txtAgeMax = (TextView) rootView.findViewById(R.id.txtAgeMax);
-
-            // set listener
             rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                 @Override
                 public void valueChanged(Number minValue, Number maxValue)
                 {
-                    txtAgeMin.setText(String.valueOf(minValue));
-                    txtAgeMax.setText(String.valueOf(maxValue));
+                    mViewModel.setMinAge(minValue.intValue());
+                    mViewModel.setMaxAge(maxValue.intValue());
                 }
             });
-        }
 
+            return view;
+        }
     }
 
     public static class ProfileFragment extends Fragment {

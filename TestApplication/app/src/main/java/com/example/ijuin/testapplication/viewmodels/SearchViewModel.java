@@ -4,12 +4,13 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.example.ijuin.testapplication.BR;
+import com.example.ijuin.testapplication.interfaces.FirebaseCallbacks;
 import com.example.ijuin.testapplication.interfaces.Observer;
-import com.example.ijuin.testapplication.utils.MyUtils;
+import com.example.ijuin.testapplication.models.UserModel;
+import com.example.ijuin.testapplication.utils.FirebaseManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-
-import okhttp3.internal.Util;
 
 /**
  * Created by ASUS on 11/17/2017.
@@ -17,35 +18,23 @@ import okhttp3.internal.Util;
 
 public class SearchViewModel extends BaseObservable
 {
-    private boolean isFinding;
-    private boolean _selectedGender;
-    private boolean _selectedGender2;
-    private float _selectedMaxAge;
-    private float _selectedMinAge;
-    private int _selectedLocation;
-
-
     public ArrayList<Observer> observers;
 
+    private UserModel _user;
+    private UserModel _newUser;
 
 
-    public SearchViewModel() {
-        _selectedGender = MyUtils.MALE;
-        _selectedGender2 = MyUtils.FEMALE;
+    public SearchViewModel(UserModel user) {
         observers=new ArrayList<>();
-        isFinding = false;
-        set_selectedMaxAge(25);
-        set_selectedMinAge(15);
+
+        _user = user;
+        _newUser = new UserModel();
+        _newUser.setState(_user.getState());
+        _newUser.setIsFindingFemale(_user.getIsFindingFemale());
+        _newUser.setIsFindingMale(_user.getIsFindingMale());
+        _newUser.setMinAge(_user.getMinAge());
+        _newUser.setMaxAge(_user.getMaxAge());
     }
-
-
-
-    public void findPartner()
-    {
-        setFinding(true);
-
-    }
-
 
     public void addObserver(Observer client) {
         if (!observers.contains(client)) {
@@ -65,63 +54,100 @@ public class SearchViewModel extends BaseObservable
         }
     }
 
-    @Bindable
-    public boolean get_selectedGender() {
-        return _selectedGender;
-    }
 
-    public void set_selectedGender(boolean _selectedGender) {
-        this._selectedGender = _selectedGender;
-        notifyPropertyChanged(BR._selectedGender);
-    }
 
-    @Bindable
-    public boolean isFinding() {
-        return isFinding;
-    }
+    public void findPartner()
+    {
+        if(_newUser.getState().equals("Finding"))
+        {
+            _newUser.setState("Not Finding");
+            notifyPropertyChanged(BR.finding);
+        }
+        else
+        {
+            _newUser.setState("Finding");
+            notifyPropertyChanged(BR.finding);
+        }
 
-    public void setFinding(boolean finding) {
-        isFinding = finding;
-        notifyPropertyChanged(BR.finding);
-    }
+        _user.setState(_newUser.getState());
+        _user.setIsFindingFemale(_newUser.getIsFindingFemale());
+        _user.setIsFindingMale(_newUser.getIsFindingMale());
+        _user.setMinAge(_newUser.getMinAge());
+        _user.setMaxAge(_newUser.getMaxAge());
 
-    @Bindable
-    public float get_selectedMaxAge() {
-        return _selectedMaxAge;
-    }
+        FirebaseManager.getInstance().updateUser(_user);
 
-    public void set_selectedMaxAge(float _selectedMaxAge) {
-        this._selectedMaxAge = _selectedMaxAge;
-        notifyPropertyChanged(BR._selectedMaxAge);
-    }
+        _newUser.setState(_user.getState());
+        _newUser.setIsFindingFemale(_user.getIsFindingFemale());
+        _newUser.setIsFindingMale(_user.getIsFindingMale());
+        _newUser.setMinAge(_user.getMinAge());
+        _newUser.setMaxAge(_user.getMaxAge());
 
-    @Bindable
-    public float get_selectedMinAge() {
-        return _selectedMinAge;
-    }
-
-    public void set_selectedMinAge(float _selectedMinAge) {
-        this._selectedMinAge = _selectedMinAge;
-        notifyPropertyChanged(BR._selectedMinAge);
     }
 
     @Bindable
-    public int get_selectedLocation() {
-        return _selectedLocation;
+    public String getState()
+    {
+        return _newUser.getState();
     }
 
-    public void set_selectedLocation(int _selectedLocation) {
-        this._selectedLocation = _selectedLocation;
-        notifyPropertyChanged(BR._selectedLocation);
+    public void setState(String value)
+    {
+        _newUser.setState(value);
+        notifyPropertyChanged(BR.state);
     }
 
     @Bindable
-    public boolean is_selectedGender2() {
-        return _selectedGender2;
+    public boolean getIsFindingMale()
+    {
+        return _newUser.getIsFindingMale();
     }
 
-    public void set_selectedGender2(boolean _selectedGender2) {
-        this._selectedGender2 = _selectedGender2;
-        notifyPropertyChanged(BR._selectedGender2);
+    public void setIsFindingMale(boolean value)
+    {
+        _newUser.setIsFindingMale(value);
+        notifyPropertyChanged(BR.isFindingMale);
+    }
+
+    @Bindable
+    public boolean getIsFindingFemale()
+    {
+        return _newUser.getIsFindingFemale();
+    }
+
+    public void setIsFindingFemale(boolean value)
+    {
+        _newUser.setIsFindingFemale(value);
+        notifyPropertyChanged(BR.isFindingFemale);
+    }
+
+    @Bindable
+    public int getMinAge()
+    {
+        return _newUser.getMinAge();
+    }
+
+    public void setMinAge(int value)
+    {
+        _newUser.setMinAge(value);
+        notifyPropertyChanged(BR.minAge);
+    }
+
+    @Bindable
+    public int getMaxAge()
+    {
+        return _newUser.getMaxAge();
+    }
+
+    public void setMaxAge(int value)
+    {
+        _newUser.setMaxAge(value);
+        notifyPropertyChanged(BR.maxAge);
+    }
+
+    @Bindable
+    public boolean isFinding()
+    {
+        return _newUser.getState().equals("Finding");
     }
 }

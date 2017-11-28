@@ -18,37 +18,31 @@ import java.util.ArrayList;
  */
 
 public class ChatViewModel extends BaseObservable implements FirebaseCallbacks,ModelCallBacks {
-    private String mRoomName;
-    private MessageModel mModel;
+    private MessageModel _model;
     public ArrayList<Observer> observers;
 
 
     public ChatViewModel(String roomName) {
-        this.mRoomName=roomName;
-        mModel=new MessageModel();
+        _model=new MessageModel();
         observers=new ArrayList<>();
     }
 
 
     public void sendMessageToFirebase(String message) {
         if (!message.trim().equals("")){
-            FirebaseManager.getInstance(mRoomName,this).sendMessageToFirebase(message,"text");
         }
     }
 
     public void setListener() {
 
-        FirebaseManager.getInstance(mRoomName,this).addMessageListeners();
     }
 
     public void onDestory() {
-        FirebaseManager.getInstance(mRoomName,this).removeListeners();
-        FirebaseManager.getInstance(mRoomName,this).destroy();
     }
 
     @Override
     public void onNewMessage(DataSnapshot dataSnapshot) {
-        mModel.addMessages(dataSnapshot,this);
+
     }
 
     @Override
