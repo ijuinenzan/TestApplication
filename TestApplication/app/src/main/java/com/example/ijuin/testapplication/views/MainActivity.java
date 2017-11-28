@@ -276,12 +276,7 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "Day la Search View";
-                case 1:
-                    return "Day la Profile View";
-            }
+
             return null;
         }
 
