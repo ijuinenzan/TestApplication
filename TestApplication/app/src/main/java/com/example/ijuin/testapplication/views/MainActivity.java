@@ -1,6 +1,10 @@
 package com.example.ijuin.testapplication.views;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +18,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -28,6 +34,12 @@ import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
 import com.twitter.sdk.android.core.models.User;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 /**
  * Created by Khang Le on 11/21/2017.
  */
@@ -38,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
     private ViewPager _viewPager;
     private TabLayout tabLayout;
     private PagerSlidingTabStrip _customTab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
 
         _customTab = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         _customTab.setViewPager(_viewPager);
+
     }
 
     @Override
@@ -121,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
         public ProfileFragment() {        }
 
         private ProfileViewModel mViewModel;
+        private Button _btnChangeProfileImg;
+        private ImageView _imgProfile;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,12 +145,73 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
                     R.layout.profile_fragment, container, false);
             View view = binding.getRoot();
 
+            _imgProfile = (ImageView) view.findViewById(R.id.img_UserIcon);
+            _btnChangeProfileImg = (Button) view.findViewById(R.id.btn_ChangeUserImg);
             Bundle extras = getActivity().getIntent().getExtras();
 
             mViewModel= new ProfileViewModel((UserModel)extras.getSerializable("User"));
             binding.setViewModel(mViewModel);
 
             return view;
+        }
+
+        // ============================================================================================
+        //  Create a directory with name is "imageDir" then get a file with name "khangdeptrai" in "imageDir" directory and save a bitmap to this link
+        //  PARAMS: a bitmap
+        //  RETURN: a path link to "imageDir"
+        // ============================================================================================
+        private String saveImage(Bitmap bitmapImage)
+        {
+            ContextWrapper cw = new ContextWrapper(getContext()); // or getApplicationContext()
+            // path to /data/data/yourapp/app_data/imageDir
+            File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+            // Create imageDir
+            File mypath=new File(directory,"khangdeptrai.jpg");
+
+            FileOutputStream fos = null;
+            try
+            {
+                fos = new FileOutputStream(mypath);
+                // Use the compress method on the BitMap object to write image to the OutputStream
+                bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            } 
+            finally
+            {
+                try
+                {
+                    fos.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            return directory.getAbsolutePath();
+        }
+
+
+        // ============================================================================================
+        //  To load an image from specified path
+        //  PARAMS: a (String) path
+        //  RETURN: non
+        // ============================================================================================
+        private void loadImage(String path)
+        {
+            try
+            {
+                File f=new File(path, "khangdeptrai.jpg");
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                _imgProfile.setImageBitmap(b);
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+
         }
 
     }
@@ -217,4 +294,7 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
         }
 
     }
+
+
+
 }
