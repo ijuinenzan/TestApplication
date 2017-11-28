@@ -74,7 +74,7 @@ public class ProfileViewModel extends BaseObservable {
 
     public void Change()
     {
-
+        notifyObservers(MyUtils.CHANGE_PICTURE, "");
     }
 
     public void Save()
