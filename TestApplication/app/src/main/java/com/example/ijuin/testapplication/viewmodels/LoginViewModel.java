@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.example.ijuin.testapplication.factories.UserFactory;
 import com.example.ijuin.testapplication.models.UserModel;
+import com.example.ijuin.testapplication.utils.FirebaseManager;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.utils.TextWatcherAdapter;
 import com.facebook.login.LoginManager;
@@ -128,6 +129,8 @@ public class LoginViewModel extends BaseObservable
                                     {
                                         DataSnapshot childRef = dataSnapshot.child(FirebaseAuth.getInstance().getUid());
                                         UserModel user = childRef.getValue(UserModel.class);
+                                        FirebaseManager.getInstance().updateUser(user);
+
 
                                         setAuthDone(true);
 
@@ -138,7 +141,7 @@ public class LoginViewModel extends BaseObservable
                                     else
                                     {
                                         UserModel user = UserFactory.createNewUser();
-                                        _userReference.child(FirebaseAuth.getInstance().getUid()).setValue(UserFactory.createNewUser());
+                                        FirebaseManager.getInstance().updateUser(user);
 
                                         setAuthDone(true);
 
@@ -158,9 +161,9 @@ public class LoginViewModel extends BaseObservable
                 });
     }
 
-    public void loginWithFacebook(String token)
+    public void loginWithFacebook(String token, final String facebookId)
     {
-        AuthCredential credential = FacebookAuthProvider.getCredential(token);
+        final AuthCredential credential = FacebookAuthProvider.getCredential(token);
 
         setAuthInProgress(true);
         FirebaseAuth.getInstance().signInWithCredential(credential)
@@ -178,6 +181,7 @@ public class LoginViewModel extends BaseObservable
                                     {
                                         DataSnapshot childRef = dataSnapshot.child(FirebaseAuth.getInstance().getUid());
                                         UserModel user = childRef.getValue(UserModel.class);
+                                        FirebaseManager.getInstance().updateUser(user);
 
                                         setAuthDone(true);
 
@@ -187,8 +191,8 @@ public class LoginViewModel extends BaseObservable
                                     }
                                     else
                                     {
-                                        UserModel user = UserFactory.createNewUser();
-                                        _userReference.child(FirebaseAuth.getInstance().getUid()).setValue(UserFactory.createNewUser());
+                                        UserModel user = UserFactory.createNewUserFromFacebook(facebookId);
+                                        FirebaseManager.getInstance().updateUser(user);
 
                                         setAuthDone(true);
 
@@ -227,6 +231,8 @@ public class LoginViewModel extends BaseObservable
                                     {
                                         DataSnapshot childRef = dataSnapshot.child(FirebaseAuth.getInstance().getUid());
                                         UserModel user = childRef.getValue(UserModel.class);
+                                        FirebaseManager.getInstance().updateUser(user);
+
 
                                         setAuthDone(true);
 
@@ -237,7 +243,7 @@ public class LoginViewModel extends BaseObservable
                                     else
                                     {
                                         UserModel user = UserFactory.createNewUser();
-                                        _userReference.child(FirebaseAuth.getInstance().getUid()).setValue(UserFactory.createNewUser());
+                                        FirebaseManager.getInstance().updateUser(user);
 
                                         setAuthDone(true);
 
@@ -277,7 +283,7 @@ public class LoginViewModel extends BaseObservable
                 });
     }
 
-    public void loginWithTwitter (String token, String secret) {
+    public void loginWithTwitter (String token, String secret, final String twitterId) {
         setAuthInProgress(true);
         AuthCredential credential = TwitterAuthProvider.getCredential(
                 token,
@@ -298,6 +304,8 @@ public class LoginViewModel extends BaseObservable
                                     {
                                         DataSnapshot childRef = dataSnapshot.child(FirebaseAuth.getInstance().getUid());
                                         UserModel user = childRef.getValue(UserModel.class);
+                                        FirebaseManager.getInstance().updateUser(user);
+
 
                                         setAuthDone(true);
 
@@ -307,8 +315,8 @@ public class LoginViewModel extends BaseObservable
                                     }
                                     else
                                     {
-                                        UserModel user = UserFactory.createNewUser();
-                                        _userReference.child(FirebaseAuth.getInstance().getUid()).setValue(UserFactory.createNewUser());
+                                        UserModel user = UserFactory.createNewUserFromTwitter(twitterId);
+                                        FirebaseManager.getInstance().updateUser(user);
 
                                         setAuthDone(true);
 

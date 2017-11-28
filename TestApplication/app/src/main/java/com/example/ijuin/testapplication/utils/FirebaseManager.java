@@ -34,6 +34,8 @@ public class FirebaseManager implements ChildEventListener, ValueEventListener
 
     private FirebaseAuth _auth;
 
+    private UserModel _user;
+
     public static synchronized FirebaseManager getInstance()
     {
         if(sFirebaseManager == null)
@@ -92,7 +94,22 @@ public class FirebaseManager implements ChildEventListener, ValueEventListener
 
     public void updateUser(UserModel user)
     {
+        if(_user == null ||_user != user)
+        {
+            _user = user;
+        }
+
+        if(_auth.getCurrentUser() == null)
+        {
+            return;
+        }
+
         _userReference.child(_auth.getUid()).setValue(user);
+    }
+
+    public UserModel getUser()
+    {
+        return _user;
     }
 
     public void signOut()
@@ -102,5 +119,6 @@ public class FirebaseManager implements ChildEventListener, ValueEventListener
 
     public void destroy() {
         sFirebaseManager=null;
+        _user = null;
     }
 }

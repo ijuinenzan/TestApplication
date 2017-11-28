@@ -20,20 +20,20 @@ public class SearchViewModel extends BaseObservable
 {
     public ArrayList<Observer> observers;
 
-    private UserModel _user;
     private UserModel _newUser;
 
 
-    public SearchViewModel(UserModel user) {
+    public SearchViewModel() {
         observers=new ArrayList<>();
 
-        _user = user;
+        UserModel currentUser = FirebaseManager.getInstance().getUser();
+
         _newUser = new UserModel();
-        _newUser.setState(_user.getState());
-        _newUser.setIsFindingFemale(_user.getIsFindingFemale());
-        _newUser.setIsFindingMale(_user.getIsFindingMale());
-        _newUser.setMinAge(_user.getMinAge());
-        _newUser.setMaxAge(_user.getMaxAge());
+        _newUser.setState(currentUser.getState());
+        _newUser.setIsFindingFemale(currentUser.getIsFindingFemale());
+        _newUser.setIsFindingMale(currentUser.getIsFindingMale());
+        _newUser.setMinAge(currentUser.getMinAge());
+        _newUser.setMaxAge(currentUser.getMaxAge());
     }
 
     public void addObserver(Observer client) {
@@ -69,32 +69,23 @@ public class SearchViewModel extends BaseObservable
             notifyPropertyChanged(BR.finding);
         }
 
-        _user.setState(_newUser.getState());
-        _user.setIsFindingFemale(_newUser.getIsFindingFemale());
-        _user.setIsFindingMale(_newUser.getIsFindingMale());
-        _user.setMinAge(_newUser.getMinAge());
-        _user.setMaxAge(_newUser.getMaxAge());
+        UserModel currentUser = FirebaseManager.getInstance().getUser();
 
-        FirebaseManager.getInstance().updateUser(_user);
 
-        _newUser.setState(_user.getState());
-        _newUser.setIsFindingFemale(_user.getIsFindingFemale());
-        _newUser.setIsFindingMale(_user.getIsFindingMale());
-        _newUser.setMinAge(_user.getMinAge());
-        _newUser.setMaxAge(_user.getMaxAge());
+        currentUser.setState(_newUser.getState());
+        currentUser.setIsFindingFemale(_newUser.getIsFindingFemale());
+        currentUser.setIsFindingMale(_newUser.getIsFindingMale());
+        currentUser.setMinAge(_newUser.getMinAge());
+        currentUser.setMaxAge(_newUser.getMaxAge());
 
-    }
+        FirebaseManager.getInstance().updateUser(currentUser);
 
-    @Bindable
-    public String getState()
-    {
-        return _newUser.getState();
-    }
+        _newUser.setState(currentUser.getState());
+        _newUser.setIsFindingFemale(currentUser.getIsFindingFemale());
+        _newUser.setIsFindingMale(currentUser.getIsFindingMale());
+        _newUser.setMinAge(currentUser.getMinAge());
+        _newUser.setMaxAge(currentUser.getMaxAge());
 
-    public void setState(String value)
-    {
-        _newUser.setState(value);
-        notifyPropertyChanged(BR.state);
     }
 
     @Bindable

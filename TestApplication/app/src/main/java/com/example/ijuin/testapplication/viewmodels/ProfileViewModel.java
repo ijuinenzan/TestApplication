@@ -19,28 +19,28 @@ import java.util.ArrayList;
 
 public class ProfileViewModel extends BaseObservable {
 
-    private UserModel _user;
     private UserModel _newUser;
     public ArrayList<Observer> observers;
 
-    public ProfileViewModel(UserModel user) {
+    public ProfileViewModel() {
         observers=new ArrayList<>();
-        _user = user;
         _newUser = new UserModel();
 
-        _newUser.setDisplayName(new FieldModel<String>(_user.getDisplayName().getValue(),_user.getDisplayName().getIsPublic()));
-        _newUser.setYearBorn(new FieldModel<Integer>(_user.getYearBorn().getValue(),_user.getYearBorn().getIsPublic()));
-        _newUser.setGender(new FieldModel<Boolean>(_user.getGender().getValue(),_user.getGender().getIsPublic()));
-        _newUser.setCity(new FieldModel<String>(_user.getCity().getValue(),_user.getCity().getIsPublic()));
-        _newUser.setCountry(new FieldModel<String>(_user.getCountry().getValue(),_user.getCountry().getIsPublic()));
-        _newUser.setWeight(new FieldModel<Float>(_user.getWeight().getValue(),_user.getWeight().getIsPublic()));
-        _newUser.setHeight(new FieldModel<Float>(_user.getHeight().getValue(),_user.getHeight().getIsPublic()));
-        _newUser.setPhoneNumber(new FieldModel<String>(_user.getPhoneNumber().getValue(),_user.getPhoneNumber().getIsPublic()));
-        _newUser.setFacebook(new FieldModel<String>(_user.getFacebook().getValue(),_user.getFacebook().getIsPublic()));
-        _newUser.setTwitter(new FieldModel<String>(_user.getTwitter().getValue(),_user.getTwitter().getIsPublic()));
-        _newUser.setAddress(new FieldModel<String>(_user.getAddress().getValue(),_user.getAddress().getIsPublic()));
-        _newUser.setJob(new FieldModel<String>(_user.getJob().getValue(),_user.getJob().getIsPublic()));
-        _newUser.setImageUrl(new FieldModel<String>(_user.getImageUrl().getValue(),_user.getImageUrl().getIsPublic()));
+        UserModel currentUser = FirebaseManager.getInstance().getUser();
+
+        _newUser.setDisplayName(new FieldModel<String>(currentUser.getDisplayName().getValue(),currentUser.getDisplayName().getIsPublic()));
+        _newUser.setYearBorn(new FieldModel<Integer>(currentUser.getYearBorn().getValue(),currentUser.getYearBorn().getIsPublic()));
+        _newUser.setGender(new FieldModel<Boolean>(currentUser.getGender().getValue(),currentUser.getGender().getIsPublic()));
+        _newUser.setCity(new FieldModel<String>(currentUser.getCity().getValue(),currentUser.getCity().getIsPublic()));
+        _newUser.setCountry(new FieldModel<String>(currentUser.getCountry().getValue(),currentUser.getCountry().getIsPublic()));
+        _newUser.setWeight(new FieldModel<Float>(currentUser.getWeight().getValue(),currentUser.getWeight().getIsPublic()));
+        _newUser.setHeight(new FieldModel<Float>(currentUser.getHeight().getValue(),currentUser.getHeight().getIsPublic()));
+        _newUser.setPhoneNumber(new FieldModel<String>(currentUser.getPhoneNumber().getValue(),currentUser.getPhoneNumber().getIsPublic()));
+        _newUser.setFacebook(new FieldModel<String>(currentUser.getFacebook().getValue(),currentUser.getFacebook().getIsPublic()));
+        _newUser.setTwitter(new FieldModel<String>(currentUser.getTwitter().getValue(),currentUser.getTwitter().getIsPublic()));
+        _newUser.setAddress(new FieldModel<String>(currentUser.getAddress().getValue(),currentUser.getAddress().getIsPublic()));
+        _newUser.setJob(new FieldModel<String>(currentUser.getJob().getValue(),currentUser.getJob().getIsPublic()));
+        _newUser.setImageUrl(new FieldModel<String>(currentUser.getImageUrl().getValue(),currentUser.getImageUrl().getIsPublic()));
     }
 
     public void addObserver(Observer client) {
@@ -73,35 +73,37 @@ public class ProfileViewModel extends BaseObservable {
 
     public void Save()
     {
-        _user.setDisplayName(_newUser.getDisplayName());
-        _user.setYearBorn(_newUser.getYearBorn());
-        _user.setGender(_newUser.getGender());
-        _user.setCity(_newUser.getCity());
-        _user.setCountry(_newUser.getCountry());
-        _user.setWeight(_newUser.getWeight());
-        _user.setHeight(_newUser.getHeight());
-        _user.setPhoneNumber(_newUser.getPhoneNumber());
-        _user.setFacebook(_newUser.getFacebook());
-        _user.setTwitter(_newUser.getTwitter());
-        _user.setAddress(_newUser.getAddress());
-        _user.setJob(_newUser.getJob());
-        _user.setImageUrl(_newUser.getImageUrl());
+        UserModel currentUser = FirebaseManager.getInstance().getUser();
 
-        FirebaseManager.getInstance().updateUser(_user);
+        currentUser.setDisplayName(_newUser.getDisplayName());
+        currentUser.setYearBorn(_newUser.getYearBorn());
+        currentUser.setGender(_newUser.getGender());
+        currentUser.setCity(_newUser.getCity());
+        currentUser.setCountry(_newUser.getCountry());
+        currentUser.setWeight(_newUser.getWeight());
+        currentUser.setHeight(_newUser.getHeight());
+        currentUser.setPhoneNumber(_newUser.getPhoneNumber());
+        currentUser.setFacebook(_newUser.getFacebook());
+        currentUser.setTwitter(_newUser.getTwitter());
+        currentUser.setAddress(_newUser.getAddress());
+        currentUser.setJob(_newUser.getJob());
+        currentUser.setImageUrl(_newUser.getImageUrl());
 
-        _newUser.setDisplayName(new FieldModel<String>(_user.getDisplayName().getValue(),_user.getDisplayName().getIsPublic()));
-        _newUser.setYearBorn(new FieldModel<Integer>(_user.getYearBorn().getValue(),_user.getYearBorn().getIsPublic()));
-        _newUser.setGender(new FieldModel<Boolean>(_user.getGender().getValue(),_user.getGender().getIsPublic()));
-        _newUser.setCity(new FieldModel<String>(_user.getCity().getValue(),_user.getCity().getIsPublic()));
-        _newUser.setCountry(new FieldModel<String>(_user.getCountry().getValue(),_user.getCountry().getIsPublic()));
-        _newUser.setWeight(new FieldModel<Float>(_user.getWeight().getValue(),_user.getWeight().getIsPublic()));
-        _newUser.setHeight(new FieldModel<Float>(_user.getHeight().getValue(),_user.getHeight().getIsPublic()));
-        _newUser.setPhoneNumber(new FieldModel<String>(_user.getPhoneNumber().getValue(),_user.getPhoneNumber().getIsPublic()));
-        _newUser.setFacebook(new FieldModel<String>(_user.getFacebook().getValue(),_user.getFacebook().getIsPublic()));
-        _newUser.setTwitter(new FieldModel<String>(_user.getTwitter().getValue(),_user.getTwitter().getIsPublic()));
-        _newUser.setAddress(new FieldModel<String>(_user.getAddress().getValue(),_user.getAddress().getIsPublic()));
-        _newUser.setJob(new FieldModel<String>(_user.getJob().getValue(),_user.getJob().getIsPublic()));
-        _newUser.setImageUrl(new FieldModel<String>(_user.getImageUrl().getValue(),_user.getImageUrl().getIsPublic()));
+        FirebaseManager.getInstance().updateUser(currentUser);
+
+        _newUser.setDisplayName(new FieldModel<String>(currentUser.getDisplayName().getValue(),currentUser.getDisplayName().getIsPublic()));
+        _newUser.setYearBorn(new FieldModel<Integer>(currentUser.getYearBorn().getValue(),currentUser.getYearBorn().getIsPublic()));
+        _newUser.setGender(new FieldModel<Boolean>(currentUser.getGender().getValue(),currentUser.getGender().getIsPublic()));
+        _newUser.setCity(new FieldModel<String>(currentUser.getCity().getValue(),currentUser.getCity().getIsPublic()));
+        _newUser.setCountry(new FieldModel<String>(currentUser.getCountry().getValue(),currentUser.getCountry().getIsPublic()));
+        _newUser.setWeight(new FieldModel<Float>(currentUser.getWeight().getValue(),currentUser.getWeight().getIsPublic()));
+        _newUser.setHeight(new FieldModel<Float>(currentUser.getHeight().getValue(),currentUser.getHeight().getIsPublic()));
+        _newUser.setPhoneNumber(new FieldModel<String>(currentUser.getPhoneNumber().getValue(),currentUser.getPhoneNumber().getIsPublic()));
+        _newUser.setFacebook(new FieldModel<String>(currentUser.getFacebook().getValue(),currentUser.getFacebook().getIsPublic()));
+        _newUser.setTwitter(new FieldModel<String>(currentUser.getTwitter().getValue(),currentUser.getTwitter().getIsPublic()));
+        _newUser.setAddress(new FieldModel<String>(currentUser.getAddress().getValue(),currentUser.getAddress().getIsPublic()));
+        _newUser.setJob(new FieldModel<String>(currentUser.getJob().getValue(),currentUser.getJob().getIsPublic()));
+        _newUser.setImageUrl(new FieldModel<String>(currentUser.getImageUrl().getValue(),currentUser.getImageUrl().getIsPublic()));
     }
 
     public void LogOut()

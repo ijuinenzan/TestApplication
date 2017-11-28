@@ -105,9 +105,11 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         LoginManager.getInstance().registerCallback(_callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                mViewModel.loginWithFacebook(loginResult.getAccessToken().getToken());
+                mViewModel.loginWithFacebook(loginResult.getAccessToken().getToken(), loginResult.getAccessToken().getUserId());
                 _pBar.animate().setStartDelay(300).setDuration(1000).alpha(1).start();
                 _txtLogin.animate().setStartDelay(100).setDuration(500).alpha(0).start();
+
+                loginResult.getAccessToken().getUserId();
 
                 // Scale button Login smaller
                 RelativeLayout.LayoutParams button_login_lp= (RelativeLayout.LayoutParams) _layoutLogin.getLayoutParams();
@@ -140,7 +142,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         _twitterLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
-                mViewModel.loginWithTwitter(result.data.getAuthToken().token, result.data.getAuthToken().secret);
+                mViewModel.loginWithTwitter(result.data.getAuthToken().token, result.data.getAuthToken().secret, result.data.getUserName());
                 _pBar.animate().setStartDelay(300).setDuration(1000).alpha(1).start();
                 _txtLogin.animate().setStartDelay(100).setDuration(500).alpha(0).start();
 
@@ -187,8 +189,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         //endregion
     }
 
-    public void startMainActivity(UserModel user) {
-        final UserModel userModel = user;
+    public void startMainActivity() {
         if((int)_layoutLogin.getTag()==1)
         {
             return;
@@ -220,7 +221,6 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
                 {
                     // getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, frag_dashboard).disallowAddToBackStack().commitAllowingStateLoss();
                     Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                    intent.putExtra("User", userModel);
                     startActivity(intent);
                 }
                 catch(Exception e){}
@@ -285,7 +285,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         }
         else if(event == MyUtils.OPEN_ACTIVITY)
         {
-            startMainActivity((UserModel)content);
+            startMainActivity();
         }
     }
 

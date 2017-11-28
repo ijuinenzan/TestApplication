@@ -110,9 +110,7 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
                     R.layout.search_fragment, container, false);
             View view = binding.getRoot();
 
-            Bundle extras = getActivity().getIntent().getExtras();
-
-            mViewModel= new SearchViewModel((UserModel)extras.getSerializable("User"));
+            mViewModel= new SearchViewModel();
             binding.setViewModel(mViewModel);
 
             final BubbleThumbRangeSeekbar rangeSeekbar = (BubbleThumbRangeSeekbar) view.findViewById(R.id.rangeSeekbar);
@@ -147,9 +145,8 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
 
             _imgProfile = (ImageView) view.findViewById(R.id.img_UserIcon);
             _btnChangeProfileImg = (Button) view.findViewById(R.id.btn_ChangeUserImg);
-            Bundle extras = getActivity().getIntent().getExtras();
 
-            mViewModel= new ProfileViewModel((UserModel)extras.getSerializable("User"));
+            mViewModel= new ProfileViewModel();
             binding.setViewModel(mViewModel);
 
             return view;
