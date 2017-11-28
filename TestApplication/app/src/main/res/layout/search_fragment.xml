@@ -17,9 +17,147 @@
         android:textSize="25sp"
         android:fontFamily="@font/signature_of_the_ancient"/>
 
-    <include layout="@layout/gender_in_search_fragment"/>
+    <LinearLayout
+        android:id="@+id/linearLayout_popup"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/theme"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical">
 
-    <include layout="@layout/age_range_in_search_fragment"/>
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:fontFamily="@font/thelightfont"
+                app:layout_marginLeftPercent="10%"
+                android:textColor="#DB4C2C"
+                android:textStyle="bold"
+                app:layout_marginTopPercent="3%"
+                app:layout_marginBottomPercent="3%"
+                android:text="male"/>
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_marginLeftPercent="80%"
+                app:layout_marginTopPercent="3%"
+                app:layout_marginBottomPercent="3%"
+                android:textColorHint="#ff0000"/>
+        </android.support.percent.PercentRelativeLayout>
+
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:fontFamily="@font/thelightfont"
+                android:id="@+id/txtFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                app:layout_marginLeftPercent="10%"
+                android:textColor="#DB4C2C"
+                android:text="female"
+                android:textStyle="bold"
+                app:layout_marginBottomPercent="3%"/>
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_marginLeftPercent="80%"
+                app:layout_marginBottomPercent="3%"
+                android:shadowColor="@color/YELLOW"/>
+        </android.support.percent.PercentRelativeLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@drawable/theme"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/txtAddRange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/agerange"
+                app:layout_marginLeftPercent="5%"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                android:textColor="#DB4C2C"/>
+
+            <TextView
+                android:id="@+id/txtAgeMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                app:layout_marginLeftPercent="81%"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/BLACK"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                app:layout_marginLeftPercent="87%"
+                android:textStyle="bold"
+                android:textColor="@color/BLACK"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/txtAgeMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="15sp"
+                app:layout_marginLeftPercent="90%"
+                android:textStyle="bold"
+                android:textColor="@color/BLACK"
+                android:layout_marginTop="10dp"/>
+
+        </android.support.percent.PercentRelativeLayout>
+
+        <com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar
+            android:id="@+id/rangeSeekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bar_color="@color/SILVER"
+            app:bar_highlight_color="@color/CRIMSON"
+            app:left_thumb_color="@color/CRIMSON"
+            app:left_thumb_color_pressed="@color/CRIMSON"
+            app:right_thumb_color="@color/CRIMSON"
+            app:right_thumb_color_pressed="@color/CRIMSON"
+            app:max_value="55"
+            app:min_value="15"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
 
 
     <com.wang.avi.AVLoadingIndicatorView
