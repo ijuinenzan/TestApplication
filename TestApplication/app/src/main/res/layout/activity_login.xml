@@ -2,7 +2,6 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:animateLayoutChanges="true"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -49,6 +48,7 @@
             app:layout_marginTopPercent="35%"
             android:id="@+id/form_login"
             android:padding="30dp"
+            android:focusableInTouchMode="false"
             android:alpha="100">
 
             <ImageView

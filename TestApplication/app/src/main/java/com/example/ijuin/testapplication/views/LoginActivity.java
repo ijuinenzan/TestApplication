@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.hardware.input.InputManager;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -282,6 +283,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         _btnAnonymousLogin.setAlpha(1);
         _twitterFirebaseLoginButton.setAlpha(1);
         _facebookFirebaseLoginButton.setAlpha(1);
+        _layoutLogin.setTag(0);
     }
 
     @Override
