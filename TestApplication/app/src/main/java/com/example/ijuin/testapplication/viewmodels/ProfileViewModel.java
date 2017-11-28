@@ -109,5 +109,6 @@ public class ProfileViewModel extends BaseObservable {
     public void LogOut()
     {
         FirebaseManager.getInstance().signOut();
+        notifyObservers(MyUtils.LOG_OUT, null);
     }
 }

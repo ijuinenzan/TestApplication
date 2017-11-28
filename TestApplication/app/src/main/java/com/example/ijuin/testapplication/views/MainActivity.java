@@ -60,7 +60,10 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
         addControls();
     }
 
-
+    public void back()
+    {
+        super.onBackPressed();
+    }
 
     public void addControls()
     {
@@ -89,11 +92,12 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
     }
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     public void onObserve(int event, Object eventMessage) {
-        if(event == MyUtils.CHANGE_PICTURE)
-        {
-            //change picture
-        }
     }
 
 
@@ -128,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
         }
     }
 
-    public static class ProfileFragment extends Fragment {
+    public static class ProfileFragment extends Fragment implements Observer<Object> {
 
         public ProfileFragment() {        }
 
@@ -147,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
             _btnChangeProfileImg = (Button) view.findViewById(R.id.btn_ChangeUserImg);
 
             mViewModel= new ProfileViewModel();
+            mViewModel.addObserver(this);
             binding.setViewModel(mViewModel);
 
             return view;
@@ -211,6 +216,13 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
 
         }
 
+        @Override
+        public void onObserve(int event, Object eventMessage) {
+            if(event == MyUtils.LOG_OUT)
+            {
+                ((MainActivity)getActivity()).back();
+            }
+        }
     }
 
     public static class AboutUsFragment extends Fragment {

@@ -27,6 +27,7 @@ public class MyUtils
     public static final int SHOW_TOAST = 2;
     public static final int UPDATE_MESSAGES=3;
     public static final int CHANGE_PICTURE = 4;
+    public static final int LOG_OUT = 5;
 
     public static Boolean MALE = true;
     public static Boolean FEMALE = false;
