@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable name="viewModel" type="com.example.ijuin.testapplication.viewmodels.ChatViewModel"/>
@@ -38,6 +39,13 @@
                 android:layout_alignParentBottom="true"
                 style="@style/regular_layouts">
 
+                <android.support.design.widget.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fabSize="mini"
+                    android:backgroundTint="@color/TWITTER"
+                    android:src="@drawable/ic_up_24dp"/>
+
                 <EditText
                     android:id="@+id/edittext_chat_message"
                     android:layout_width="0dp"
@@ -45,6 +53,7 @@
                     android:layout_weight="1"
                     android:hint="@string/hint_typing"
                     android:layout_marginEnd="@dimen/margin_average"
+                    android:layout_marginStart="5dp"
                     style="@style/regular_editTexts"/>
                 <Button
                     android:layout_width="@dimen/small_width"
@@ -52,6 +61,8 @@
                     android:text="@string/send_text"
                     android:onClick="@{() -> activity.sendMessage()}"
                     style="@style/regular_buttons"/>
+
+
             </LinearLayout>
 
         </RelativeLayout>

@@ -14,6 +14,7 @@ import com.example.ijuin.testapplication.viewmodels.ChatViewModel;
 
 import java.util.ArrayList;
 
+
 /**
  * Created by ijuin on 11/12/2017.
  */
@@ -28,33 +29,34 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
-        mViewModel= new ChatViewModel(getIntent().getStringExtra(MyUtils.EXTRA_ROOM_NAME));
-        mBinding.setViewModel(mViewModel);
-        mBinding.setActivity(this);
-        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mViewModel.addObserver(this);
-        mViewModel.setListener();
+
+//        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
+//        mViewModel= new ChatViewModel(getIntent().getStringExtra(MyUtils.EXTRA_ROOM_NAME));
+//        mBinding.setViewModel(mViewModel);
+//        mBinding.setActivity(this);
+//        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        mViewModel.addObserver(this);
+//        mViewModel.setListener();
     }
 
     public void sendMessage() {
-        mViewModel.sendMessageToFirebase(mBinding.edittextChatMessage.getText().toString());
-        mBinding.edittextChatMessage.getText().clear();
+//        mViewModel.sendMessageToFirebase(mBinding.edittextChatMessage.getText().toString());
+//        mBinding.edittextChatMessage.getText().clear();
     }
 
     @Override
     public void onObserve(int event, ArrayList<MessageItemModel> eventMessage) {
 
-        ChatAdapter chatAdapter=new ChatAdapter(this,eventMessage);
-        mBinding.recyclerView.setAdapter(chatAdapter);
-        mBinding.recyclerView.scrollToPosition(eventMessage.size()-1);
+//        ChatAdapter chatAdapter=new ChatAdapter(this,eventMessage);
+//        mBinding.recyclerView.setAdapter(chatAdapter);
+//        mBinding.recyclerView.scrollToPosition(eventMessage.size()-1);
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        mViewModel.removeObserver(this);
-        mViewModel.onDestory();
+       super.onDestroy();
+//        mViewModel.removeObserver(this);
+//        mViewModel.onDestory();
     }
 
 }

@@ -46,6 +46,8 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+
 public class LoginActivity extends AppCompatActivity implements Observer<Object>  {
 
     //region DECLARE VARIABLE
@@ -64,6 +66,8 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
     private DisplayMetrics dm;
     RelativeLayout _layoutLogin;
     private ValueAnimator _valueAnimator;
+    private RelativeLayout.LayoutParams _button_login_lp;
+    private RelativeLayout.LayoutParams _old_button_login_lp;
     //endregion
 
     @Override
@@ -71,6 +75,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
+
 
         TwitterAuthConfig authConfig =  new TwitterAuthConfig(
                 getString(R.string.com_twitter_sdk_android_CONSUMER_KEY),
@@ -112,9 +117,8 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
                 loginResult.getAccessToken().getUserId();
 
                 // Scale button Login smaller
-                RelativeLayout.LayoutParams button_login_lp= (RelativeLayout.LayoutParams) _layoutLogin.getLayoutParams();
-                button_login_lp.width=Math.round(200);
-                _layoutLogin.setLayoutParams(button_login_lp);
+                _button_login_lp.width=Math.round(200);
+                _layoutLogin.setLayoutParams(_button_login_lp);
             }
 
             @Override
@@ -147,9 +151,9 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
                 _txtLogin.animate().setStartDelay(100).setDuration(500).alpha(0).start();
 
                 // Scale button Login smaller
-                RelativeLayout.LayoutParams button_login_lp= (RelativeLayout.LayoutParams) _layoutLogin.getLayoutParams();
-                button_login_lp.width=Math.round(200);
-                _layoutLogin.setLayoutParams(button_login_lp);
+
+                _button_login_lp.width=Math.round(200);
+                _layoutLogin.setLayoutParams(_button_login_lp);
             }
 
             @Override
@@ -169,6 +173,8 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         dm=getResources().getDisplayMetrics();
         _layoutLogin = (RelativeLayout) findViewById(R.id.button_login);
         _layoutLogin.setTag(0);
+        _button_login_lp = (RelativeLayout.LayoutParams) _layoutLogin.getLayoutParams();
+        _old_button_login_lp = _button_login_lp;
         _pBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
 
 
@@ -198,7 +204,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         {
             _layoutLogin.animate().x(dm.widthPixels/2).y(dm.heightPixels/2).setInterpolator(new EasingInterpolator(Ease.CUBIC_IN)).setListener(null).setDuration(1000).setStartDelay(0).start();
             _layoutLogin.animate().setStartDelay(600).setDuration(1000).scaleX(40).scaleY(40).setInterpolator(new EasingInterpolator(Ease.CUBIC_IN_OUT)).start();
-            _imgView.animate().alpha(0).rotation(90).setStartDelay(0).setDuration(800).start();
+            //_imgView.animate().alpha(0).rotation(90).setStartDelay(0).setDuration(800).start();
         }
         _layoutLogin.setTag(1);
         _valueAnimator.setFloatValues(_layoutLogin.getMeasuredWidth(), _layoutLogin.getMeasuredHeight());
@@ -225,7 +231,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
                 }
                 catch(Exception e){}
 
-                _layoutLogin.animate().setStartDelay(0).alpha(1).setDuration(1000).scaleX(1).scaleY(1).x(dm.widthPixels-_layoutLogin.getMeasuredWidth()-100).y(dm.heightPixels-_layoutLogin.getMeasuredHeight()-100).setListener(new Animator.AnimatorListener(){
+                _layoutLogin.animate().setStartDelay(0).alpha(1).setDuration(1000).scaleX(1).scaleY(1).setListener(new Animator.AnimatorListener(){
 
                     @Override
                     public void onAnimationStart(Animator p1) {
@@ -234,9 +240,13 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
 
                     @Override
                     public void onAnimationEnd(Animator p1) {
-                        _imgView.animate().setDuration(0).setStartDelay(0).rotation(85).alpha(1).start();
-                        _imgView.animate().setDuration(2000).setInterpolator(new BounceInterpolator()).setStartDelay(0).rotation(0).start();
-                        _layoutLogin.setTag(2);
+                        //_imgView.animate().setDuration(0).setStartDelay(0).rotation(85).alpha(1).start();
+                        //_imgView.animate().setDuration(2000).setInterpolator(new BounceInterpolator()).setStartDelay(0).rotation(0).start();
+                        _txtLogin.animate().alpha(1);
+                        _txtLogin.setText("LOGIN");
+                        _old_button_login_lp.width = -1;
+                        _layoutLogin.setLayoutParams(_old_button_login_lp);
+                        //_layoutLogin.setTag(2);
                     }
 
                     @Override
@@ -269,6 +279,9 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
     protected void onResume() {
         super.onResume();
         mViewModel.addObserver(this);
+        _btnAnonymousLogin.setAlpha(1);
+        _twitterFirebaseLoginButton.setAlpha(1);
+        _facebookFirebaseLoginButton.setAlpha(1);
     }
 
     @Override
