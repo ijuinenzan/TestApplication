@@ -34,6 +34,14 @@
 
     <color name="TWITTER">#DB4C2C</color>
 
+    <color name="ORANGE">#FF7733</color>
+
+    <color name="DARK_YELLOW">#FFD133</color>
+
+    <color name="DARK_BLUE">#337DFF</color>
+
+
+
     <!-- Login Page-->
     <color name="color_login_button">#FF3366</color>
     <color name="color_login_buttonpress">#EE3162</color>
@@ -44,4 +52,5 @@
     <color name="color_edittext_hint">#999</color>
 
     <color name="color_edittext_label">#fff</color>
+
 </resources>

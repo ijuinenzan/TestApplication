@@ -24,6 +24,12 @@
 
     <string name="changeUserImg">Change</string>
 
+    <string name="setting">Setting</string>
+    <string name="block">Block</string>
+    <string name="profile">Profile</string>
+    <string name="volume">Volume</string>
+
+
     <string name="userName">Name:</string>
     <string name="userAge">Age:</string>
     <string name="userGender">Gender:</string>

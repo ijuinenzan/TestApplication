@@ -11,6 +11,7 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/layout_chat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -32,6 +33,48 @@
                 android:layout_above="@+id/layout_input">
             </android.support.v7.widget.RecyclerView>
 
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/fab_camera"
+                android:layout_marginStart="5dp"
+                android:elevation="6dp"
+                android:src="@drawable/ic_location_27dp"
+                app:pressedTranslationZ="12dp"
+                android:layout_marginBottom="7dp"
+                android:backgroundTint="@color/DARK_BLUE"
+                android:visibility="invisible"/>
+
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="6dp"
+                android:src="@drawable/ic_camera_27dp"
+                android:layout_above="@id/fab_gallery"
+                app:pressedTranslationZ="12dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="7dp"
+                android:backgroundTint="@color/CRIMSON"
+                android:visibility="invisible"/>
+
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_gallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_gallery_27dp"
+                android:elevation="6dp"
+                app:pressedTranslationZ="12dp"
+                android:layout_above="@id/layout_input"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="7dp"
+                android:backgroundTint="@color/DARK_YELLOW"
+                android:visibility="invisible"/>
+
             <LinearLayout
                 android:id="@+id/layout_input"
                 android:layout_width="match_parent"
@@ -41,6 +84,7 @@
                 style="@style/regular_layouts">
 
                 <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab_plus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:fabSize="mini"
@@ -50,7 +94,7 @@
 
                 <io.github.rockerhieu.emojicon.EmojiconEditText
                     android:id="@+id/editEmojicon"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
@@ -59,9 +103,9 @@
 
                 <Button
                     android:layout_marginStart="6dp"
-                    android:layout_width="@dimen/small_width"
+                    android:layout_width="40dp"
                     android:layout_height="match_parent"
-                    android:text="@string/send_text"
+                    android:background="@drawable/ic_send_48dp"
                     android:onClick="@{() -> activity.sendMessage()}"
                     style="@style/KhangTheme"/>
 
