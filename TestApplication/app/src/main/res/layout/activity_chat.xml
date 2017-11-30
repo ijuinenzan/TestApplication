@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     app:fabSize="mini"
                     android:backgroundTint="@color/TWITTER"
-                    android:src="@drawable/ic_up_24dp"/>
+                    android:src="@drawable/ic_plus"/>
 
 
                 <io.github.rockerhieu.emojicon.EmojiconEditText
