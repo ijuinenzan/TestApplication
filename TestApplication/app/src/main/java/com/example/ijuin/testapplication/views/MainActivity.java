@@ -262,8 +262,7 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
                 @Override
                 public void onClick(View view)
                 {
-                    writeToFile("Khang Dep Trai","settings", "users");
-                    _txt.setText(readFromFile("settings","users"));
+                    _txt.setText(readFromFile(writeToFile("Khang Dep Trai","settings", "users"),"users"));
                 }
             });
             return view;
@@ -271,11 +270,11 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
 
 
 
-        private void writeToFile(String content, String filePath, String fileName)
+        private String writeToFile(String content, String fileDirName, String fileName)
         {
             ContextWrapper cw = new ContextWrapper(getContext());
 
-            File directory = cw.getDir(filePath, Context.MODE_PRIVATE);
+            File directory = cw.getDir(fileDirName, Context.MODE_PRIVATE);
 
             File mypath = new File(directory,fileName + ".txt");
 
@@ -300,6 +299,7 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
                     e.printStackTrace();
                 }
             }
+            return directory.getAbsolutePath();
         }
 
 
