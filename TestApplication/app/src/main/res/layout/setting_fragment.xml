@@ -90,4 +90,14 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sound_area"
+        android:layout_centerHorizontal="true"
+        android:text="hello"
+        app:layout_marginTopPercent="5%"
+        android:textSize="20sp"/>
+
 </android.support.percent.PercentRelativeLayout>
