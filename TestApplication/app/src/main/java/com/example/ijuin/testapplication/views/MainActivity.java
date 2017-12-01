@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
@@ -28,7 +27,6 @@ import com.example.ijuin.testapplication.databinding.ProfileFragmentBinding;
 import com.example.ijuin.testapplication.databinding.SearchFragmentBinding;
 
 import com.example.ijuin.testapplication.interfaces.Observer;
-import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
 
@@ -239,6 +237,21 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
 
     }
 
+    public static class SettingFragment extends Fragment {
+
+        public SettingFragment() {        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState)
+        {
+            View view = inflater.inflate(R.layout.setting_fragment, container, false);
+
+            return view;
+        }
+
+    }
+
 
 
 
@@ -263,6 +276,8 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
                 case 2:
                     frag = new AboutUsFragment();
                     break;
+                case 3:
+                    frag = new SettingFragment();
             }
             return frag;
         }
@@ -270,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
 
@@ -287,11 +302,13 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
 
             switch (position) {
                 case 0:
-                    return R.drawable.heart;
+                    return R.drawable.ic_heart;
                 case 1:
-                    return R.drawable.profile;
+                    return R.drawable.ic_profile;
                 case 2:
-                    return R.drawable.logo;
+                    return R.drawable.ic_logo;
+                case 3:
+                    return R.drawable.ic_settings;
                 default:
                     return -1;
             }

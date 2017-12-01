@@ -24,14 +24,21 @@
 
     <string name="changeUserImg">Change</string>
 
-    <string name="setting">Setting</string>
+    <string name="settings">Settings</string>
     <string name="block">Block</string>
     <string name="profile">Profile</string>
     <string name="volume">Volume</string>
 
+    <string name="background">Background</string>
+    <string name="change_bg_image">Background Image</string>
+    <string name="change_bg_color">Background Color</string>
+    <string name="sound">Sound</string>
+    <string name="change_sound">Change Sound</string>
 
+
+    <string name="isPublic">Is Public?</string>
     <string name="userName">Name:</string>
-    <string name="userAge">Age:</string>
+    <string name="userAge">Year Born:</string>
     <string name="userGender">Gender:</string>
     <string name="userCity">City:</string>
     <string name="userCountry">Country:</string>

@@ -7,6 +7,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
+
     <color name="chat_sdk_button_login_button_color">#1c93db</color>
     <color name="chat_sdk_button_login_button_color_pressed">#1874ac</color>
 
@@ -15,6 +16,10 @@
 
     <color name="chat_sdk_button_anonymous_button_color">#aaaaaa</color>
     <color name="chat_sdk_button_anonymous_button_color_pressed">#888787</color>
+
+    <color name="CORNSILK">#FFF8DC</color>
+
+    <color name="BLANCHEDALMOND">#FFEBCD</color>
 
     <color name="RED">#FF0000</color>
 

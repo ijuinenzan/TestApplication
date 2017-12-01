@@ -34,10 +34,10 @@
     <dimen name="dialog_height">380dp</dimen>
 
     <dimen name="fontsize">15sp</dimen>
-    <dimen name="marginStart_col1">10dp</dimen>
-    <dimen name="marginStart_col2">120dp</dimen>
-    <dimen name="marginStart_col3">340dp</dimen>
-    <dimen name="widthContent">200dp</dimen>
+    <dimen name="marginStart_col1">2%</dimen>
+    <dimen name="marginStart_col2">26%</dimen>
+    <dimen name="marginStart_col3">89%</dimen>
+    <dimen name="widthContent">230dp</dimen>
 
     <dimen name="login_button_radius">30dp</dimen>
     <dimen name="login_button_height">60dp</dimen>

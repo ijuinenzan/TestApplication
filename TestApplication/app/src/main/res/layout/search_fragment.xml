@@ -112,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/agerange"
-                    app:layout_marginLeftPercent="5%"
+                    app:layout_marginStartPercent="5%"
                     android:layout_marginTop="10dp"
                     android:textSize="20sp"
                     android:textColor="#DB4C2C"/>
@@ -122,32 +122,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`` + viewModel.minAge}"
-                    app:layout_marginLeftPercent="81%"
+                    android:layout_toEndOf="@id/txtAddRange"
+                    app:layout_marginStartPercent="50%"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="@color/BLACK"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
+                    android:id="@+id/txtConnect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-"
-                    app:layout_marginLeftPercent="87%"
+                    android:layout_toEndOf="@id/txtAddRange"
                     android:textStyle="bold"
                     android:textColor="@color/BLACK"
+                    app:layout_marginStartPercent="55%"
                     android:textSize="15sp"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:id="@+id/txtAgeMax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/txtAddRange"
                     android:text="@{`` + viewModel.maxAge}"
-                    android:textSize="15sp"
-                    app:layout_marginLeftPercent="90%"
-                    android:textStyle="bold"
                     android:textColor="@color/BLACK"
-                    android:layout_marginTop="10dp"/>
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    app:layout_marginStartPercent="57%"/>
 
             </android.support.percent.PercentRelativeLayout>
 
@@ -163,8 +167,8 @@
                 app:right_thumb_color_pressed="@color/CRIMSON"
                 android:layout_marginTop="10dp"
                 app:data_type="_integer"
-                app:min_start_value="0"
-                app:max_start_value="100"/>
+                app:min_value="18"
+                app:max_value="60"/>
         </LinearLayout>
 
 

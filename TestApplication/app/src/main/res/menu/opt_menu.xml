@@ -8,7 +8,7 @@
         android:checkable="false"
         android:enabled="true"
         android:textSize="30sp"
-        android:title="@string/setting"
+        android:title="@string/settings"
         android:visible="true"
         app:showAsAction="never" />
 
