@@ -46,11 +46,14 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements Observer<Object>
 {
+
+//region DECLARE VARIABLE
     private PagerAdapter _pagerAdapter;
     private ViewPager _viewPager;
     private TabLayout tabLayout;
     private PagerSlidingTabStrip _customTab;
     private MediaPlayer _mediaPlayer;
+//endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

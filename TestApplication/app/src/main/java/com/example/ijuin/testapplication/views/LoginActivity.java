@@ -7,6 +7,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.hardware.input.InputManager;
+import android.os.CountDownTimer;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -59,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
     private TwitterLoginButton _twitterLoginButton;
     private CallbackManager _callbackManager;
     private Button _btnAnonymousLogin;
+    private boolean _isPressedBack = false;
 
     // Login
     ProgressBar _pBar;
@@ -290,6 +292,32 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
     protected void onPause() {
         super.onPause();
         mViewModel.removeObserver(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(!_isPressedBack)
+        {
+            Toast.makeText(this,"Press Back again to EXIT",Toast.LENGTH_LONG).show();
+            _isPressedBack = true;
+        }
+        else
+        {
+            super.onBackPressed();
+        }
+
+        new CountDownTimer(3000,1000)
+        {
+            @Override
+            public void onTick(long l)
+            { }
+
+            @Override
+            public void onFinish()
+            {
+                _isPressedBack = false;
+            }
+        }.start();
     }
 
     @Override
