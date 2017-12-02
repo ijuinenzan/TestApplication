@@ -7,7 +7,10 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.hardware.input.InputManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.CountDownTimer;
+import android.provider.Settings;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -62,6 +65,10 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
     private Button _btnAnonymousLogin;
     private boolean _isPressedBack = false;
 
+    // ask permisstion to draw over other app for bubble chatheads
+    private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
+
+
     // Login
     ProgressBar _pBar;
     ImageView _imgView;
@@ -79,7 +86,24 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
 
         setContentView(R.layout.activity_login);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this))
+        {
+            //If the draw over permission is not available open the settings screen
+            //to grant the permission.
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
+        }
+        else
+        {
+            addControls();
+        }
 
+        addControls();
+    }
+
+    public void addControls()
+    {
         TwitterAuthConfig authConfig =  new TwitterAuthConfig(
                 getString(R.string.com_twitter_sdk_android_CONSUMER_KEY),
                 getString(R.string.com_twitter_sdk_android_CONSUMER_SECRET));
@@ -337,6 +361,27 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         super.onActivityResult(requestCode, resultCode, data);
         _callbackManager.onActivityResult(requestCode, resultCode, data);
         _twitterLoginButton.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
+
+            //Check if the permission is granted or not.
+            if (resultCode == RESULT_OK)
+            {
+                addControls();
+            }
+            else { //Permission is not available
+                Toast.makeText(this,
+                        "Draw over other app permission not available. Closing the application",
+                        Toast.LENGTH_SHORT).show();
+
+                finish();
+            }
+        }
+        else
+        {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.example.ijuin.testapplication.views;
 
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -97,14 +98,21 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
     }
 
     @Override
-    public void onBackPressed() {
-
+    public void onBackPressed()
+    {
+        startService(new Intent(MainActivity.this, ChatHeadService.class));
+        finish();
     }
 
     @Override
     public void onObserve(int event, Object eventMessage) {
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        _mediaPlayer.stop();
+    }
 
     public static class SearchFragment extends Fragment {
 
@@ -401,9 +409,10 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
     }
 
 
+
     @Override
-    protected void onPause() {
-        super.onPause();
-        _mediaPlayer.stop();
+    protected void onDestroy()
+    {
+        super.onDestroy();
     }
 }

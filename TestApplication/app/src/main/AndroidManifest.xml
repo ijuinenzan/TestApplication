@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:allowBackup="true"
@@ -13,6 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/KhangTheme">
+
+
 
         <activity android:name=".views.LoginActivity"
             android:windowSoftInputMode="stateHidden">
@@ -58,10 +62,20 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+
+
         <activity android:name=".views.MainActivity"
             android:windowSoftInputMode="stateHidden">
 
         </activity>
+
+
+
+        <service
+            android:name=".views.ChatHeadService"
+            android:enabled="true"
+            android:exported="false"/>
     </application>
 
 </manifest>
