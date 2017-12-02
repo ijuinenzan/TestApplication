@@ -5,6 +5,7 @@ import android.content.ContextWrapper;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -33,17 +34,11 @@ import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
 
 import com.example.ijuin.testapplication.viewmodels.SearchViewModel;
 
-import org.w3c.dom.Text;
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 
 /**
  * Created by Khang Le on 11/21/2017.
@@ -55,13 +50,15 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
     private ViewPager _viewPager;
     private TabLayout tabLayout;
     private PagerSlidingTabStrip _customTab;
-
+    private MediaPlayer _mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        _mediaPlayer = MediaPlayer.create(this,R.raw.anh_nang_cua_anh);
+        _mediaPlayer.start();
         addControls();
     }
 
@@ -401,5 +398,9 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
     }
 
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        _mediaPlayer.stop();
+    }
 }
