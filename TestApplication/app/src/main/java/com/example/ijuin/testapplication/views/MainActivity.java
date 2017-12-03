@@ -21,8 +21,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
@@ -305,18 +308,20 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         private int selectedColor;
         View _main;
         private int SELECT_FILE = 410;
+        private VideoView _videoView;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState)
         {
-            View view = inflater.inflate(R.layout.setting_fragment, container, false);
+            final View view = inflater.inflate(R.layout.setting_fragment, container, false);
             _txt = (TextView) view.findViewById(R.id.content);
             _sound = (Button) view.findViewById(R.id.btn_change_sound);
             _btnColor = (Button) view.findViewById(R.id.btn_bg_color);
             _btnImage = (Button) view.findViewById(R.id.btn_change_bg_image);
             _imgView = (ImageView) view.findViewById(R.id.bg_img_selected) ;
             _main = (View) view.findViewById(R.id.mainPercentRelativeLayout);
+            _videoView = (VideoView) view.findViewById(R.id.videoview);
 
             _sound.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -368,6 +373,31 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             });
 
 
+            try {
+                int id = R.raw.khanh;
+                _videoView.setVideoURI(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + id));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            _videoView.requestFocus();
+            _videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+
+                    mediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+                        @Override
+                        public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+                            MediaController mediacontroller = new MediaController(getActivity());
+                            mediacontroller.setAnchorView(_videoView);
+                            _videoView.setMediaController(mediacontroller);
+                        }
+                    });
+                }
+            });
+
+            _videoView.start();
             return view;
         }
 

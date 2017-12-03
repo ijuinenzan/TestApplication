@@ -110,9 +110,21 @@
         android:maxHeight="100dp"
         android:minHeight="100dp"
         android:maxWidth="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/content"
-        app:layout_marginTopPercent="5%"/>
+        android:layout_centerHorizontal="true"/>
+
+    <LinearLayout
+        android:id="@+id/media_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/content">
+
+
+        <VideoView
+            android:id="@+id/videoview"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+
+    </LinearLayout>
 
 
 </android.support.percent.PercentRelativeLayout>

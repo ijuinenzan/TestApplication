@@ -98,7 +98,7 @@
                     app:image_url="@{chatMessage.srcIcon}"/>
             </LinearLayout>
 
-            
+
 
         </LinearLayout>
 
