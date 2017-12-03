@@ -139,6 +139,9 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         _mediaPlayer.stop();
     }
 
+
+
+
     public static class SearchFragment extends Fragment {
 
         public SearchFragment() {        }
@@ -169,6 +172,10 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             return view;
         }
     }
+
+
+
+
 
     public static class ProfileFragment extends Fragment implements Observer<Object> {
 
@@ -263,6 +270,9 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         }
     }
 
+
+
+
     public static class AboutUsFragment extends Fragment {
 
         public AboutUsFragment() {        }
@@ -277,6 +287,9 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
 
     }
 
+
+
+
     public static class SettingFragment extends Fragment {
 
         public SettingFragment() {        }
@@ -284,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         Button _sound;
         Button _btnColor;
         private int selectedColor;
+        View _main;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -293,12 +307,13 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             _txt = (TextView) view.findViewById(R.id.content);
             _sound = (Button) view.findViewById(R.id.btn_change_sound);
             _btnColor = (Button) view.findViewById(R.id.btn_bg_color);
+            _main = (View) view.findViewById(R.id.mainPercentRelativeLayout);
 
             _sound.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view)
                 {
-                    _txt.setText(readFromFile(writeToFile("Khang Dep Trai","settings", "users"),"users"));
+                    _txt.setText(readFromFile_string(writeToFile("Khang Dep Trai","settings", "users"),"users"));
                 }
             });
 
@@ -323,7 +338,8 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                         @Override
                         public void onColorSelected(int color) {
                             selectedColor = color;
-                            _txt.setTextColor(selectedColor);
+                            String path = writeToFile(String.valueOf(selectedColor),"settings","colors");
+                            _main.setBackgroundColor(readFromFile_int(path,"colors"));
                         }
 
                     });
@@ -372,7 +388,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         }
 
 
-        private String readFromFile(String filePath, String fileName) {
+        private String readFromFile_string(String filePath, String fileName) {
 
             String content = "";
             FileInputStream fis = null;
@@ -401,6 +417,37 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                 }
             }
             return content;
+        }
+
+        private int readFromFile_int(String filePath, String fileName) {
+
+            String content = "";
+            FileInputStream fis = null;
+            try
+            {
+                File f = new File(filePath, fileName+".txt");
+                fis = new FileInputStream(f);
+                int size = fis.available();
+                byte[] buffer = new byte[size];
+                fis.read(buffer);
+                content = new String(buffer);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                try
+                {
+                    fis.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            return Integer.parseInt(content);
         }
 
     }
