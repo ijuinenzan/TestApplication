@@ -102,5 +102,17 @@
         app:layout_marginTopPercent="5%"
         android:textSize="20sp"/>
 
+    <ImageView
+        android:id="@+id/bg_img_selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="100dp"
+        android:maxHeight="100dp"
+        android:minHeight="100dp"
+        android:maxWidth="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/content"
+        app:layout_marginTopPercent="5%"/>
+
 
 </android.support.percent.PercentRelativeLayout>

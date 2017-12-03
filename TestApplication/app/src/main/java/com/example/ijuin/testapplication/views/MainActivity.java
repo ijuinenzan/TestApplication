@@ -1,5 +1,6 @@
 package com.example.ijuin.testapplication.views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -7,7 +8,9 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -297,8 +300,11 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         TextView _txt;
         Button _sound;
         Button _btnColor;
+        Button _btnImage;
+        ImageView _imgView;
         private int selectedColor;
         View _main;
+        private int SELECT_FILE = 410;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -308,6 +314,8 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             _txt = (TextView) view.findViewById(R.id.content);
             _sound = (Button) view.findViewById(R.id.btn_change_sound);
             _btnColor = (Button) view.findViewById(R.id.btn_bg_color);
+            _btnImage = (Button) view.findViewById(R.id.btn_change_bg_image);
+            _imgView = (ImageView) view.findViewById(R.id.bg_img_selected) ;
             _main = (View) view.findViewById(R.id.mainPercentRelativeLayout);
 
             _sound.setOnClickListener(new View.OnClickListener() {
@@ -350,14 +358,34 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             });
 
 
+            _btnImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("image/*");
+                    startActivityForResult(intent.createChooser(intent, "Select File"), SELECT_FILE);
+                }
+            });
+
 
             return view;
         }
 
 
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (resultCode == Activity.RESULT_OK)
+            {
+                if (requestCode == SELECT_FILE)
+                {
+                    Uri selectedImageUri = data.getData();
+                    _imgView.setImageURI(selectedImageUri);
+                }
+            }
+        }
 
-        private String writeToFile(String content, String fileDirName, String fileName)
-        {
+        private String writeToFile(String content, String fileDirName, String fileName) {
             ContextWrapper cw = new ContextWrapper(getContext());
 
             File directory = cw.getDir(fileDirName, Context.MODE_PRIVATE);
