@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             mViewModel.addObserver(this);
             binding.setViewModel(mViewModel);
 
+
             return view;
         }
 
