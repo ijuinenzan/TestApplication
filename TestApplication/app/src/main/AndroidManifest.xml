@@ -5,8 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -15,41 +15,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/KhangTheme">
-
-
-
-        <activity android:name=".views.LoginActivity"
+        <activity
+            android:name=".views.LoginActivity"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-
         <activity
             android:name=".views.ChatActivity"
             android:theme="@style/KhangTheme"
-            android:windowSoftInputMode="adjustResize" >
-
-        </activity>
-
-
+            android:windowSoftInputMode="adjustResize"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-
-
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="Chat Application" />
-
-
-
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -62,20 +49,15 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
-
-
-        <activity android:name=".views.MainActivity"
-            android:windowSoftInputMode="stateHidden">
-
-        </activity>
-
-
+        <activity
+            android:name=".views.MainActivity"
+            android:windowSoftInputMode="stateHidden"></activity>
 
         <service
             android:name=".views.ChatHeadService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
+
     </application>
 
 </manifest>

@@ -57,7 +57,7 @@
     <string name="hintUserName">User Name</string>
     <string name="hintPhone">0868242564</string>
     <string name="hintAddress">Ktx B DHQG HCM</string>
-    <string name="hintCompany">University of Infomation Technology</string>
+    <string name="hintCompany">University of Information Technology</string>
     <string name="hintCity">HoChiMinh city</string>
     <string name="hintCountry">VietNam</string>
     <string name="hintWeight">90kg</string>
@@ -72,7 +72,9 @@
     <string name="search">Search</string>
     <string name="agerange">Age Range</string>
     <string name="donate">Donate</string>
-    <string name="typehere">[Type Here...]</string>
+    <string name="typehere">[Type Here&#8230;]</string>
+
+
 
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 </resources>

@@ -37,6 +37,9 @@ import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
 
 import com.example.ijuin.testapplication.viewmodels.SearchViewModel;
 
+import org.xdty.preference.colorpicker.ColorPickerDialog;
+import org.xdty.preference.colorpicker.ColorPickerSwatch;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -279,6 +282,8 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         public SettingFragment() {        }
         TextView _txt;
         Button _sound;
+        Button _btnColor;
+        private int selectedColor;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -287,6 +292,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             View view = inflater.inflate(R.layout.setting_fragment, container, false);
             _txt = (TextView) view.findViewById(R.id.content);
             _sound = (Button) view.findViewById(R.id.btn_change_sound);
+            _btnColor = (Button) view.findViewById(R.id.btn_bg_color);
 
             _sound.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -295,6 +301,39 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                     _txt.setText(readFromFile(writeToFile("Khang Dep Trai","settings", "users"),"users"));
                 }
             });
+
+            _btnColor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view)
+                {
+                    int[] arr_colors = getResources().getIntArray(R.array.arr_colors);
+                    selectedColor = R.color.red;
+                    ColorPickerDialog colorPickerDialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title,
+                            arr_colors,
+                            selectedColor,
+                            5, // Number of columns
+                            ColorPickerDialog.SIZE_SMALL,
+                            true // True or False to enable or disable the serpentine effect
+                            //0, // stroke width
+                            //Color.BLACK // stroke color
+                    );
+
+                    colorPickerDialog.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
+
+                        @Override
+                        public void onColorSelected(int color) {
+                            selectedColor = color;
+                            _txt.setTextColor(selectedColor);
+                        }
+
+                    });
+
+                    colorPickerDialog.show(getActivity().getFragmentManager(), "color_dialog_test");
+                }
+            });
+
+
+
             return view;
         }
 
@@ -382,10 +421,10 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             Fragment frag = null;
             switch (position) {
                 case 0:
-                    frag = new SearchFragment();
+                    frag = new ProfileFragment();
                     break;
                 case 1:
-                    frag = new ProfileFragment();
+                    frag = new SearchFragment();
                     break;
                 case 2:
                     frag = new AboutUsFragment();
@@ -416,9 +455,9 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
 
             switch (position) {
                 case 0:
-                    return R.drawable.ic_heart;
-                case 1:
                     return R.drawable.ic_profile;
+                case 1:
+                    return R.drawable.ic_heart;
                 case 2:
                     return R.drawable.ic_logo;
                 case 3:
@@ -432,9 +471,4 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
 
 
 
-    @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-    }
 }

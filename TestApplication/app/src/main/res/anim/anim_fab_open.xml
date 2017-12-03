@@ -13,7 +13,7 @@
         android:pivotY="50%"/>
 
     <translate
-        android:duration="500"
+        android:duration="400"
         android:fromYDelta="700"
         android:toYDelta="0"      />
 
