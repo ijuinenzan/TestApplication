@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -36,17 +37,11 @@ import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
 
 import com.example.ijuin.testapplication.viewmodels.SearchViewModel;
 
-import org.w3c.dom.Text;
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 
 /**
  * Created by Khang Le on 11/21/2017.
@@ -54,6 +49,8 @@ import java.io.OutputStreamWriter;
 
 public class MainActivity extends AppCompatActivity implements Observer<String>
 {
+
+//region DECLARE VARIABLE
     private PagerAdapter _pagerAdapter;
     private ViewPager _viewPager;
     private TabLayout tabLayout;
@@ -62,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
     private ActivityMainBinding _binding;
     private MainViewModel _viewModel;
 
+    private MediaPlayer _mediaPlayer;
+//endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +68,13 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         setContentView(R.layout.activity_main);
 
 
-
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         _viewModel = new MainViewModel();
         _binding.setViewModel(_viewModel);
         _binding.setActivity(this);
         _viewModel.addObserver(this);
-
+        _mediaPlayer = MediaPlayer.create(this,R.raw.anh_nang_cua_anh);
+        _mediaPlayer.start();
         addControls();
     }
 
@@ -118,8 +117,10 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
     }
 
     @Override
-    public void onBackPressed() {
-
+    public void onBackPressed()
+    {
+        startService(new Intent(MainActivity.this, ChatHeadService.class));
+        finish();
     }
 
     @Override
@@ -129,6 +130,11 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         startActivity(chatIntent);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        _mediaPlayer.stop();
+    }
 
     public static class SearchFragment extends Fragment {
 
@@ -426,4 +432,9 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
 
 
 
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+    }
 }
