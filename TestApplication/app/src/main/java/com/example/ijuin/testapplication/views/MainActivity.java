@@ -2,6 +2,7 @@ package com.example.ijuin.testapplication.views;
 
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,12 +24,14 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
 import com.example.ijuin.testapplication.R;
+import com.example.ijuin.testapplication.databinding.ActivityMainBinding;
 import com.example.ijuin.testapplication.databinding.ProfileFragmentBinding;
 
 import com.example.ijuin.testapplication.databinding.SearchFragmentBinding;
 
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.utils.MyUtils;
+import com.example.ijuin.testapplication.viewmodels.MainViewModel;
 import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
 
 import com.example.ijuin.testapplication.viewmodels.SearchViewModel;
@@ -49,12 +52,15 @@ import java.io.OutputStreamWriter;
  * Created by Khang Le on 11/21/2017.
  */
 
-public class MainActivity extends AppCompatActivity implements Observer<Object>
+public class MainActivity extends AppCompatActivity implements Observer<String>
 {
     private PagerAdapter _pagerAdapter;
     private ViewPager _viewPager;
     private TabLayout tabLayout;
     private PagerSlidingTabStrip _customTab;
+
+    private ActivityMainBinding _binding;
+    private MainViewModel _viewModel;
 
 
     @Override
@@ -62,7 +68,22 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+        _binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        _viewModel = new MainViewModel();
+        _binding.setViewModel(_viewModel);
+        _binding.setActivity(this);
+        _viewModel.addObserver(this);
+
         addControls();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        _viewModel.removeObserver(this);
+        _viewModel.onDestroy();
     }
 
     public void back()
@@ -102,7 +123,10 @@ public class MainActivity extends AppCompatActivity implements Observer<Object>
     }
 
     @Override
-    public void onObserve(int event, Object eventMessage) {
+    public void onObserve(int event, String chatRoom) {
+        Intent chatIntent = new Intent(MainActivity.this, ChatActivity.class);
+        chatIntent.putExtra("RoomName", chatRoom);
+        startActivity(chatIntent);
     }
 
 

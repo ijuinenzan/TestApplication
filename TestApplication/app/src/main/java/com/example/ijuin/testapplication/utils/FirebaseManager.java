@@ -2,6 +2,7 @@ package com.example.ijuin.testapplication.utils;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.example.ijuin.testapplication.interfaces.FirebaseCallbacks;
 import com.example.ijuin.testapplication.models.UserModel;
@@ -20,21 +21,27 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by ijuin on 11/12/2017.
  */
-public class FirebaseManager implements ChildEventListener, ValueEventListener
+public class FirebaseManager implements ChildEventListener
 {
     private volatile static FirebaseManager sFirebaseManager;
     private FirebaseDatabase _database;
     private DatabaseReference _userReference;
+    private DatabaseReference _messageReference;
+    private DatabaseReference _chatRoomsReference;
+    private ArrayList<FirebaseCallbacks> _callbacks;
 
     private FirebaseAuth _auth;
 
     private UserModel _user;
+
+    private String _chatRoom;
 
     public static synchronized FirebaseManager getInstance()
     {
@@ -52,24 +59,75 @@ public class FirebaseManager implements ChildEventListener, ValueEventListener
     private FirebaseManager(){
         _database = FirebaseDatabase.getInstance();
         _userReference = _database.getReference().child("users");
+        _chatRoomsReference = _database.getReference().child("chatrooms");
         _auth = FirebaseAuth.getInstance();
+        _callbacks = new ArrayList<>();
+        _chatRoom = "";
     }
 
-    public void addMessageListeners(){
-
+    public void addCallback(FirebaseCallbacks callback)
+    {
+        _callbacks.add(callback);
     }
 
-    public void removeListeners(){
+    public void removeCallback(FirebaseCallbacks callback)
+    {
+        _callbacks.remove(callback);
+    }
+
+    public void addMessageListener()
+    {
+        _messageReference.addChildEventListener(this);
+    }
+
+    public void addChatRoomListener()
+    {
+        _chatRoomsReference.addChildEventListener(this);
+    }
+
+    public void removeMessageListener()
+    {
+        _messageReference.removeEventListener(this);
+    }
+
+    public void removeChatRoomListener()
+    {
+        _chatRoomsReference.removeEventListener(this);
+    }
+
+    @Override
+    public void onChildAdded(DataSnapshot dataSnapshot, String s)
+    {
+        String root = dataSnapshot.getRef().getParent().getKey();
+
+        if(root.equals("chatrooms"))
+        {
+            for(FirebaseCallbacks callback: _callbacks)
+            {
+                callback.onChatroom(dataSnapshot);
+            }
+        }
+        else if(root.equals("messages"))
+        {
+            for(FirebaseCallbacks callback: _callbacks)
+            {
+                callback.onMessage(dataSnapshot);
+            }
+        }
 
     }
 
     @Override
-    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-    }
-
-    @Override
-    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+    public void onChildChanged(DataSnapshot dataSnapshot, String s)
+    {
+        String root = dataSnapshot.getRef().getParent().getKey();
+        if(root.equals("users"))
+        {
+            if(dataSnapshot.getKey().equals(FirebaseAuth.getInstance().getUid()))
+            {
+                //update user.
+            }
+        }
     }
 
     @Override
@@ -79,11 +137,6 @@ public class FirebaseManager implements ChildEventListener, ValueEventListener
 
     @Override
     public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-    }
-
-    @Override
-    public void onDataChange(DataSnapshot dataSnapshot) {
 
     }
 
@@ -115,10 +168,14 @@ public class FirebaseManager implements ChildEventListener, ValueEventListener
     public void signOut()
     {
         _auth.signOut();
+        _user = null;
     }
 
+    public void updateChatRoom(String chatRoom)
+    {
+        _chatRoom = chatRoom;
+    }
     public void destroy() {
         sFirebaseManager=null;
-        _user = null;
     }
 }

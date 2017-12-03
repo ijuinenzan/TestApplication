@@ -75,9 +75,6 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_login);
-
-
         TwitterAuthConfig authConfig =  new TwitterAuthConfig(
                 getString(R.string.com_twitter_sdk_android_CONSUMER_KEY),
                 getString(R.string.com_twitter_sdk_android_CONSUMER_SECRET));
@@ -87,6 +84,12 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
                 .build();
 
         Twitter.initialize(twitterConfig);
+
+
+        setContentView(R.layout.activity_login);
+
+
+
 
 
 

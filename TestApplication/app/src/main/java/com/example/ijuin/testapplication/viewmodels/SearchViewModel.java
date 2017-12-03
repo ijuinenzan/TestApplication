@@ -63,7 +63,7 @@ public class SearchViewModel extends BaseObservable
             _newUser.setState("Not Finding");
             notifyPropertyChanged(BR.finding);
         }
-        else
+        else if(_newUser.getState().equals("Not Finding"))
         {
             _newUser.setState("Finding");
             notifyPropertyChanged(BR.finding);

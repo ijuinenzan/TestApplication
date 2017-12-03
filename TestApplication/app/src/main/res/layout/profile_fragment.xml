@@ -181,7 +181,7 @@
                             android:id="@+id/rBtn_Female"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:checked="@={viewModel.user.gender.value}" />
+                            android:checked="@={!viewModel.user.gender.value}" />
                     </RadioGroup>
 
                     <CheckBox
