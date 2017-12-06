@@ -33,6 +33,26 @@
                 android:layout_above="@+id/layout_input">
             </android.support.v7.widget.RecyclerView>
 
+            <LinearLayout
+                android:id="@+id/media_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/content">
+
+
+                <VideoView
+                    android:id="@+id/videoview"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp" />
+
+            </LinearLayout>
+
+            <include
+                android:id="@+id/audio"
+                layout="@layout/layout_audio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/media_layout" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_location"
@@ -75,6 +95,15 @@
                 android:backgroundTint="@color/DARK_YELLOW"
                 android:visibility="invisible"/>
 
+            <Button
+                android:id="@+id/btn_start_stop_recorder"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_above="@id/layout_input"
+                android:layout_marginStart="80dp"
+                android:background="@drawable/ic_start_record_48dp"
+                android:visibility="gone"/>
+
             <LinearLayout
                 android:id="@+id/layout_input"
                 android:layout_width="match_parent"
@@ -90,6 +119,21 @@
                     app:fabSize="mini"
                     android:backgroundTint="@color/TWITTER"
                     android:src="@drawable/ic_plus"/>
+
+                <Button
+                    android:id="@+id/btn_video"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_video_48dp"
+                    android:layout_marginTop="0dp"
+                    android:visibility="visible"/>
+
+                <Button
+                    android:id="@+id/btn_recorder"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_mic_48dp"
+                    android:visibility="visible"/>
 
 
                 <io.github.rockerhieu.emojicon.EmojiconEditText

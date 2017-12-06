@@ -8,6 +8,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,6 +19,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,6 +27,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -308,7 +311,8 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         private int selectedColor;
         View _main;
         private int SELECT_FILE = 410;
-        private VideoView _videoView;
+        private View _btnRecorderAndPlay;
+        MediaRecorder mediaRecorder = new MediaRecorder();
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -321,7 +325,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             _btnImage = (Button) view.findViewById(R.id.btn_change_bg_image);
             _imgView = (ImageView) view.findViewById(R.id.bg_img_selected) ;
             _main = (View) view.findViewById(R.id.mainPercentRelativeLayout);
-            _videoView = (VideoView) view.findViewById(R.id.videoview);
+            _btnRecorderAndPlay = (View) view.findViewById(R.id.btn_record_and_play) ;
 
             _sound.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -373,31 +377,20 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             });
 
 
-            try {
-                int id = R.raw.khanh;
-                _videoView.setVideoURI(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + id));
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-            _videoView.requestFocus();
-            _videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+
+
+            _btnRecorderAndPlay.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onPrepared(MediaPlayer mediaPlayer) {
-
-                    mediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
-                        @Override
-                        public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-                            MediaController mediacontroller = new MediaController(getActivity());
-                            mediacontroller.setAnchorView(_videoView);
-                            _videoView.setMediaController(mediacontroller);
-                        }
-                    });
+                public void onClick(View view) {
+                    mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                 }
+
             });
 
-            _videoView.start();
+
+
             return view;
         }
 
