@@ -131,8 +131,8 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
     @Override
     public void onBackPressed()
     {
-        startService(new Intent(MainActivity.this, ChatHeadService.class));
-        finish();
+        //startService(new Intent(MainActivity.this, ChatHeadService.class));
+        //finish();
     }
 
     @Override
