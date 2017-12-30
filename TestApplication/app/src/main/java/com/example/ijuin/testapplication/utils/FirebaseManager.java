@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.ijuin.testapplication.interfaces.FirebaseCallbacks;
+import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.models.UserModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -50,7 +51,6 @@ public class FirebaseManager implements ChildEventListener
             synchronized (FirebaseManager.class)
             {
                 sFirebaseManager = new FirebaseManager();
-                //sFirebaseManager = new FirebaseManager(roomName,callBacks);
             }
         }
         return sFirebaseManager;
@@ -160,6 +160,11 @@ public class FirebaseManager implements ChildEventListener
         _userReference.child(_auth.getUid()).setValue(user);
     }
 
+    public void updateProfilePicture()
+    {
+
+    }
+
     public UserModel getUser()
     {
         return _user;
@@ -171,11 +176,22 @@ public class FirebaseManager implements ChildEventListener
         _user = null;
     }
 
+    public void sendMessage(MessageItemModel message)
+    {
+        String key = _messageReference.push().getKey();
+        message.setMessageKey(key);
+        _messageReference.child(key).setValue(message);
+    }
+
     public void updateChatRoom(String chatRoom)
     {
         _chatRoom = chatRoom;
+        _messageReference = _chatRoomsReference.child(chatRoom).child("messages");
+
     }
     public void destroy() {
         sFirebaseManager=null;
     }
+
+
 }

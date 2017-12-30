@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'PhuongKhanh'
             keyPassword 'thaoAnh1510'
-            storeFile file('D:/Downloads/debug.keystore')
+            storeFile file('C:/Users/ijuin/.android/debug.keystore')
             storePassword 'thaoAnh1510'
         }
     }

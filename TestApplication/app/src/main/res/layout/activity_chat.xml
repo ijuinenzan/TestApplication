@@ -143,6 +143,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:hint="@string/typehere"
+                    android:text="@={viewModel.message}"
                     emojicon:emojiconSize="20sp" />
 
                 <Button
@@ -150,7 +151,7 @@
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/ic_send_48dp"
-                    android:onClick="@{() -> activity.sendMessage()}"
+                    android:onClick="@{() -> viewModel.sendMessage()}"
                     style="@style/KhangTheme"/>
 
 

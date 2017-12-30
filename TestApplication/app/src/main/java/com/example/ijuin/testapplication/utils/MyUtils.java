@@ -5,6 +5,8 @@ import android.databinding.InverseBindingAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,7 +23,6 @@ public class MyUtils
     public static String MESSAGE_INVALIDE_ROOM_NAME= "Enter a valid Name";
 
     public static String TEXT_TYPE = "TEXT";
-    public static String EXTRA_ROOM_NAME="EXTRA_ROOM_NAME";
 
     public static final int OPEN_ACTIVITY = 1;
     public static final int SHOW_TOAST = 2;
@@ -31,14 +32,7 @@ public class MyUtils
     public static final int CHAT_ROOM_FOUND = 6;
 
     public static Boolean MALE = true;
-    public static Boolean FEMALE = false;
 
-    public static String convertTime(long timestamp) {
-        SimpleDateFormat sdf;
-        sdf = new SimpleDateFormat("HH:mm");
-        Date date = new Date(timestamp);
-        sdf.setTimeZone(TimeZone.getDefault());
-        return sdf.format(date);
-    }
+    public static Boolean FEMALE = false;
 
 }

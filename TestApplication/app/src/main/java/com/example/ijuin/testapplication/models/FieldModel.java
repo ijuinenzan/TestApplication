@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 public class FieldModel <T> extends BaseObservable implements Serializable {
     private T _value;
-    private Boolean _isPublic;
+    private boolean _isPublic;
 
     public FieldModel()
     {
@@ -30,10 +30,10 @@ public class FieldModel <T> extends BaseObservable implements Serializable {
     public void setValue(T _value) {
         this._value = _value;
     }
-    public Boolean getIsPublic() {
+    public boolean getIsPublic() {
         return _isPublic;
     }
-    public void setIsPublic(Boolean _isPublic) {
+    public void setIsPublic(boolean _isPublic) {
         this._isPublic = _isPublic;
     }
 }

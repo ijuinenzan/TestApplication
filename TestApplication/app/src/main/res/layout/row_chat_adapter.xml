@@ -33,16 +33,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:visibility='@{chatMessage.isIcon ? View.GONE: View.VISIBLE}'
                     android:textColor="@android:color/holo_orange_dark"
-                    android:text="@{chatMessage.message}"/>
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="0dp"
-                    android:visibility='@{chatMessage.isIcon ? View.VISIBLE: View.GONE}'
-                    app:image_url="@{chatMessage.srcIcon}"/>
+                    android:visibility='@{chatMessage.type =="TEXT"? View.VISIBLE: View.GONE}'
+                    android:text="@={chatMessage.message}"/>
 
             </LinearLayout>
             <TextView
@@ -63,15 +56,6 @@
             android:visibility="@{chatMessage.isMine ? View.VISIBLE: View.GONE}"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_large"
-                android:layout_marginRight="@dimen/margin_average"
-                android:text="@{chatMessage.timeStamp}"
-                style="@style/info_textviews"/>
-
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,17 +70,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:visibility='@{chatMessage.isIcon ? View.GONE: View.VISIBLE}'
                     android:textColor="@android:color/holo_orange_dark"
-                    android:text="@{chatMessage.message}"/>
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="0dp"
-                    android:visibility='@{chatMessage.isIcon ? View.VISIBLE: View.GONE}'
-                    app:image_url="@{chatMessage.srcIcon}"/>
+                    android:visibility='@{chatMessage.type =="TEXT"? View.VISIBLE: View.GONE}'
+                    android:text="@={chatMessage.message}"/>
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_average"
+                android:text="@={chatMessage.timeStamp}"
+                style="@style/info_textviews"/>
 
 
 
