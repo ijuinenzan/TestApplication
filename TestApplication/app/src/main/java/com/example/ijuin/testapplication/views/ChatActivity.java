@@ -8,7 +8,9 @@ import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +32,8 @@ import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.viewmodels.ChatViewModel;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -99,7 +103,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         _btnPlayAudio = (Button) findViewById(R.id.btn_play_pause_audio);
 
 
-
         _fabPlus.setOnClickListener(this);
         _fabLocation.setOnClickListener(this);
         _fabCamera.setOnClickListener(this);
@@ -112,11 +115,12 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
         _player = new MediaPlayer();
 
+
         _seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 int seekValue = _seekbar.getProgress();
-                float currentTimeFloat = (seekValue*702)/100;
+                float currentTimeFloat = seekValue/100;
                 int currentTimeInt = (int)(currentTimeFloat);
                 int timeInMinute = currentTimeInt/60;
                 if (timeInMinute == 0)
@@ -239,8 +243,10 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         // DataSourceConfigured
         _recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
-        String filePath = writeAudioToFile("audio", "temp");
-        _recorder.setOutputFile(filePath);
+        String filePath = writeAudioToFile("audio");
+
+        _recorder.setOutputFile(filePath + "/audiorecordtest.3gp");
+
         _recorder.prepare();
 
         // Prepared
@@ -263,10 +269,27 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
             _player.release();
         }
         _player = new MediaPlayer();
-        String filepath = writeAudioToFile("audio", "temp");
-        _player.setDataSource(filepath);
+        String filepath = writeAudioToFile("audio");
+        _player.setDataSource(filepath + "/audiorecordtest.3gp");
         _player.prepare();
         _player.start();
+        setEndTimeAudio(_player.getDuration());
+    }
+
+
+    public void setEndTimeAudio(int timeInMilliSeconds)
+    {
+        int timeInSeconds = timeInMilliSeconds/1000;
+        int timeInMinute = timeInSeconds/60;
+
+        if (timeInSeconds < 10)
+        {
+            _endTimeAudio.setText(String.valueOf(timeInMinute) +":0" + String.valueOf(timeInSeconds-timeInMinute*60));
+        }
+        else
+        {
+            _endTimeAudio.setText(String.valueOf(timeInMinute) +":" + String.valueOf(timeInSeconds-timeInMinute*60));
+        }
     }
 
     public void stopPlayback()
@@ -275,14 +298,30 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         _player.release();
     }
 
-    private String writeAudioToFile(String fileDirName, String fileName) {
+    public void pauseAndResume()
+    {
+        if(_isPlay)
+        {
+            _player.pause();
+        }
+        else
+        {
+            _player.reset();
+            // can not resume ???
+        }
+    }
+    private String writeAudioToFile(String fileDirName) {
         ContextWrapper cw = new ContextWrapper(this);
 
         File directory = cw.getDir(fileDirName, Context.MODE_PRIVATE);
-
-        File mypath = new File(directory,fileName + ".3gpp");
-
-        return directory.getAbsolutePath() + mypath;
+        if (!directory.exists())
+        {
+            // the directory was created
+            if (directory.mkdir()) {
+                Toast.makeText(this, "Created directory", Toast.LENGTH_LONG).show();
+            }
+        }
+        return directory.getAbsolutePath();
     }
 
     @Override
@@ -387,7 +426,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         {
             if (_isPlay)
             {
-                stopPlayback();
+                pauseAndResume();
                 _btnPlayAudio.setBackgroundResource(R.drawable.ic_play_48dp);
                 _isPlay = false;
             }
