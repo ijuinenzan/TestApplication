@@ -35,9 +35,11 @@ import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.viewmodels.LoginViewModel;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -93,12 +95,13 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
                     Uri.parse("package:" + getPackageName()));
             startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
         }
-        else
-        {
-            addControls();
-        }
 
         addControls();
+
+        if(AccessToken.getCurrentAccessToken() != null)
+        {
+            mViewModel.loginWithFacebook(AccessToken.getCurrentAccessToken().getToken(), AccessToken.getCurrentAccessToken().getUserId());
+        }
     }
 
     public void addControls()
@@ -116,16 +119,10 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
 
         setContentView(R.layout.activity_login);
 
-
-
-
-
-
         ActivityLoginBinding activityLoginBinding= DataBindingUtil.setContentView(this, R.layout.activity_login);
         mViewModel= new LoginViewModel();
         activityLoginBinding.setViewModel(mViewModel);
         activityLoginBinding.setActivity(this);
-
 
         _facebookFirebaseLoginButton = (Button) findViewById(R.id.btnFirebaseFacebookLogin);
         _facebookLoginButon = (LoginButton)findViewById(R.id.btnFacebookLogin);

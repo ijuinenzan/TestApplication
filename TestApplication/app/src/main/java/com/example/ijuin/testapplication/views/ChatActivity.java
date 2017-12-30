@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
+import android.databinding.DataBindingUtil;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -116,6 +117,12 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
+        mViewModel = new ChatViewModel();
+        mBinding.setViewModel(mViewModel);
+        mBinding.setActivity(this);
+        mViewModel.addObserver(this);
 
         _fabPlus = (FloatingActionButton) findViewById(R.id.fab_plus);
         _fabLocation = (FloatingActionButton) findViewById(R.id.fab_location);
@@ -229,6 +236,14 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 //        mViewModel.addObserver(this);
 //        mViewModel.setListener();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mViewModel.removeObserver(this);
+        mViewModel.onDestroy();
+    }
+
 
 
     public void playVideo()
@@ -615,25 +630,12 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         }
     }
 
-    public void sendMessage() {
-        Toast.makeText(this,"SENT",Toast.LENGTH_LONG).show();
-//        mViewModel.sendMessageToFirebase(mBinding.edittextChatMessage.getText().toString());
-//        mBinding.edittextChatMessage.getText().clear();
-    }
-
     @Override
     public void onObserve(int event, ArrayList<MessageItemModel> eventMessage) {
 
 //        ChatAdapter chatAdapter=new ChatAdapter(this,eventMessage);
 //        mBinding.recyclerView.setAdapter(chatAdapter);
 //        mBinding.recyclerView.scrollToPosition(eventMessage.size()-1);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        mViewModel.removeObserver(this);
-//        mViewModel.onDestory();
     }
 
     @Override

@@ -277,6 +277,10 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             {
                 ((MainActivity)getActivity()).back();
             }
+            else if(event == MyUtils.CHANGE_PICTURE)
+            {
+
+            }
         }
     }
 

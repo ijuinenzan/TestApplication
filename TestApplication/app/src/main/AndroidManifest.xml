@@ -21,18 +21,16 @@
         <activity
             android:name=".views.LoginActivity"
             android:windowSoftInputMode="stateHidden">
-
-        </activity>
-        <activity
-            android:name=".views.ChatActivity"
-            android:theme="@style/KhangTheme"
-            android:windowSoftInputMode="adjustResize">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".views.ChatActivity"
+            android:theme="@style/KhangTheme"
+            android:windowSoftInputMode="adjustResize">
         </activity>
 
         <meta-data
@@ -60,7 +58,7 @@
         </activity>
         <activity
             android:name=".views.MainActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden"/>
 
         <service
             android:name=".views.ChatHeadService"
