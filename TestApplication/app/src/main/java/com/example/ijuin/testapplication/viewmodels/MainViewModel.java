@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import com.example.ijuin.testapplication.interfaces.FirebaseCallbacks;
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.models.MessageItemModel;
+import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.utils.FirebaseManager;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,13 +31,9 @@ public class MainViewModel extends BaseObservable implements FirebaseCallbacks
         setListener();
     }
 
-    public void UploadProfileImage(Bitmap bitmap)
-    {
-        FirebaseManager.getInstance().uploadImage(bitmap);
-    }
-
     @Override
-    public void onMessage(MessageItemModel message) {
+    public void onMessage(MessageItemModel message)
+    {
 
     }
 
@@ -51,6 +48,11 @@ public class MainViewModel extends BaseObservable implements FirebaseCallbacks
     public void onChatEnded()
     {
 
+    }
+
+    @Override
+    public void onUserUpdated(UserModel user)
+    {
     }
 
     public void setListener()

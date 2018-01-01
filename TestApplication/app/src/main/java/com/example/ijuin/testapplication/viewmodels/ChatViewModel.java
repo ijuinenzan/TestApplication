@@ -6,14 +6,11 @@ import android.databinding.Bindable;
 import com.example.ijuin.testapplication.BR;
 import com.example.ijuin.testapplication.factories.MessageFactory;
 import com.example.ijuin.testapplication.interfaces.FirebaseCallbacks;
-import com.example.ijuin.testapplication.interfaces.ModelCallBacks;
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.models.MessageItemModel;
-import com.example.ijuin.testapplication.models.MessageModel;
+import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.utils.FirebaseManager;
 import com.example.ijuin.testapplication.utils.MyUtils;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -21,16 +18,16 @@ import java.util.ArrayList;
  * Created by ijuin on 11/12/2017.
  */
 
-public class ChatViewModel extends BaseObservable implements ModelCallBacks, FirebaseCallbacks {
-    private MessageModel _model;
+public class ChatViewModel extends BaseObservable implements FirebaseCallbacks {
+    private ArrayList<MessageItemModel> _messages;
     private String _message;
-    public ArrayList<Observer> observers;
+    public ArrayList<Observer> _observers;
 
 
     public ChatViewModel()
     {
-        _model=new MessageModel();
-        observers=new ArrayList<>();
+        _messages = new ArrayList<>();
+        _observers =new ArrayList<>();
         _message = "";
 
         FirebaseManager.getInstance().addCallback(this);
@@ -38,15 +35,21 @@ public class ChatViewModel extends BaseObservable implements ModelCallBacks, Fir
     }
 
     @Bindable
-    public String getMessage()
+    public String getTypingMessage()
     {
         return _message;
     }
 
-    public void setMessage(String message)
+    public void setTypingMessage(String message)
     {
         _message = message;
-        notifyPropertyChanged(BR.message);
+        notifyPropertyChanged(BR.typingMessage);
+    }
+
+    @Bindable
+    public ArrayList<MessageItemModel> getMessages()
+    {
+        return _messages;
     }
 
 
@@ -55,7 +58,7 @@ public class ChatViewModel extends BaseObservable implements ModelCallBacks, Fir
         if (!_message.trim().equals(""))
         {
             FirebaseManager.getInstance().sendMessage(MessageFactory.createTextMessage(_message));
-            setMessage("");
+            setTypingMessage("");
         }
     }
 
@@ -69,34 +72,40 @@ public class ChatViewModel extends BaseObservable implements ModelCallBacks, Fir
         FirebaseManager.getInstance().removeMessageListener();
     }
 
-    @Override
-    public void onModelUpdated(ArrayList<MessageItemModel> messages) {
-        if (messages.size()>0) {
-            notifyObservers(MyUtils.UPDATE_MESSAGES,messages);
-        }
-    }
-
     public void addObserver(Observer client) {
-        if (!observers.contains(client)) {
-            observers.add(client);
+        if (!_observers.contains(client)) {
+            _observers.add(client);
         }
     }
 
     public void removeObserver(Observer clientToRemove) {
-        if (observers.contains(clientToRemove)) {
-            observers.remove(clientToRemove);
+        if (_observers.contains(clientToRemove)) {
+            _observers.remove(clientToRemove);
         }
     }
 
-    public void notifyObservers(int eventType, ArrayList<MessageItemModel> messages) {
-        for (int i=0; i< observers.size(); i++) {
-            observers.get(i).onObserve(eventType, messages);
+    public void notifyObservers(int eventType) {
+        for (int i = 0; i< _observers.size(); i++) {
+            _observers.get(i).onObserve(eventType, null);
         }
     }
 
     @Override
     public void onMessage(MessageItemModel message) {
-        _model.addMessages(message, this);
+        for(MessageItemModel messageIterator: _messages)
+        {
+            if(messageIterator.getMessageKey().equals(message.getMessageKey()))
+            {
+                messageIterator.setSenderId(message.getSenderId());
+                messageIterator.setTimeStamp(message.getTimeStamp());
+                messageIterator.setType(message.getType());
+                messageIterator.setMessage(message.getMessage());
+                notifyPropertyChanged(BR.messages);
+                return;
+            }
+        }
+        _messages.add(message);
+        notifyPropertyChanged(BR.messages);
     }
 
     @Override
@@ -107,6 +116,12 @@ public class ChatViewModel extends BaseObservable implements ModelCallBacks, Fir
 
     @Override
     public void onChatEnded() {
-        notifyObservers(MyUtils.EXIT_ROOM,null);
+        notifyObservers(MyUtils.EXIT_ROOM);
+    }
+
+    @Override
+    public void onUserUpdated(UserModel user)
+    {
+
     }
 }

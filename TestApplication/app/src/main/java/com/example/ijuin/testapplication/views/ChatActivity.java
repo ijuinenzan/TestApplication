@@ -127,8 +127,8 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         mBinding.setViewModel(mViewModel);
         mBinding.setActivity(this);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.recyclerView.setAdapter(new ChatAdapter(this,  mViewModel.getMessages()));
         mViewModel.addObserver(this);
-        mViewModel.setListener();
 
         _fabPlus = (FloatingActionButton) findViewById(R.id.fab_plus);
         _fabLocation = (FloatingActionButton) findViewById(R.id.fab_location);
@@ -231,16 +231,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
             }
         });
-
-
-
-//        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
-//        mViewModel= new ChatViewModel(getIntent().getStringExtra(MyUtils.EXTRA_ROOM_NAME));
-//        mBinding.setViewModel(mViewModel);
-//        mBinding.setActivity(this);
-//        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        mViewModel.addObserver(this);
-//        mViewModel.setListener();
     }
 
     @Override
@@ -645,8 +635,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         }
         else if(event == UPDATE_MESSAGES)
         {
-            ChatAdapter chatAdapter=new ChatAdapter(this,eventMessage);
-            mBinding.recyclerView.setAdapter(chatAdapter);
             mBinding.recyclerView.scrollToPosition(eventMessage.size()-1);
         }
     }

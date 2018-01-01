@@ -156,7 +156,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:hint="@string/typehere"
-                    android:text="@={viewModel.message}"
+                    android:text="@={viewModel.typingMessage}"
                     emojicon:emojiconSize="20sp" />
 
                 <Button

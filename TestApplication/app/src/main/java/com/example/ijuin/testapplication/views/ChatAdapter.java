@@ -21,27 +21,27 @@ import java.util.ArrayList;
  */
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder> {
-
-
     private ArrayList<MessageItemModel> chatList;
-    private Context mContext;
 
     public ChatAdapter(Context context, ArrayList<MessageItemModel> chatList) {
         this.chatList =chatList;
-        this.mContext =context;
     }
 
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.row_chat_adapter, parent, false);
-        RowChatAdapterBinding binding= DataBindingUtil.bind(view);
-        return new BindingHolder(binding);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        RowChatAdapterBinding rowChatAdapterBinding = RowChatAdapterBinding.inflate(layoutInflater, parent, false);
+        return new BindingHolder(rowChatAdapterBinding);
     }
 
     @Override
     public void onBindViewHolder(final BindingHolder holder, final int position) {
-        holder.getBinding().setVariable(BR.chatMessage, chatList.get(position));
-        holder.getBinding().executePendingBindings();
+        holder.bind(chatList.get(position));
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
     }
 
     @Override
@@ -51,20 +51,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
 
 
     class BindingHolder extends RecyclerView.ViewHolder {
-
-        private RowChatAdapterBinding binding;
+        private RowChatAdapterBinding _binding;
 
         BindingHolder(RowChatAdapterBinding binding) {
             super(binding.getRoot());
-            setBinding(binding);
+            _binding = binding;
         }
 
-        public void setBinding(RowChatAdapterBinding binding) {
-            this.binding = binding;
-        }
-
-        public RowChatAdapterBinding getBinding() {
-            return binding;
+        public void bind(MessageItemModel message)
+        {
+            _binding.setVariable(BR.chatMessage, message);
+            _binding.setChatMessage(message);
+            _binding.executePendingBindings();
         }
     }
 }
