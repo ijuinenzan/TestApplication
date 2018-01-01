@@ -1,10 +1,16 @@
 package com.example.ijuin.testapplication.utils;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.ijuin.testapplication.interfaces.FirebaseCallbacks;
+import com.example.ijuin.testapplication.models.FieldModel;
 import com.example.ijuin.testapplication.models.UserModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -16,14 +22,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 /**
  * Created by ijuin on 11/12/2017.
@@ -32,6 +45,8 @@ public class FirebaseManager implements ChildEventListener
 {
     private volatile static FirebaseManager sFirebaseManager;
     private FirebaseDatabase _database;
+    private FirebaseStorage _storage;
+    private StorageReference _profileImageReference;
     private DatabaseReference _userReference;
     private DatabaseReference _messageReference;
     private DatabaseReference _chatRoomsReference;
@@ -63,7 +78,33 @@ public class FirebaseManager implements ChildEventListener
         _auth = FirebaseAuth.getInstance();
         _callbacks = new ArrayList<>();
         _chatRoom = "";
+        _storage = FirebaseStorage.getInstance();
+        _profileImageReference = _storage.getReferenceFromUrl("gs://testandroidstudio-2b160.appspot.com").child("profile_pictures/" + FirebaseAuth.getInstance().getUid());
     }
+
+    public void uploadImage(Bitmap bitmap)
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = _profileImageReference.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                _user.setImageUrl(new FieldModel<String>(downloadUrl.toString(),false));
+                _userReference.child(_auth.getUid()).setValue(_user);
+            }
+        });
+    }
+
 
     public void addCallback(FirebaseCallbacks callback)
     {

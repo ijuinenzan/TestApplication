@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -40,11 +42,13 @@ import com.example.ijuin.testapplication.databinding.ProfileFragmentBinding;
 import com.example.ijuin.testapplication.databinding.SearchFragmentBinding;
 
 import com.example.ijuin.testapplication.interfaces.Observer;
+import com.example.ijuin.testapplication.utils.FirebaseManager;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.viewmodels.MainViewModel;
 import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
 
 import com.example.ijuin.testapplication.viewmodels.SearchViewModel;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.xdty.preference.colorpicker.ColorPickerDialog;
 import org.xdty.preference.colorpicker.ColorPickerSwatch;
@@ -54,6 +58,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import static android.support.v4.app.ActivityCompat.startActivityForResult;
+import static com.example.ijuin.testapplication.utils.MyUtils.REQUEST_CAMERA;
+import static com.example.ijuin.testapplication.utils.MyUtils.SELECT_FILE_FROM_GALLERY;
 
 /**
  * Created by Khang Le on 11/21/2017.
@@ -126,6 +134,33 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         _customTab = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         _customTab.setViewPager(_viewPager);
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK)
+        {
+            if (requestCode == REQUEST_CAMERA)
+            {
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                _viewModel.UploadProfileImage(bitmap);
+                //finish();
+            }
+            else if (requestCode == SELECT_FILE_FROM_GALLERY)
+            {
+                Uri uri = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    _viewModel.UploadProfileImage(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //finish();
+            }
+        }
     }
 
     @Override
@@ -277,6 +312,17 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             {
                 ((MainActivity)getActivity()).back();
             }
+            else if (event == MyUtils.SELECT_PICTURE)
+            {
+                Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                getActivity().startActivityForResult(intent.createChooser(intent, "Select File From Gallery"), SELECT_FILE_FROM_GALLERY);
+            }
+            else if (event == MyUtils.TAKE_PICTURE)
+            {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                ((MainActivity)getActivity()).startActivityForResult(intent, REQUEST_CAMERA);
+            }
         }
     }
 
@@ -395,18 +441,18 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         }
 
 
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if (resultCode == Activity.RESULT_OK)
-            {
-                if (requestCode == SELECT_FILE)
-                {
-                    Uri selectedImageUri = data.getData();
-                    _imgView.setImageURI(selectedImageUri);
-                }
-            }
-        }
+//        @Override
+//        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//            super.onActivityResult(requestCode, resultCode, data);
+//            if (resultCode == Activity.RESULT_OK)
+//            {
+//                if (requestCode == SELECT_FILE)
+//                {
+//                    Uri selectedImageUri = data.getData();
+//                    _imgView.setImageURI(selectedImageUri);
+//                }
+//            }
+//        }
 
         private String writeToFile(String content, String fileDirName, String fileName) {
             ContextWrapper cw = new ContextWrapper(getContext());

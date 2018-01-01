@@ -1,6 +1,7 @@
 package com.example.ijuin.testapplication.viewmodels;
 
 import android.databinding.BaseObservable;
+import android.graphics.Bitmap;
 
 import com.example.ijuin.testapplication.interfaces.FirebaseCallbacks;
 import com.example.ijuin.testapplication.interfaces.Observer;
@@ -26,6 +27,11 @@ public class MainViewModel extends BaseObservable implements FirebaseCallbacks
         FirebaseManager.getInstance().addCallback(this);
 
         setListener();
+    }
+
+    public void UploadProfileImage(Bitmap bitmap)
+    {
+        FirebaseManager.getInstance().uploadImage(bitmap);
     }
 
     @Override

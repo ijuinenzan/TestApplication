@@ -306,7 +306,6 @@ public class LoginViewModel extends BaseObservable
                                         UserModel user = childRef.getValue(UserModel.class);
                                         FirebaseManager.getInstance().updateUser(user);
 
-
                                         setAuthDone(true);
 
                                         _userReference.removeEventListener(this);

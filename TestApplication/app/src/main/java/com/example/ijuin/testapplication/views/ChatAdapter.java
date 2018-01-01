@@ -32,12 +32,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
         this.mContext =context;
     }
 
-    @BindingAdapter({"app:image_url"})
-    public static void loadImage(ImageView imageView,String url)
-    {
-        Glide.with(imageView.getContext()).load(url).into(imageView);
-    }
-
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.row_chat_adapter, parent, false);
