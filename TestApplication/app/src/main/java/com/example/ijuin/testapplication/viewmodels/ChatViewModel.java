@@ -90,7 +90,7 @@ public class ChatViewModel extends BaseObservable implements FirebaseCallbacks {
     }
 
     public void onDestroy() {
-        FirebaseManager.getInstance().addCallback(this);
+        FirebaseManager.getInstance().removeCallback(this);
         FirebaseManager.getInstance().removeMessageListener();
     }
 
@@ -139,11 +139,14 @@ public class ChatViewModel extends BaseObservable implements FirebaseCallbacks {
     public void exitRoom()
     {
         notifyObservers(MyUtils.EXIT_ROOM);
+        FirebaseManager.getInstance().exitRoom();
+        FirebaseManager.getInstance().removeMessageListener();
+        FirebaseManager.getInstance().removeCallback(this);
     }
 
     @Override
     public void onChatEnded() {
-        notifyObservers(MyUtils.EXIT_ROOM);
+        exitRoom();
     }
 
     @Override

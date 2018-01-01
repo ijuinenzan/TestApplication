@@ -88,6 +88,13 @@ public class FirebaseManager implements ChildEventListener
         _profileImageReference = _storage.getReference().child("profile_pictures/" + FirebaseAuth.getInstance().getUid());
     }
 
+    public void exitRoom(){
+        _currentChatRoomReference.child("isAvailable").setValue(false);
+        _user.setState("Not Finding");
+        _userReference.child(_auth.getUid()).setValue(_user);
+        _chatRoom = "";
+    }
+
     public void uploadProfileImage(Bitmap bitmap)
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

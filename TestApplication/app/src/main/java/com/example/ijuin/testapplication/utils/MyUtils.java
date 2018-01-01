@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,12 +19,14 @@ import android.widget.VideoView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.views.ChatAdapter;
 
 import java.io.IOException;
 import java.net.URL;
 import java.security.spec.ECField;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -58,6 +61,14 @@ public class MyUtils
     public static Boolean MALE = true;
 
     public static Boolean FEMALE = false;
+
+    @BindingAdapter({"app:chat_messages"})
+    public static void updateMessages(RecyclerView recyclerView, ArrayList<MessageItemModel> messages)
+    {
+        ChatAdapter chatAdapter = ((ChatAdapter)recyclerView.getAdapter());
+        chatAdapter.setChatList(messages);
+        recyclerView.scrollToPosition(messages.size()-1);
+    }
 
     @BindingAdapter({"app:image_url"})
     public static void loadImage(ImageView imageView,String url)

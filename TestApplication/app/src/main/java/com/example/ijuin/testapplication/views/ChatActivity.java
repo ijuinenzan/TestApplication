@@ -415,7 +415,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
         if(event == EXIT_ROOM)
         {
-            onBackPressed();
+            super.onBackPressed();
         }
         else if(event == UPDATE_MESSAGES)
         {
@@ -426,9 +426,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     @Override
     public void onBackPressed()
     {
-        super.onBackPressed();
-        _btnRecorder.setVisibility(View.VISIBLE);
-        _btnVideo.setVisibility(View.VISIBLE);
     }
 
 
