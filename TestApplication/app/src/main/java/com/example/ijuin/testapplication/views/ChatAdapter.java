@@ -83,6 +83,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
         return _chatList.size();
     }
 
+    public void setChatList(ArrayList<MessageItemModel> chatList){
+        _chatList = chatList;
+        notifyDataSetChanged();
+    }
+
     class BindingHolder extends RecyclerView.ViewHolder {
         private ViewDataBinding _binding;
 

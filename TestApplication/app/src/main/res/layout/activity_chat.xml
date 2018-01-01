@@ -2,7 +2,9 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:emojicon="http://schemas.android.com/tools">
+    xmlns:emojicon="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable name="viewModel" type="com.example.ijuin.testapplication.viewmodels.ChatViewModel"/>
@@ -50,12 +52,10 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/layout_input">
+                android:layout_above="@+id/layout_input"
+                app:stackFromEnd="true"
+                app:chat_messages="@{viewModel.messages}">
             </android.support.v7.widget.RecyclerView>
-
-
-
-
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_location"
