@@ -57,8 +57,10 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     private ChatViewModel mViewModel;
     private final int PLACE_PICKER_REQUEST = 2000;
     private static final int REQUEST_LOCATION = 1997;
-    private final int SELECT_FILE = 123456789;
+    private final int SELECT_FILE = 1234;
     private final int REQUEST_CAMERA = 2468;
+    private final int REQUEST_VIDEO = 1357;
+
 
     // ====== Floating Action Button =============================================================
     FloatingActionButton _fabPlus, _fabLocation, _fabCamera, _fabGallery;
@@ -311,6 +313,14 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
                 mViewModel.sendImageUri(selectedImageUri);
             }
         }
+        else if (requestCode == REQUEST_VIDEO)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                Uri videoUri = data.getData();
+                mViewModel.sendVideo(videoUri);
+            }
+        }
 
     }
 
@@ -360,6 +370,27 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         alert.show();
     }
 
+    public void alertExit()
+    {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialogInterface, int i) {
+                        mViewModel.exitRoom();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     public void sendLocation()
     {
         onClickLocation();
@@ -389,8 +420,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
     public void sendVideo()
     {
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.iloveyou);
-        mViewModel.sendVideo(uri);
+        ChatActivity.this.startActivityForResult(new Intent(MediaStore.ACTION_VIDEO_CAPTURE), REQUEST_VIDEO);
     }
 
     public void getImageFromGallery()

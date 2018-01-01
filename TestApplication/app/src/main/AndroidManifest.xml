@@ -22,13 +22,13 @@
         android:theme="@style/KhangTheme">
         <activity
             android:name=".views.ChatActivity"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="adjustResize">
 
         </activity>
         <activity
             android:name=".views.LoginActivity"
             android:theme="@style/KhangTheme"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="stateHidden">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

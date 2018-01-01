@@ -26,8 +26,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/left_node_bg">
+                android:orientation="vertical">
 
                 <VideoView
                     android:id="@+id/videoView_message_left"
@@ -58,7 +57,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_average"
-                android:background="@drawable/right_node_bg"
                 android:orientation="horizontal">
 
                 <VideoView
