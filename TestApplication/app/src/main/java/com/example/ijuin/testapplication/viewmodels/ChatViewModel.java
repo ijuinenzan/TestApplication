@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * Created by ijuin on 11/12/2017.
  */
 
-public class ChatViewModel extends BaseObservable implements ModelCallBacks {
+public class ChatViewModel extends BaseObservable implements ModelCallBacks, FirebaseCallbacks {
     private MessageModel _model;
     private String _message;
     public ArrayList<Observer> observers;
@@ -32,6 +32,9 @@ public class ChatViewModel extends BaseObservable implements ModelCallBacks {
         _model=new MessageModel();
         observers=new ArrayList<>();
         _message = "";
+
+        FirebaseManager.getInstance().addCallback(this);
+        setListener();
     }
 
     @Bindable
@@ -58,11 +61,12 @@ public class ChatViewModel extends BaseObservable implements ModelCallBacks {
 
     public void setListener()
     {
-
+        FirebaseManager.getInstance().addMessageListener();
     }
 
     public void onDestroy() {
-
+        FirebaseManager.getInstance().addCallback(this);
+        FirebaseManager.getInstance().removeMessageListener();
     }
 
     @Override
@@ -90,4 +94,19 @@ public class ChatViewModel extends BaseObservable implements ModelCallBacks {
         }
     }
 
+    @Override
+    public void onMessage(MessageItemModel message) {
+        _model.addMessages(message, this);
+    }
+
+    @Override
+    public void onChatroom(String roomName)
+    {
+
+    }
+
+    @Override
+    public void onChatEnded() {
+        notifyObservers(MyUtils.EXIT_ROOM,null);
+    }
 }

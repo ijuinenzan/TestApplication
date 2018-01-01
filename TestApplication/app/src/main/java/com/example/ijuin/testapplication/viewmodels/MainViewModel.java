@@ -1,9 +1,11 @@
 package com.example.ijuin.testapplication.viewmodels;
 
 import android.databinding.BaseObservable;
+import android.graphics.Bitmap;
 
 import com.example.ijuin.testapplication.interfaces.FirebaseCallbacks;
 import com.example.ijuin.testapplication.interfaces.Observer;
+import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.utils.FirebaseManager;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,20 +30,27 @@ public class MainViewModel extends BaseObservable implements FirebaseCallbacks
         setListener();
     }
 
+    public void UploadProfileImage(Bitmap bitmap)
+    {
+        FirebaseManager.getInstance().uploadImage(bitmap);
+    }
+
     @Override
-    public void onMessage(DataSnapshot datasnapshot) {
+    public void onMessage(MessageItemModel message) {
 
     }
 
     @Override
-    public void onChatroom(DataSnapshot datasnapshot)
+    public void onChatroom(String roomName)
     {
-        if(datasnapshot.child("user1").getValue().equals(FirebaseAuth.getInstance().getUid()) ||
-                datasnapshot.child("user2").getValue().equals(FirebaseAuth.getInstance().getUid()))
-        {
-            FirebaseManager.getInstance().updateChatRoom(datasnapshot.getKey());
-            notifyObservers(MyUtils.CHAT_ROOM_FOUND, datasnapshot.getKey());
-        }
+        FirebaseManager.getInstance().updateChatRoom(roomName);
+        notifyObservers(MyUtils.CHAT_ROOM_FOUND, roomName);
+    }
+
+    @Override
+    public void onChatEnded()
+    {
+
     }
 
     public void setListener()

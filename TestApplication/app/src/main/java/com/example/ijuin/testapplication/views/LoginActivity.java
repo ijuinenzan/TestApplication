@@ -2,8 +2,10 @@ package com.example.ijuin.testapplication.views;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.hardware.input.InputManager;
@@ -81,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
     private RelativeLayout.LayoutParams _button_login_lp;
     private RelativeLayout.LayoutParams _old_button_login_lp;
     //endregion
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

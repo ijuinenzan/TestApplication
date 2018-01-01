@@ -2,6 +2,7 @@ package com.example.ijuin.testapplication.viewmodels;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.graphics.Bitmap;
 
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.models.FieldModel;
@@ -63,6 +64,7 @@ public class ProfileViewModel extends BaseObservable {
         }
     }
 
+
     @Bindable
     public UserModel getUser() {
         return _newUser;
@@ -70,7 +72,12 @@ public class ProfileViewModel extends BaseObservable {
 
     public void Change()
     {
-        notifyObservers(MyUtils.CHANGE_PICTURE, "");
+        notifyObservers(MyUtils.SELECT_PICTURE, "");
+    }
+
+    public void TakePicture()
+    {
+        notifyObservers(MyUtils.TAKE_PICTURE, "");
     }
 
     public void Save()

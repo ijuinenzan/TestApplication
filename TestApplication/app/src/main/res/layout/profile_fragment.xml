@@ -34,14 +34,23 @@
                     android:minHeight="100dp"
                     android:maxWidth="100dp"
                     android:maxHeight="100dp"
-                    android:src="@drawable/ic_profile"/>
+                    app:image_url="@{viewModel.user.imageUrl.value}"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chụp hình"
+                    android:layout_marginStart="20dp"
+                    android:onClick="@{() -> viewModel.TakePicture()}"/>
 
                 <Button
                     android:id="@+id/btn_ChangeUserImg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/changeUserImg"
-                    android:layout_marginStart="20dp"/>
+                    android:text="Chọn hình"
+                    android:onClick="@{() -> viewModel.Change()}"/>
+
+
             </LinearLayout>
 
             <LinearLayout
