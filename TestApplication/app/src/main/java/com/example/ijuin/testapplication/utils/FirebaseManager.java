@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.ijuin.testapplication.factories.MessageFactory;
 import com.example.ijuin.testapplication.interfaces.FirebaseCallbacks;
 import com.example.ijuin.testapplication.models.FieldModel;
 import com.example.ijuin.testapplication.models.MessageItemModel;
@@ -83,7 +84,7 @@ public class FirebaseManager implements ChildEventListener
         _profileImageReference = _storage.getReferenceFromUrl("gs://testandroidstudio-2b160.appspot.com").child("profile_pictures/" + FirebaseAuth.getInstance().getUid());
     }
 
-    public void uploadImage(Bitmap bitmap)
+    public void uploadProfileImage(Bitmap bitmap)
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -101,6 +102,32 @@ public class FirebaseManager implements ChildEventListener
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
                 _user.setImageUrl(new FieldModel<String>(downloadUrl.toString(),false));
                 _userReference.child(_auth.getUid()).setValue(_user);
+            }
+        });
+    }
+
+    public void sendVideoMessage()
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        //bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = _profileImageReference.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                String key = _messageReference.push().getKey();
+                MessageItemModel message = MessageFactory.createVideoMessage(downloadUrl.toString());
+                message.setMessageKey(key);
+                _messageReference.child(key).setValue(message);
             }
         });
     }
@@ -233,10 +260,6 @@ public class FirebaseManager implements ChildEventListener
         }
 
         _userReference.child(_auth.getUid()).setValue(user);
-    }
-
-    public void updateProfilePicture()
-    {
     }
 
     public UserModel getUser()

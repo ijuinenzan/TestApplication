@@ -62,6 +62,11 @@ public class ChatViewModel extends BaseObservable implements FirebaseCallbacks {
         }
     }
 
+    public void sendLocation(Double lattitude, Double longitude)
+    {
+        FirebaseManager.getInstance().sendMessage(MessageFactory.createLocationMessage(lattitude,longitude));
+    }
+
     public void setListener()
     {
         FirebaseManager.getInstance().addMessageListener();
@@ -112,6 +117,11 @@ public class ChatViewModel extends BaseObservable implements FirebaseCallbacks {
     public void onChatroom(String roomName)
     {
 
+    }
+
+    public void exitRoom()
+    {
+        notifyObservers(MyUtils.EXIT_ROOM);
     }
 
     @Override

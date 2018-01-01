@@ -65,7 +65,7 @@ public class ProfileViewModel extends BaseObservable implements FirebaseCallback
 
     public void uploadProfileImage(Bitmap bitmap)
     {
-        FirebaseManager.getInstance().uploadImage(bitmap);
+        FirebaseManager.getInstance().uploadProfileImage(bitmap);
     }
 
     public void removeObserver(Observer clientToRemove) {

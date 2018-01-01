@@ -23,4 +23,24 @@ public class MessageFactory
         messageItemModel.setType(MyUtils.TEXT_TYPE);
         return messageItemModel;
     }
+
+    public static MessageItemModel createLocationMessage(Double lattitude,Double longitude)
+    {
+        MessageItemModel messageItemModel = new MessageItemModel();
+        messageItemModel.setMessage(String.valueOf(lattitude) + " " + String.valueOf(longitude));
+        messageItemModel.setSenderId(FirebaseAuth.getInstance().getUid());
+        messageItemModel.setTimeStamp(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+        messageItemModel.setType(MyUtils.LOCATION_TYPE);
+        return messageItemModel;
+    }
+
+    public static MessageItemModel createVideoMessage(String videoUrl)
+    {
+        MessageItemModel messageItemModel = new MessageItemModel();
+        messageItemModel.setMessage(videoUrl);
+        messageItemModel.setSenderId(FirebaseAuth.getInstance().getUid());
+        messageItemModel.setTimeStamp(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+        messageItemModel.setType(MyUtils.VIDEO_TYPE);
+        return messageItemModel;
+    }
 }

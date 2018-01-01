@@ -9,8 +9,6 @@ import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.utils.FirebaseManager;
 import com.example.ijuin.testapplication.utils.MyUtils;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 
