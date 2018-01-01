@@ -98,7 +98,7 @@
                     android:id="@+id/videoview_message_right"
                     android:layout_width="200dp"
                     android:visibility='@{chatMessage.type.equals(MyUtils.VIDEO_TYPE)? View.VISIBLE: View.GONE}'
-
+                    app:video_url="@{chatMessage.message}"
                     android:layout_height="200dp" />
 
                 <include

@@ -11,6 +11,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.databinding.DataBindingUtil;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
@@ -400,6 +401,12 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         }
     }
 
+    public void getVideo()
+    {
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.iloveyou);
+        mViewModel.sendVideo(uri);
+    }
+
     @Override
     public void onClick(View v)
     {
@@ -417,10 +424,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         {
             Toast.makeText(this,"GALLERY",Toast.LENGTH_LONG).show();
             //TODO: Click Gallery
-        }
-        else if (i == _btnVideo.getId())
-        {
-            //playVideo();
         }
         else if (i == _btnRecorder.getId())
         {

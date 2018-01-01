@@ -2,6 +2,7 @@ package com.example.ijuin.testapplication.viewmodels;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.net.Uri;
 
 import com.example.ijuin.testapplication.BR;
 import com.example.ijuin.testapplication.factories.MessageFactory;
@@ -59,9 +60,15 @@ public class ChatViewModel extends BaseObservable implements ModelCallBacks, Fir
         }
     }
 
-    public void sendLocation(Double lattitude, Double longitude)
+    public void sendLocation(Double latitude, Double longitude)
     {
-        FirebaseManager.getInstance().sendMessage(MessageFactory.createLocationMessage(lattitude,longitude));
+        FirebaseManager.getInstance().sendMessage(MessageFactory.createLocationMessage(latitude,longitude));
+    }
+
+    public void sendVideo(Uri uri)
+    {
+        FirebaseManager.getInstance().sendVideoMessage(uri);
+        //FirebaseManager.getInstance().sendMessage(MessageFactory.createVideoMessage(uri.toString()));
     }
 
     public void setListener()

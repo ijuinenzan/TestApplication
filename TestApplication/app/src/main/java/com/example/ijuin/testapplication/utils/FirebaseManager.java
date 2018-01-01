@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -30,9 +31,11 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +52,7 @@ public class FirebaseManager implements ChildEventListener
     private FirebaseDatabase _database;
     private FirebaseStorage _storage;
     private StorageReference _profileImageReference;
+    private StorageReference _chatRoomStorageReference;
     private DatabaseReference _userReference;
     private DatabaseReference _messageReference;
     private DatabaseReference _chatRoomsReference;
@@ -81,7 +85,7 @@ public class FirebaseManager implements ChildEventListener
         _callbacks = new ArrayList<>();
         _chatRoom = "";
         _storage = FirebaseStorage.getInstance();
-        _profileImageReference = _storage.getReferenceFromUrl("gs://testandroidstudio-2b160.appspot.com").child("profile_pictures/" + FirebaseAuth.getInstance().getUid());
+        _profileImageReference = _storage.getReference().child("profile_pictures/" + FirebaseAuth.getInstance().getUid());
     }
 
     public void uploadProfileImage(Bitmap bitmap)
@@ -107,30 +111,34 @@ public class FirebaseManager implements ChildEventListener
         });
     }
 
-    public void sendVideoMessage()
+    public void sendVideoMessage(Uri uri)
     {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        //bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        
-        byte[] data = baos.toByteArray();
+        try
+        {
+            final String key = _messageReference.push().getKey();
+            StorageReference uploadRef = _chatRoomStorageReference.child(key);
+            UploadTask uploadTask = uploadRef.putFile(uri);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    MessageItemModel message = MessageFactory.createVideoMessage(downloadUrl.toString());
+                    message.setMessageKey(key);
+                    _messageReference.child(key).setValue(message);
+                }
+            });
+        }
+        catch (Exception e)
+        {
 
-        UploadTask uploadTask = _profileImageReference.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                String key = _messageReference.push().getKey();
-                MessageItemModel message = MessageFactory.createVideoMessage(downloadUrl.toString());
-                message.setMessageKey(key);
-                _messageReference.child(key).setValue(message);
-            }
-        });
+        }
+
     }
 
 
@@ -270,6 +278,7 @@ public class FirebaseManager implements ChildEventListener
         _chatRoom = chatRoom;
         _currentChatRoomReference = _chatRoomsReference.child(chatRoom);
         _messageReference = _currentChatRoomReference.child("messages");
+        _chatRoomStorageReference = _storage.getReference().child(_chatRoom);
     }
     public void destroy() {
         sFirebaseManager=null;

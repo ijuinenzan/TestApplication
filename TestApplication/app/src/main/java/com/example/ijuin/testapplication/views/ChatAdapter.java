@@ -165,23 +165,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
     private VideoView _videoView;
     public void playVideo()
     {
-        _videoView.requestFocus();
-        _videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
 
-                mediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
-                    @Override
-                    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-                        MediaController mediacontroller = new MediaController(_context);
-                        mediacontroller.setAnchorView(_videoView);
-                        _videoView.setMediaController(mediacontroller);
-                    }
-                });
-            }
-        });
-
-        _videoView.start();
     }
     // endregion
 
