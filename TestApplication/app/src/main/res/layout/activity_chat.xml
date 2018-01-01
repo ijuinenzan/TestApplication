@@ -84,7 +84,8 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginBottom="7dp"
                 android:backgroundTint="@color/CRIMSON"
-                android:visibility="invisible"/>
+                android:visibility="invisible"
+                android:onClick="@{() -> activity.getImageFromCamera()}"/>
 
 
             <android.support.design.widget.FloatingActionButton
@@ -98,7 +99,8 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginBottom="7dp"
                 android:backgroundTint="@color/DARK_YELLOW"
-                android:visibility="invisible"/>
+                android:visibility="invisible"
+                android:onClick="@{() -> activity.getImageFromGallery()}"/>
 
             <Button
                 android:id="@+id/btn_start_stop_recorder"
@@ -107,7 +109,8 @@
                 android:layout_above="@id/layout_input"
                 android:layout_marginStart="80dp"
                 android:background="@drawable/ic_start_record_48dp"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:onClick="@{()->activity.onClickStartStopRecorder()}"/>
 
             <LinearLayout
                 android:id="@+id/layout_input"
@@ -123,7 +126,8 @@
                     android:layout_height="wrap_content"
                     app:fabSize="mini"
                     android:backgroundTint="@color/TWITTER"
-                    android:src="@drawable/ic_plus"/>
+                    android:src="@drawable/ic_plus"
+                    android:onClick="@{() -> activity.onClickPlus()}"/>
 
                 <Button
                     android:id="@+id/btn_video"
@@ -132,14 +136,15 @@
                     android:background="@drawable/ic_video_48dp"
                     android:layout_marginTop="0dp"
                     android:visibility="visible"
-                    android:onClick="@{() -> activity.getVideo()}"/>
+                    android:onClick="@{() -> activity.sendVideo()}"/>
 
                 <Button
                     android:id="@+id/btn_recorder"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/ic_mic_48dp"
-                    android:visibility="visible"/>
+                    android:visibility="visible"
+                    android:onClick="@{() -> activity.onClickRecorder()}"/>
 
 
                 <io.github.rockerhieu.emojicon.EmojiconEditText

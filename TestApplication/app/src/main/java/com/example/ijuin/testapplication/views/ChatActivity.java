@@ -7,12 +7,14 @@ import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.databinding.DataBindingUtil;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -25,6 +27,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ijuin.testapplication.R;
@@ -47,14 +50,15 @@ import static com.example.ijuin.testapplication.utils.MyUtils.UPDATE_MESSAGES;
  * Created by ijuin on 11/12/2017.
  */
 
-public class ChatActivity extends AppCompatActivity implements Observer<ArrayList<MessageItemModel>> , View.OnClickListener
+public class ChatActivity extends AppCompatActivity implements Observer<ArrayList<MessageItemModel>>
 {
     //region DECLARE VARIABLE
     private ActivityChatBinding mBinding;
     private ChatViewModel mViewModel;
     private final int PLACE_PICKER_REQUEST = 2000;
     private static final int REQUEST_LOCATION = 1997;
-
+    private final int SELECT_FILE = 123456789;
+    private final int REQUEST_CAMERA = 2468;
 
     // ====== Floating Action Button =============================================================
     FloatingActionButton _fabPlus, _fabLocation, _fabCamera, _fabGallery;
@@ -117,24 +121,11 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         _animClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_rotate_clockwise);
         _animAntiClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_rotate_anticlockwise);
 
-        //_videoView = (VideoView) findViewById(R.id.videoview);
+
         _btnRecorder = (Button) findViewById(R.id.btn_recorder);
         _btnVideo = (Button) findViewById(R.id.btn_video);
         _btnStartStopRecorder = (Button) findViewById(R.id.btn_start_stop_recorder);
         _edtEmoji = (EditText) findViewById(R.id.editEmojicon);
-
-
-
-        _fabPlus.setOnClickListener(this);
-        _fabLocation.setOnClickListener(this);
-        _fabCamera.setOnClickListener(this);
-        _fabGallery.setOnClickListener(this);
-        _btnVideo.setOnClickListener(this);
-        _btnRecorder.setOnClickListener(this);
-        _btnStartStopRecorder.setOnClickListener(this);
-
-
-
 
 
         _edtEmoji.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -222,7 +213,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
 
 
-    private void onClickPlus()
+    public void onClickPlus()
     {
         _edtEmoji.clearFocus();
         if (_isOpen)
@@ -263,7 +254,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         }
     }
 
-    private void onClickStartStopRecorder()
+    public void onClickStartStopRecorder()
     {
         if (ActivityCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
 
@@ -297,25 +288,30 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            if (resultCode == RESULT_OK) {
+        if (requestCode == PLACE_PICKER_REQUEST)
+        {
+            if (resultCode == RESULT_OK)
+            {
                 Place place = PlacePicker.getPlace(this, data);
             }
         }
-    }
-
-
-    private void mapPicker()
-    {
-        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-
-        try
+        else if (requestCode == REQUEST_CAMERA)
         {
-            //_context.startActivityForResult(builder.build(ChatActivity.this), PLACE_PICKER_REQUEST);
+            if (resultCode == RESULT_OK)
+            {
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                mViewModel.sendImageBitmap(bitmap);
+            }
         }
-        catch(Exception e)
+        else if (requestCode == SELECT_FILE)
         {
+            if (resultCode == RESULT_OK)
+            {
+                Uri selectedImageUri = data.getData();
+                mViewModel.sendImageUri(selectedImageUri);
+            }
         }
+
     }
 
     private void getLocation()
@@ -391,38 +387,27 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         }
     }
 
-    public void getVideo()
+    public void sendVideo()
     {
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.iloveyou);
         mViewModel.sendVideo(uri);
     }
 
-    @Override
-    public void onClick(View v)
+    public void getImageFromGallery()
     {
-        int i = v.getId();
-        if(i == _fabPlus.getId())
-        {
-            onClickPlus();
-        }
-        else if (i == _fabCamera.getId())
-        {
-            Toast.makeText(this,"CAMERA",Toast.LENGTH_LONG).show();
-            //TODO: Click Camera
-        }
-        else if (i == _fabGallery.getId())
-        {
-            Toast.makeText(this,"GALLERY",Toast.LENGTH_LONG).show();
-            //TODO: Click Gallery
-        }
-        else if (i == _btnRecorder.getId())
-        {
-            _btnStartStopRecorder.setVisibility(View.VISIBLE);
-        }
-        else if (i == _btnStartStopRecorder.getId())
-        {
-            onClickStartStopRecorder();
-        }
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        ChatActivity.this.startActivityForResult(intent.createChooser(intent, "Select File"), SELECT_FILE);
+    }
+
+    public void getImageFromCamera()
+    {
+        ChatActivity.this.startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), REQUEST_CAMERA);
+    }
+
+    public void onClickRecorder()
+    {
+        _btnStartStopRecorder.setVisibility(View.VISIBLE);
     }
 
     @Override

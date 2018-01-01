@@ -43,4 +43,14 @@ public class MessageFactory
         messageItemModel.setType(MyUtils.VIDEO_TYPE);
         return messageItemModel;
     }
+
+    public static MessageItemModel createImageMessage(String imageUrl)
+    {
+        MessageItemModel messageItemModel = new MessageItemModel();
+        messageItemModel.setMessage(imageUrl);
+        messageItemModel.setSenderId(FirebaseAuth.getInstance().getUid());
+        messageItemModel.setTimeStamp(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+        messageItemModel.setType(MyUtils.IMAGE_TYPE);
+        return messageItemModel;
+    }
 }

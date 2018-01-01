@@ -2,6 +2,7 @@ package com.example.ijuin.testapplication.viewmodels;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 import com.example.ijuin.testapplication.BR;
@@ -71,7 +72,16 @@ public class ChatViewModel extends BaseObservable implements FirebaseCallbacks {
     public void sendVideo(Uri uri)
     {
         FirebaseManager.getInstance().sendVideoMessage(uri);
-        //FirebaseManager.getInstance().sendMessage(MessageFactory.createVideoMessage(uri.toString()));
+    }
+
+    public void sendImageUri(Uri uri)
+    {
+        FirebaseManager.getInstance().sendImageUri(uri);
+    }
+
+    public void sendImageBitmap(Bitmap bitmap)
+    {
+        FirebaseManager.getInstance().sendImageBitmap(bitmap);
     }
 
     public void setListener()

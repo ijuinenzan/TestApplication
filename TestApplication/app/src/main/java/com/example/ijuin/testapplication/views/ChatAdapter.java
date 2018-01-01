@@ -75,6 +75,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
         {
             return R.layout.location_chat_adapter;
         }
+        else if(messageType.equals(MyUtils.AUDIO_TYPE))
+        {
+            return R.layout.audio_chat_adapter;
+        }
+        else if(messageType.equals(MyUtils.IMAGE_TYPE))
+        {
+            return R.layout.image_chat_adapter;
+        }
+        else if(messageType.equals(MyUtils.VIDEO_TYPE))
+        {
+            return R.layout.video_chat_adapter;
+        }
         return -1;
     }
 
@@ -105,12 +117,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
 
     private void onCreate()
     {
-        _startTimeAudio = (TextView) _view.findViewById(R.id.txt_current_time);
-        _endTimeAudio = (TextView) _view.findViewById(R.id.txt_end_time);
-        _btnPlayAudio = (Button) _view.findViewById(R.id.btn_play_pause_audio);
-        _seekbar = (SeekBar) _view.findViewById(R.id.seekbar_audio);
+//        _startTimeAudio = (TextView) _view.findViewById(R.id.txt_current_time);
+//        _endTimeAudio = (TextView) _view.findViewById(R.id.txt_end_time);
+//        _btnPlayAudio = (Button) _view.findViewById(R.id.btn_play_pause_audio);
+//        _seekbar = (SeekBar) _view.findViewById(R.id.seekbar_audio);
 
-        _player = new MediaPlayer();
 
         _btnPlayAudio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,20 +215,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
         return directory.getAbsolutePath();
     }
 
-    public void startPlayback() throws Exception
-    {
-        if(_player!=null)
-        {
-            _player.stop();
-            _player.release();
-        }
-        _player = new MediaPlayer();
-        String filepath = createFile("audio");
-        _player.setDataSource(filepath + "/audiorecordtest.3gp");
-        _player.prepare();
-        _player.start();
-        setEndTimeAudio(_player.getDuration());
-    }
+
 
 
     public void setEndTimeAudio(int timeInMilliSeconds)
@@ -265,7 +263,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
         else
         {
             try {
-                startPlayback();
+               // startPlayback();
             } catch (Exception e) {
                 e.printStackTrace();
             }

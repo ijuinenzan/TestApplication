@@ -140,6 +140,53 @@ public class FirebaseManager implements ChildEventListener
 
     }
 
+    public void sendImageBitmap(Bitmap bitmap)
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        final String key = _messageReference.push().getKey();
+        StorageReference uploadRef = _chatRoomStorageReference.child(key);
+
+        UploadTask uploadTask = uploadRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception)
+            {
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                MessageItemModel message = MessageFactory.createImageMessage(downloadUrl.toString());
+                message.setMessageKey(key);
+                _messageReference.child(key).setValue(message);
+            }
+        });
+    }
+
+    public void sendImageUri(Uri uri)
+    {
+        final String key = _messageReference.push().getKey();
+        StorageReference uploadRef = _chatRoomStorageReference.child(key);
+
+        UploadTask uploadTask = uploadRef.putFile(uri);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception)
+            {
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                MessageItemModel message = MessageFactory.createImageMessage(downloadUrl.toString());
+                message.setMessageKey(key);
+                _messageReference.child(key).setValue(message);
+            }
+        });
+    }
 
     public void addCallback(FirebaseCallbacks callback)
     {

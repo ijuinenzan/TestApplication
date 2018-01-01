@@ -22,6 +22,7 @@ import com.example.ijuin.testapplication.views.ChatAdapter;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.spec.ECField;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,6 +42,7 @@ public class MyUtils
     public static String VIDEO_TYPE = "VIDEO";
     public static String AUDIO_TYPE = "AUDIO";
     public static String LOCATION_TYPE = "LOCATION";
+    public static String IMAGE_TYPE = "IMAGE";
 
     public static final int OPEN_ACTIVITY = 1;
     public static final int SHOW_TOAST = 2;
@@ -62,6 +64,28 @@ public class MyUtils
     {
         Glide.with(imageView.getContext()).load(url).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
     }
+
+//    @BindingAdapter({"app:audio"})
+//    public static void loadAudio(MediaPlayer player, String url)
+//    {
+//        player = new MediaPlayer();
+//        if(player!=null)
+//        {
+//            player.stop();
+//            player.release();
+//        }
+//        player = new MediaPlayer();
+//        try {
+//            player.setDataSource(url);
+//            player.prepare();
+//            player.start();
+//            setEndTimeAudio(player.getDuration());
+//        }
+//        catch (IOException e)
+//        {
+//
+//        }
+//    }
 
     @BindingAdapter({"app:video_url"})
     public static void loadVideo(final VideoView videoView, String url)
@@ -89,35 +113,35 @@ public class MyUtils
     @BindingAdapter({"app:location"})
     public static void loadLocation(final ImageButton imageButton, String location)
     {
-//        // get from fb
-//        final double latitude = Double.parseDouble(location.split(" ")[0]);
-//        final double longitude = Double.parseDouble(location.split(" ")[1]);
-//        imageButton.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                int height = imageButton.getMeasuredHeight();
-//                int width = imageButton.getMeasuredWidth();
-//
-//                MapBuilder mapBuilder = new MapBuilder().center(latitude, longitude).dimensions(width, height).zoom(25);
-//
-//                mapBuilder.setKey("");
-//
-//                mapBuilder.addMarker(new MarkerBuilder().position(latitude, longitude));
-//
-//                String url = mapBuilder.build();
-//
-//                GetImageAsyncTask asyncTask = new GetImageAsyncTask(imageButton);
-//                asyncTask.execute(url);
-//            }
-//        });
-//        imageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String uri = String.format(Locale.ENGLISH, "geo:%f,%f?q=%f,%f (%s)", latitude, longitude, latitude, longitude, "Mark");
-//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-//                imageButton.getContext().startActivity(intent);
-//            }
-//        });
+        // get from fb
+        final double latitude = Double.parseDouble(location.split(" ")[0]);
+        final double longitude = Double.parseDouble(location.split(" ")[1]);
+        imageButton.post(new Runnable() {
+            @Override
+            public void run() {
+                int height = imageButton.getMeasuredHeight();
+                int width = imageButton.getMeasuredWidth();
+
+                MapBuilder mapBuilder = new MapBuilder().center(latitude, longitude).dimensions(width, height).zoom(25);
+
+                mapBuilder.setKey("");
+
+                mapBuilder.addMarker(new MarkerBuilder().position(latitude, longitude));
+
+                String url = mapBuilder.build();
+
+                GetImageAsyncTask asyncTask = new GetImageAsyncTask(imageButton);
+                asyncTask.execute(url);
+            }
+        });
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uri = String.format(Locale.ENGLISH, "geo:%f,%f?q=%f,%f (%s)", latitude, longitude, latitude, longitude, "Mark");
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                imageButton.getContext().startActivity(intent);
+            }
+        });
     }
 
 

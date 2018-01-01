@@ -7,6 +7,7 @@
     <data>
         <import type="com.example.ijuin.testapplication.utils.MyUtils"/>
         <variable name="chatMessage" type="com.example.ijuin.testapplication.models.MessageItemModel"/>
+        <variable name="activity" type="com.example.ijuin.testapplication.views.ChatActivity"/>
         <import type="android.view.View"/>
     </data>
 
@@ -26,18 +27,15 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/left_node_bg">
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/textview_message_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:text="@={chatMessage.message}"/>
-
-
+                <ImageView
+                    android:id="@+id/imgView_message_left"
+                    android:scaleType="center"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:background="@drawable/ic_play_48dp"
+                    app:image_url='@{chatMessage.message}'/>
             </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
@@ -61,21 +59,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_average"
-                android:background="@drawable/right_node_bg"
                 android:orientation="horizontal">
 
-
-
-                <TextView
-                    style="@style/textview_message_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:visibility='@{chatMessage.type.equals(MyUtils.TEXT_TYPE)? View.VISIBLE: View.GONE}'
-                    android:text="@={chatMessage.message}"/>
-
-               
+                <ImageView
+                    android:id="@+id/imgView_message_right"
+                    android:scaleType="fitCenter"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:background="@drawable/ic_play_48dp"
+                    app:image_url='@{chatMessage.message}'/>
             </LinearLayout>
 
             <TextView
@@ -85,8 +77,6 @@
                 android:layout_marginRight="@dimen/margin_average"
                 android:text="@={chatMessage.timeStamp}"
                 style="@style/info_textviews"/>
-
-
 
         </LinearLayout>
 
