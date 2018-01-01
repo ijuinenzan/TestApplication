@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.ijuin.testapplication.views.ChatAdapter;
 
 import java.io.IOException;
@@ -58,7 +60,7 @@ public class MyUtils
     @BindingAdapter({"app:image_url"})
     public static void loadImage(ImageView imageView,String url)
     {
-        Glide.with(imageView.getContext()).load(url).into(imageView);
+        Glide.with(imageView.getContext()).load(url).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
     }
 
     @BindingAdapter({"app:video_url"})

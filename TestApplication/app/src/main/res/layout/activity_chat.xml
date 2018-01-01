@@ -29,6 +29,7 @@
                 android:textSize="12sp"
                 android:textColor="@color/white"
                 android:background="@drawable/btn_exit_room"
+                android:onClick="@{()-> viewModel.exitRoom()}"
                 emojicon:ignore="SmallSp" />
 
             <TextView
@@ -148,7 +149,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:hint="@string/typehere"
-                    android:text="@={viewModel.message}"
+                    android:text="@={viewModel.typingMessage}"
                     emojicon:emojiconSize="20sp" />
 
                 <Button

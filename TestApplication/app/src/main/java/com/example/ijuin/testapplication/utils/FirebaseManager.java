@@ -97,13 +97,12 @@ public class FirebaseManager implements ChildEventListener
         UploadTask uploadTask = _profileImageReference.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
+            public void onFailure(@NonNull Exception exception)
+            {
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
                 _user.setImageUrl(new FieldModel<String>(downloadUrl.toString(),false));
                 _userReference.child(_auth.getUid()).setValue(_user);
@@ -150,6 +149,16 @@ public class FirebaseManager implements ChildEventListener
     public void removeCallback(FirebaseCallbacks callback)
     {
         _callbacks.remove(callback);
+    }
+
+    public void addUserListener()
+    {
+        _userReference.addChildEventListener(this);
+    }
+
+    public void removeUserListener()
+    {
+        _userReference.removeEventListener(this);
     }
 
     public void addMessageListener()
@@ -206,10 +215,13 @@ public class FirebaseManager implements ChildEventListener
         {
             if(dataSnapshot.getKey().equals(FirebaseAuth.getInstance().getUid()))
             {
-                //update user.
+                for(FirebaseCallbacks callback: _callbacks)
+                {
+                    callback.onUserUpdated(_user);
+                }
             }
         }
-        if(root.equals("chatrooms") && dataSnapshot.getKey().equals(_chatRoom))
+        else if(root.equals("chatrooms") && dataSnapshot.getKey().equals(_chatRoom))
         {
             if((boolean)dataSnapshot.child("isAvailable").getValue() == false)
             {
@@ -217,6 +229,13 @@ public class FirebaseManager implements ChildEventListener
                 {
                     callback.onChatEnded();
                 }
+            }
+        }
+        else if(root.equals("messages"))
+        {
+            for(FirebaseCallbacks callback: _callbacks)
+            {
+                callback.onMessage(dataSnapshot.getValue(MessageItemModel.class));
             }
         }
     }
@@ -249,10 +268,6 @@ public class FirebaseManager implements ChildEventListener
         }
 
         _userReference.child(_auth.getUid()).setValue(user);
-    }
-
-    public void updateProfilePicture()
-    {
     }
 
     public UserModel getUser()

@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
 
     public void addControls()
     {
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         _pagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
         _viewPager = (ViewPager) findViewById(R.id.viewPagerContainer);
@@ -126,10 +125,6 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         };
 
         _viewPager.setPageTransformer(true,transformer);
-        //_viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-        //tabLayout = (TabLayout) findViewById(R.id.tabs);
-        //tabLayout.setupWithViewPager(_viewPager);
 
         _customTab = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         _customTab.setViewPager(_viewPager);
@@ -146,19 +141,23 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             if (requestCode == REQUEST_CAMERA)
             {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                _viewModel.UploadProfileImage(bitmap);
-                //finish();
+
+                for(int i = 0; i < _pagerAdapter.getCount(); ++i)
+                {
+                    if(_pagerAdapter.getItem(i) instanceof ProfileFragment)
+                    {
+                        ((ProfileFragment)_pagerAdapter.getItem(i)).mViewModel.uploadProfileImage(bitmap);
+                    }
+                }
             }
             else if (requestCode == SELECT_FILE_FROM_GALLERY)
             {
                 Uri uri = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                    _viewModel.UploadProfileImage(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                //finish();
             }
         }
     }
@@ -166,8 +165,6 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
     @Override
     public void onBackPressed()
     {
-        //startService(new Intent(MainActivity.this, ChatHeadService.class));
-        //finish();
     }
 
     @Override
@@ -323,6 +320,13 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 ((MainActivity)getActivity()).startActivityForResult(intent, REQUEST_CAMERA);
             }
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            mViewModel.removeObserver(this);
+            mViewModel.onDestroy();
         }
     }
 

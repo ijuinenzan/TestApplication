@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -23,10 +24,11 @@ import android.widget.VideoView;
 
 import com.example.ijuin.testapplication.BR;
 import com.example.ijuin.testapplication.R;
-import com.example.ijuin.testapplication.databinding.RowChatAdapterBinding;
+import com.example.ijuin.testapplication.databinding.TextChatAdapterBinding;
 import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.utils.MapBuilder;
 import com.example.ijuin.testapplication.utils.MarkerBuilder;
+import com.example.ijuin.testapplication.utils.MyUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,52 +41,60 @@ import java.util.Locale;
  */
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder> {
-
-
-    private ArrayList<MessageItemModel> chatList;
+    private ArrayList<MessageItemModel> _chatList;
     private Context _context;
     private View _view;
 
-    public ChatAdapter(Context context, ArrayList<MessageItemModel> chatList) {
-        this.chatList =chatList;
+    public ChatAdapter(Context context, ArrayList<MessageItemModel> chatList)
+    {
+        this._chatList =chatList;
         this._context =context;
     }
-
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        _view = LayoutInflater.from(_context).inflate(R.layout.row_chat_adapter, parent, false);
-        RowChatAdapterBinding binding= DataBindingUtil.bind(_view);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        ViewDataBinding binding = DataBindingUtil.inflate(
+                layoutInflater, viewType, parent, false);
         return new BindingHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(final BindingHolder holder, final int position) {
-        holder.getBinding().setVariable(BR.chatMessage, chatList.get(position));
-        holder.getBinding().executePendingBindings();
+        holder.bind(_chatList.get(position));
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        String messageType = _chatList.get(position).getType();
+
+        if(messageType.equals(MyUtils.TEXT_TYPE))
+        {
+            return R.layout.text_chat_adapter;
+        }
+        else if(messageType.equals(MyUtils.LOCATION_TYPE))
+        {
+            return R.layout.location_chat_adapter;
+        }
+        return -1;
     }
 
     @Override
     public int getItemCount() {
-        return chatList.size();
+        return _chatList.size();
     }
 
-
-
     class BindingHolder extends RecyclerView.ViewHolder {
+        private ViewDataBinding _binding;
 
-        private RowChatAdapterBinding binding;
-
-        BindingHolder(RowChatAdapterBinding binding) {
+        BindingHolder(ViewDataBinding binding) {
             super(binding.getRoot());
-            setBinding(binding);
+            _binding = binding;
         }
 
-        public void setBinding(RowChatAdapterBinding binding) {
-            this.binding = binding;
-        }
-
-        public RowChatAdapterBinding getBinding() {
-            return binding;
+        public void bind(MessageItemModel message)
+        {
+            _binding.setVariable(BR.chatMessage, message);
+            _binding.executePendingBindings();
         }
     }
 
