@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -36,6 +37,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static com.example.ijuin.testapplication.utils.MyUtils.EXIT_ROOM;
+import static com.example.ijuin.testapplication.utils.MyUtils.UPDATE_MESSAGES;
 
 
 /**
@@ -87,7 +91,9 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         mViewModel = new ChatViewModel();
         mBinding.setViewModel(mViewModel);
         mBinding.setActivity(this);
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mViewModel.addObserver(this);
+        mViewModel.setListener();
 
         _fabPlus = (FloatingActionButton) findViewById(R.id.fab_plus);
         _fabLocation = (FloatingActionButton) findViewById(R.id.fab_location);
@@ -461,9 +467,16 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     @Override
     public void onObserve(int event, ArrayList<MessageItemModel> eventMessage) {
 
-//        ChatAdapter chatAdapter=new ChatAdapter(this,eventMessage);
-//        mBinding.recyclerView.setAdapter(chatAdapter);
-//        mBinding.recyclerView.scrollToPosition(eventMessage.size()-1);
+        if(event == EXIT_ROOM)
+        {
+            onBackPressed();
+        }
+        else if(event == UPDATE_MESSAGES)
+        {
+            ChatAdapter chatAdapter=new ChatAdapter(this,eventMessage);
+            mBinding.recyclerView.setAdapter(chatAdapter);
+            mBinding.recyclerView.scrollToPosition(eventMessage.size()-1);
+        }
     }
 
     @Override

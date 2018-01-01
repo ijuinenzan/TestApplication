@@ -20,7 +20,6 @@ import java.util.TimeZone;
 public class MyUtils
 {
     public static String MESSAGE_AUTHENTICATION_FAILED = "Firebase authentication failed, please check your internet connection";
-    public static String MESSAGE_INVALIDE_ROOM_NAME= "Enter a valid Name";
 
     public static String TEXT_TYPE = "TEXT";
 
@@ -30,6 +29,7 @@ public class MyUtils
     public static final int CHANGE_PICTURE = 4;
     public static final int LOG_OUT = 5;
     public static final int CHAT_ROOM_FOUND = 6;
+    public static final int EXIT_ROOM=7;
 
     public static Boolean MALE = true;
 

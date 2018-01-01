@@ -5,6 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="com.example.ijuin.testapplication.utils.MyUtils"/>
         <variable name="chatMessage" type="com.example.ijuin.testapplication.models.MessageItemModel"/>
         <import type="android.view.View"/>
     </data>
@@ -34,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@android:color/holo_orange_dark"
-                    android:visibility='@{chatMessage.type =="TEXT"? View.VISIBLE: View.GONE}'
+                    android:visibility='@{chatMessage.type.equals(MyUtils.TEXT_TYPE)? View.VISIBLE: View.GONE}'
                     android:text="@={chatMessage.message}"/>
 
             </LinearLayout>
@@ -71,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@android:color/holo_orange_dark"
-                    android:visibility='@{chatMessage.type =="TEXT"? View.VISIBLE: View.GONE}'
+                    android:visibility='@{chatMessage.type.equals(MyUtils.TEXT_TYPE)? View.VISIBLE: View.GONE}'
                     android:text="@={chatMessage.message}"/>
             </LinearLayout>
 

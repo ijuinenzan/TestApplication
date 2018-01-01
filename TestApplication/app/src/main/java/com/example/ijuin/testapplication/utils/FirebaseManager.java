@@ -36,6 +36,7 @@ public class FirebaseManager implements ChildEventListener
     private DatabaseReference _userReference;
     private DatabaseReference _messageReference;
     private DatabaseReference _chatRoomsReference;
+    private DatabaseReference _currentChatRoomReference;
     private ArrayList<FirebaseCallbacks> _callbacks;
 
     private FirebaseAuth _auth;
@@ -100,18 +101,22 @@ public class FirebaseManager implements ChildEventListener
     {
         String root = dataSnapshot.getRef().getParent().getKey();
 
-        if(root.equals("chatrooms"))
+        if(root.equals("chatrooms") && (boolean)dataSnapshot.child("isAvailable").getValue())
         {
-            for(FirebaseCallbacks callback: _callbacks)
+            if(dataSnapshot.child("user1").getValue().equals(FirebaseAuth.getInstance().getUid()) ||
+                    dataSnapshot.child("user2").getValue().equals(FirebaseAuth.getInstance().getUid()))
             {
-                callback.onChatroom(dataSnapshot);
+                for(FirebaseCallbacks callback: _callbacks)
+                {
+                    callback.onChatroom(dataSnapshot.getKey());
+                }
             }
         }
         else if(root.equals("messages"))
         {
             for(FirebaseCallbacks callback: _callbacks)
             {
-                callback.onMessage(dataSnapshot);
+                callback.onMessage(dataSnapshot.getValue(MessageItemModel.class));
             }
         }
 
@@ -126,6 +131,16 @@ public class FirebaseManager implements ChildEventListener
             if(dataSnapshot.getKey().equals(FirebaseAuth.getInstance().getUid()))
             {
                 //update user.
+            }
+        }
+        if(root.equals("chatrooms") && dataSnapshot.getKey().equals(_chatRoom))
+        {
+            if((boolean)dataSnapshot.child("isAvailable").getValue() == false)
+            {
+                for(FirebaseCallbacks callback: _callbacks)
+                {
+                    callback.onChatEnded();
+                }
             }
         }
     }
@@ -162,7 +177,6 @@ public class FirebaseManager implements ChildEventListener
 
     public void updateProfilePicture()
     {
-
     }
 
     public UserModel getUser()
@@ -186,8 +200,8 @@ public class FirebaseManager implements ChildEventListener
     public void updateChatRoom(String chatRoom)
     {
         _chatRoom = chatRoom;
-        _messageReference = _chatRoomsReference.child(chatRoom).child("messages");
-
+        _currentChatRoomReference = _chatRoomsReference.child(chatRoom);
+        _messageReference = _currentChatRoomReference.child("messages");
     }
     public void destroy() {
         sFirebaseManager=null;

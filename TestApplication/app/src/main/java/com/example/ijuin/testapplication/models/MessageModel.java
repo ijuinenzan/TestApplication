@@ -32,8 +32,7 @@ public class MessageModel
                 return;
             }
         }
-        MessageItemModel messageItemModel=new MessageItemModel();
-        mMessages.add(messageItemModel);
+        mMessages.add(message);
         callBacks.onModelUpdated(mMessages);
     }
 }
