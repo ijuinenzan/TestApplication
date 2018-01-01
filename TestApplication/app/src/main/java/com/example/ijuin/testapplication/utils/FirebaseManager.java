@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.example.ijuin.testapplication.interfaces.FirebaseCallbacks;
 import com.example.ijuin.testapplication.models.FieldModel;
+import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.models.UserModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -50,6 +51,7 @@ public class FirebaseManager implements ChildEventListener
     private DatabaseReference _userReference;
     private DatabaseReference _messageReference;
     private DatabaseReference _chatRoomsReference;
+    private DatabaseReference _currentChatRoomReference;
     private ArrayList<FirebaseCallbacks> _callbacks;
 
     private FirebaseAuth _auth;
@@ -65,7 +67,6 @@ public class FirebaseManager implements ChildEventListener
             synchronized (FirebaseManager.class)
             {
                 sFirebaseManager = new FirebaseManager();
-                //sFirebaseManager = new FirebaseManager(roomName,callBacks);
             }
         }
         return sFirebaseManager;
@@ -141,18 +142,22 @@ public class FirebaseManager implements ChildEventListener
     {
         String root = dataSnapshot.getRef().getParent().getKey();
 
-        if(root.equals("chatrooms"))
+        if(root.equals("chatrooms") && (boolean)dataSnapshot.child("isAvailable").getValue())
         {
-            for(FirebaseCallbacks callback: _callbacks)
+            if(dataSnapshot.child("user1").getValue().equals(FirebaseAuth.getInstance().getUid()) ||
+                    dataSnapshot.child("user2").getValue().equals(FirebaseAuth.getInstance().getUid()))
             {
-                callback.onChatroom(dataSnapshot);
+                for(FirebaseCallbacks callback: _callbacks)
+                {
+                    callback.onChatroom(dataSnapshot.getKey());
+                }
             }
         }
         else if(root.equals("messages"))
         {
             for(FirebaseCallbacks callback: _callbacks)
             {
-                callback.onMessage(dataSnapshot);
+                callback.onMessage(dataSnapshot.getValue(MessageItemModel.class));
             }
         }
 
@@ -167,6 +172,16 @@ public class FirebaseManager implements ChildEventListener
             if(dataSnapshot.getKey().equals(FirebaseAuth.getInstance().getUid()))
             {
                 //update user.
+            }
+        }
+        if(root.equals("chatrooms") && dataSnapshot.getKey().equals(_chatRoom))
+        {
+            if((boolean)dataSnapshot.child("isAvailable").getValue() == false)
+            {
+                for(FirebaseCallbacks callback: _callbacks)
+                {
+                    callback.onChatEnded();
+                }
             }
         }
     }
@@ -201,6 +216,10 @@ public class FirebaseManager implements ChildEventListener
         _userReference.child(_auth.getUid()).setValue(user);
     }
 
+    public void updateProfilePicture()
+    {
+    }
+
     public UserModel getUser()
     {
         return _user;
@@ -212,11 +231,22 @@ public class FirebaseManager implements ChildEventListener
         _user = null;
     }
 
+    public void sendMessage(MessageItemModel message)
+    {
+        String key = _messageReference.push().getKey();
+        message.setMessageKey(key);
+        _messageReference.child(key).setValue(message);
+    }
+
     public void updateChatRoom(String chatRoom)
     {
         _chatRoom = chatRoom;
+        _currentChatRoomReference = _chatRoomsReference.child(chatRoom);
+        _messageReference = _currentChatRoomReference.child("messages");
     }
     public void destroy() {
         sFirebaseManager=null;
     }
+
+
 }

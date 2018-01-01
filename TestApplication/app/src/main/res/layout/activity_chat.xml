@@ -54,6 +54,19 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/media_layout" />
 
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/audio"/>
+
+            <ImageButton
+                android:id="@+id/imgBtn_Location"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:background="@drawable/ic_play_48dp"
+                android:layout_below="@+id/txt_time" />
+
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_location"
                 android:layout_width="wrap_content"
@@ -143,6 +156,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:hint="@string/typehere"
+                    android:text="@={viewModel.message}"
                     emojicon:emojiconSize="20sp" />
 
                 <Button
@@ -150,7 +164,7 @@
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/ic_send_48dp"
-                    android:onClick="@{() -> activity.sendMessage()}"
+                    android:onClick="@{() -> viewModel.sendMessage()}"
                     style="@style/KhangTheme"/>
 
 

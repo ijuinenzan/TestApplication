@@ -13,12 +13,26 @@ public class MessageModel
 {
     private ArrayList<MessageItemModel> mMessages;
 
-    public void addMessages(DataSnapshot dataSnapshot, ModelCallBacks callBacks){
+    public void addMessages(MessageItemModel message, ModelCallBacks callBacks){
         if (mMessages==null){
             mMessages= new ArrayList<>();
         }
-        MessageItemModel messageItemModel=new MessageItemModel(dataSnapshot);
-        mMessages.add(messageItemModel);
+
+        for(MessageItemModel messageIterator : mMessages)
+        {
+            if(message.getMessageKey().equals(messageIterator.getMessageKey()))
+            {
+                messageIterator.setMessage(message.getMessage());
+                messageIterator.setType(message.getType());
+                messageIterator.setTimeStamp(message.getTimeStamp());
+                messageIterator.setSenderId(message.getSenderId());
+
+                callBacks.onModelUpdated(mMessages);
+
+                return;
+            }
+        }
+        mMessages.add(message);
         callBacks.onModelUpdated(mMessages);
     }
 }

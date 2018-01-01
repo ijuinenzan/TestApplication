@@ -9,6 +9,8 @@ import com.example.ijuin.testapplication.models.FieldModel;
 import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.utils.FirebaseManager;
 import com.example.ijuin.testapplication.utils.MyUtils;
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -116,6 +118,8 @@ public class ProfileViewModel extends BaseObservable {
     public void LogOut()
     {
         FirebaseManager.getInstance().signOut();
+        LoginManager.getInstance().logOut();
+        AccessToken.setCurrentAccessToken(null);
         notifyObservers(MyUtils.LOG_OUT, null);
     }
 }

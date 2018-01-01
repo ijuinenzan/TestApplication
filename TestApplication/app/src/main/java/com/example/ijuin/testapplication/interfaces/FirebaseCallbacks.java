@@ -1,5 +1,6 @@
 package com.example.ijuin.testapplication.interfaces;
 
+import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.google.firebase.database.DataSnapshot;
 /**
  * Created by Khanh on 11/11/2017.
@@ -7,6 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 
 public interface FirebaseCallbacks
 {
-    void onMessage(DataSnapshot datasnapshot);
-    void onChatroom(DataSnapshot datasnapshot);
+    void onMessage(MessageItemModel message);
+    void onChatroom(String roomName);
+    void onChatEnded();
 }

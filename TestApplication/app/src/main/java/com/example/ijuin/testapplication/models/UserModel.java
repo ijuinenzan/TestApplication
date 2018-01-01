@@ -27,8 +27,8 @@ public class UserModel extends BaseObservable implements Serializable {
     private FieldModel<String> _address;
     private FieldModel<String> _job;
     private String _state;
-    private Boolean _isFindingMale;
-    private Boolean _isFindingFemale;
+    private boolean _isFindingMale;
+    private boolean _isFindingFemale;
     private Integer _minAge;
     private Integer _maxAge;
 
@@ -154,7 +154,7 @@ public class UserModel extends BaseObservable implements Serializable {
         return _isFindingFemale;
     }
 
-    public void setIsFindingFemale(Boolean _isFindingFemale) {
+    public void setIsFindingFemale(boolean _isFindingFemale) {
         this._isFindingFemale = _isFindingFemale;
         notifyPropertyChanged(BR.isFindingFemale);
     }
@@ -164,7 +164,7 @@ public class UserModel extends BaseObservable implements Serializable {
         return _isFindingMale;
     }
 
-    public void setIsFindingMale(Boolean _isFindingMale) {
+    public void setIsFindingMale(boolean _isFindingMale) {
         this._isFindingMale = _isFindingMale;
         notifyPropertyChanged(BR.isFindingMale);
     }
