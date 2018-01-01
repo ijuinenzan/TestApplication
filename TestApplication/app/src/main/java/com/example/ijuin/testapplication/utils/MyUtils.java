@@ -23,6 +23,9 @@ public class MyUtils
     public static String MESSAGE_INVALIDE_ROOM_NAME= "Enter a valid Name";
 
     public static String TEXT_TYPE = "TEXT";
+    public static String VIDEO_TYPE = "VIDEO";
+    public static String AUDIO_TYPE = "AUDIO";
+    public static String LOCATION_TYPE = "LOCATION";
 
     public static final int OPEN_ACTIVITY = 1;
     public static final int SHOW_TOAST = 2;
