@@ -59,6 +59,11 @@ public class ChatViewModel extends BaseObservable implements ModelCallBacks, Fir
         }
     }
 
+    public void sendLocation(Double lattitude, Double longitude)
+    {
+        FirebaseManager.getInstance().sendMessage(MessageFactory.createLocationMessage(lattitude,longitude));
+    }
+
     public void setListener()
     {
         FirebaseManager.getInstance().addMessageListener();

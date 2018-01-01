@@ -17,11 +17,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-<<<<<<< HEAD
-=======
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
->>>>>>> ad6121eadfae21592d0b3970c8ffd6a1ae45b92d
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -90,6 +87,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     private LocationManager _locationManager;
     private double _lattitude;
     private double _longitude;
+    private boolean _isGetLocationSucess = false;
     // ===========================================================================================
 
 
@@ -342,7 +340,8 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         else {
             Location location = _locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             Location location1 = _locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (location != null) {
+            if (location != null)
+            {
                 _lattitude = location.getLatitude();
                 _longitude = location.getLongitude();
                 // up lattitude va longitude len fb
@@ -374,6 +373,16 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         alert.show();
     }
 
+    public void sendLocation()
+    {
+        onClickLocation();
+        if(_isGetLocationSucess)
+        {
+            mViewModel.sendLocation(_lattitude,_longitude);
+        }
+
+    }
+
     public void onClickLocation()
     {
         _locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
@@ -381,11 +390,13 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         {
             // failed
             alertTurnOnLocation();
+            _isGetLocationSucess = false;
         }
         else
         {
             // success
             getLocation();
+            _isGetLocationSucess = true;
         }
     }
 
@@ -396,11 +407,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         if(i == _fabPlus.getId())
         {
             onClickPlus();
-        }
-        else if (i == _fabLocation.getId())
-        {
-            // place piker - set ImageButton
-            onClickLocation();
         }
         else if (i == _fabCamera.getId())
         {

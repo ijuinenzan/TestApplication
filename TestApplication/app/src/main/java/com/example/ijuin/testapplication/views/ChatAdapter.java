@@ -98,7 +98,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
         _startTimeAudio = (TextView) _view.findViewById(R.id.txt_current_time);
         _endTimeAudio = (TextView) _view.findViewById(R.id.txt_end_time);
         _btnPlayAudio = (Button) _view.findViewById(R.id.btn_play_pause_audio);
-        _imgBtnLocation = (ImageButton) _view.findViewById(R.id.imgBtn_Location);
         _seekbar = (SeekBar) _view.findViewById(R.id.seekbar_audio);
 
         _player = new MediaPlayer();
@@ -110,13 +109,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
             }
         });
 
-        _imgBtnLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // read location
-                openLocationInGoogleMaps(10.845347, 106.763956);
-            }
-        });
 
         _seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -173,15 +165,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
     private VideoView _videoView;
     public void playVideo()
     {
-        try {
-            int id = R.raw.khanh;
-            _videoView.setVideoURI(Uri.parse("android.resource://" + _context.getPackageName() + "/" + id));
-
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
         _videoView.requestFocus();
         _videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -300,79 +283,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
 
 
 
-    // region LOCATION
-
-    private ImageButton _imgBtnLocation;
-
-
-    // To go to Google Map
-    private void openLocationInGoogleMaps(Double latitude, Double longitude){
-        try
-        {
-            String uri = String.format(Locale.ENGLISH, "geo:%f,%f?q=%f,%f (%s)", latitude, longitude, latitude, longitude, "Mark");
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            _context.startActivity(intent);
-        }
-        catch (ActivityNotFoundException e)
-        {
-
-        }
-    }
-
-
-    // Show mini map in chat
-    private void chooseLocation()
-    {
-        _imgBtnLocation.post(new Runnable() {
-            @Override
-            public void run() {
-                int height = _imgBtnLocation.getMeasuredHeight();
-                int width = _imgBtnLocation.getMeasuredWidth();
-
-
-                // get from fb
-                double lattitude;
-                double longitude;
-
-
-                MapBuilder mapBuilder = new MapBuilder().center(10.845347, 106.763956).dimensions(width, height).zoom(25);
-
-                mapBuilder.setKey("");
-
-                mapBuilder.addMarker(new MarkerBuilder().position(10.845347, 106.763956));
-
-                String url = mapBuilder.build();
-
-                GetImageAsyncTask asyncTask = new GetImageAsyncTask();
-                asyncTask.execute(url);
-            }
-        });
-    }
 
 
 
 
-    class GetImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
 
-        @Override
-        protected Bitmap doInBackground(String... params) {
-            try {
-                URL newUrl = new URL(params[0]);
-                Bitmap bitmap = BitmapFactory.decodeStream(newUrl.openConnection().getInputStream());
-                return bitmap;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);;
-            _imgBtnLocation.setImageBitmap(bitmap);
-        }
-    }
     // endregion
     // ================================================================================
     // ================================================================================

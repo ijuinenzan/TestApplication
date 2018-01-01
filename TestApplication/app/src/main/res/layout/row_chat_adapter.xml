@@ -41,7 +41,7 @@
                 <VideoView
                     android:id="@+id/videoview_message_left"
                     android:layout_width="200dp"
-                    android:visibility='@{chatMessage.type =="VIDEO"? View.VISIBLE: View.GONE}'
+                    android:visibility='@{chatMessage.type.equals(MyUtils.VIDEO_TYPE)? View.VISIBLE: View.GONE}'
                     android:layout_height="200dp" />
 
                 <include
@@ -49,14 +49,14 @@
                     layout="@layout/layout_audio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility='@{chatMessage.type =="AUDIO"? View.VISIBLE: View.GONE}'/>
+                    android:visibility='@{chatMessage.type.equals(MyUtils.AUDIO_TYPE)? View.VISIBLE: View.GONE}'/>
 
                 <ImageButton
                     android:id="@+id/imgBtn_location_message_left"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:background="@drawable/ic_play_48dp"
-                    android:visibility='@{chatMessage.type =="LOCATION"? View.VISIBLE: View.GONE}'/>
+                    android:visibility='@{chatMessage.type.equals(MyUtils.LOCATION_TYPE)? View.VISIBLE: View.GONE}'/>
             </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
@@ -97,7 +97,8 @@
                 <VideoView
                     android:id="@+id/videoview_message_right"
                     android:layout_width="200dp"
-                    android:visibility='@{chatMessage.type =="VIDEO"? View.VISIBLE: View.GONE}'
+                    android:visibility='@{chatMessage.type.equals(MyUtils.VIDEO_TYPE)? View.VISIBLE: View.GONE}'
+
                     android:layout_height="200dp" />
 
                 <include
@@ -105,14 +106,15 @@
                     layout="@layout/layout_audio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility='@{chatMessage.type =="AUDIO"? View.VISIBLE: View.GONE}'/>
+                    android:visibility='@{chatMessage.type.equals(MyUtils.AUDIO_TYPE)? View.VISIBLE: View.GONE}'/>
 
                 <ImageButton
                     android:id="@+id/imgBtn_location_message_right"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:background="@drawable/ic_play_48dp"
-                    android:visibility='@{chatMessage.type =="LOCATION"? View.VISIBLE: View.GONE}'/>
+                    app:location="@{chatMessage.message}"
+                    android:visibility='@{chatMessage.type.equals(MyUtils.LOCATION_TYPE)? View.VISIBLE: View.GONE}'/>
             </LinearLayout>
 
             <TextView

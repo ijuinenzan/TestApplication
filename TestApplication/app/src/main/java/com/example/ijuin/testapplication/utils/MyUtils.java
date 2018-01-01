@@ -1,15 +1,27 @@
 package com.example.ijuin.testapplication.utils;
 
+import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.example.ijuin.testapplication.views.ChatAdapter;
 
+import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 
@@ -47,4 +59,75 @@ public class MyUtils
         Glide.with(imageView.getContext()).load(url).into(imageView);
     }
 
+    @BindingAdapter({"app:video_url"})
+    public static void loadVideo(VideoView videoView, String url)
+    {
+        videoView.setVideoURI(Uri.parse(url));
+    }
+
+    @BindingAdapter({"app:location"})
+    public static void loadLocation(final ImageButton imageButton, String location)
+    {
+        // get from fb
+        final double latitude = Double.parseDouble(location.split(" ")[0]);
+        final double longitude = Double.parseDouble(location.split(" ")[1]);
+        imageButton.post(new Runnable() {
+            @Override
+            public void run() {
+                int height = imageButton.getMeasuredHeight();
+                int width = imageButton.getMeasuredWidth();
+
+                MapBuilder mapBuilder = new MapBuilder().center(latitude, longitude).dimensions(width, height).zoom(25);
+
+                mapBuilder.setKey("");
+
+                mapBuilder.addMarker(new MarkerBuilder().position(latitude, longitude));
+
+                String url = mapBuilder.build();
+
+                GetImageAsyncTask asyncTask = new GetImageAsyncTask(imageButton);
+                asyncTask.execute(url);
+            }
+        });
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uri = String.format(Locale.ENGLISH, "geo:%f,%f?q=%f,%f (%s)", latitude, longitude, latitude, longitude, "Mark");
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                imageButton.getContext().startActivity(intent);
+            }
+        });
+    }
+
+
+
+
+}
+
+class GetImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
+
+    ImageButton _imageButton;
+
+    GetImageAsyncTask(ImageButton imageButton)
+    {
+        _imageButton = imageButton;
+    }
+    @Override
+    protected Bitmap doInBackground(String... params) {
+        try {
+            URL newUrl = new URL(params[0]);
+            Bitmap bitmap = BitmapFactory.decodeStream(newUrl.openConnection().getInputStream());
+            return bitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(Bitmap bitmap) {
+        super.onPostExecute(bitmap);;
+        _imageButton.setImageBitmap(bitmap);
+    }
 }
