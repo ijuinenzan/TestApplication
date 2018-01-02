@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <data>
+        <import type="com.example.ijuin.testapplication.utils.MyUtils"/>
+        <variable name="chatMessage" type="com.example.ijuin.testapplication.models.MessageItemModel"/>
+        <import type="android.view.View"/>
+    </data>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="95dp"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="vertical"
+            android:visibility="@{chatMessage.isMine ? View.GONE : View.VISIBLE}">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_average"
+                android:background="@drawable/left_node_bg"
+                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/txt_greet_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_average"
+                android:text="@={chatMessage.message}"/>
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/info_textviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_average"
+                android:text="@={chatMessage.timeStamp}" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

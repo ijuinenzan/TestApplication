@@ -13,8 +13,6 @@ import com.example.ijuin.testapplication.utils.FirebaseManager;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 

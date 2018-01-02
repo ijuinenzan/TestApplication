@@ -11,11 +11,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.databinding.DataBindingUtil;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.ColorInt;
 import android.support.design.widget.TabLayout;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.Fragment;
@@ -24,16 +26,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
@@ -46,16 +43,14 @@ import com.example.ijuin.testapplication.databinding.ProfileFragmentBinding;
 import com.example.ijuin.testapplication.databinding.SearchFragmentBinding;
 
 import com.example.ijuin.testapplication.interfaces.Observer;
-import com.example.ijuin.testapplication.utils.FirebaseManager;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.viewmodels.MainViewModel;
 import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
 
 import com.example.ijuin.testapplication.viewmodels.SearchViewModel;
-import com.google.firebase.auth.FirebaseAuth;
 
-import org.xdty.preference.colorpicker.ColorPickerDialog;
-import org.xdty.preference.colorpicker.ColorPickerSwatch;
+import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
+import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,7 +58,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
 import static com.example.ijuin.testapplication.utils.MyUtils.REQUEST_CAMERA;
 import static com.example.ijuin.testapplication.utils.MyUtils.SELECT_FILE;
 import static com.example.ijuin.testapplication.utils.MyUtils.SELECT_FILE_FROM_GALLERY;
@@ -140,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
     {
         _pagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
-        _viewPager = (ViewPager) findViewById(R.id.viewPagerContainer);
+        _viewPager = findViewById(R.id.viewPagerContainer);
         _viewPager.setAdapter(_pagerAdapter) ;
 
         ViewPager.PageTransformer transformer = new ViewPager.PageTransformer() {
@@ -152,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
 
         _viewPager.setPageTransformer(true,transformer);
 
-        _customTab = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        _customTab = findViewById(R.id.tabs);
         _customTab.setViewPager(_viewPager);
 
     }
@@ -233,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             mViewModel= new SearchViewModel();
             binding.setViewModel(mViewModel);
 
-            final BubbleThumbRangeSeekbar rangeSeekbar = (BubbleThumbRangeSeekbar) view.findViewById(R.id.rangeSeekbar);
+            final BubbleThumbRangeSeekbar rangeSeekbar = view.findViewById(R.id.rangeSeekbar);
 
             rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                 @Override
@@ -269,8 +263,8 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                     R.layout.profile_fragment, container, false);
             View view = binding.getRoot();
 
-            _imgProfile = (ImageView) view.findViewById(R.id.img_UserIcon);
-            _btnChangeProfileImg = (Button) view.findViewById(R.id.btn_ChangeUserImg);
+            _imgProfile = view.findViewById(R.id.img_UserIcon);
+            _btnChangeProfileImg = view.findViewById(R.id.btn_ChangeUserImg);
 
             mViewModel= new ProfileViewModel();
             mViewModel.addObserver(this);
@@ -355,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             else if (event == MyUtils.TAKE_PICTURE)
             {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                ((MainActivity)getActivity()).startActivityForResult(intent, REQUEST_CAMERA);
+                getActivity().startActivityForResult(intent, REQUEST_CAMERA);
             }
         }
 
@@ -411,15 +405,14 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             int color = settings.getInt("bg_color", android.R.color.white);
 
             final View view = inflater.inflate(R.layout.setting_fragment, container, false);
-            _txt = (TextView) view.findViewById(R.id.content);
-            _sound = (Button) view.findViewById(R.id.btn_change_sound);
-            _btnColor = (Button) view.findViewById(R.id.btn_bg_color);
-            _btnImage = (Button) view.findViewById(R.id.btn_change_bg_image);
-            _imgView = (ImageView) view.findViewById(R.id.bg_img_selected) ;
-            _main = (View) view.findViewById(R.id.mainPercentRelativeLayout);
-            _main.setBackgroundColor(color);
 
-
+            _txt = view.findViewById(R.id.content);
+            _sound = view.findViewById(R.id.btn_change_sound);
+            _btnColor = view.findViewById(R.id.btn_bg_color);
+            _btnImage = view.findViewById(R.id.btn_change_bg_image);
+            _imgView = view.findViewById(R.id.bg_img_selected) ;
+            _main = view.findViewById(R.id.mainPercentRelativeLayout);
+			
             _sound.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view)
@@ -432,29 +425,13 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                 @Override
                 public void onClick(View view)
                 {
-                    int[] arr_colors = getResources().getIntArray(R.array.arr_colors);
-                    selectedColor = R.color.red;
-                    ColorPickerDialog colorPickerDialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title,
-                            arr_colors,
-                            selectedColor,
-                            5, // Number of columns
-                            ColorPickerDialog.SIZE_SMALL,
-                            true // True or False to enable or disable the serpentine effect
-                            //0, // stroke width
-                            //Color.BLACK // stroke color
-                    );
-
-                    colorPickerDialog.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
-
-                        @Override
-                        public void onColorSelected(int color) {
-                            selectedColor = color;
+                    final ColorPicker cp = new ColorPicker(getActivity(), 255, 255, 0, 0);
+                    cp.show();
+                    cp.setCallback(new ColorPickerCallback() {
+                        public void onColorChosen(@ColorInt int color) {
                             ((MainActivity)getActivity()).setBackground(color);
-                            _main.setBackgroundColor(selectedColor);
                         }
                     });
-
-                    colorPickerDialog.show(getActivity().getFragmentManager(), "color_dialog_test");
                 }
             });
 
@@ -594,21 +571,41 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             super(fm);
         }
 
+        ProfileFragment _profileFragment;
+        SearchFragment _searchFragment;
+        AboutUsFragment _aboutUsFragment;
+        SettingFragment _settingFragment;
         @Override
         public Fragment getItem(int position) {
             Fragment frag = null;
             switch (position) {
                 case 0:
-                    frag = new ProfileFragment();
+                    if(_profileFragment == null)
+                    {
+                        _profileFragment = new ProfileFragment();
+                    }
+                    frag = _profileFragment;
                     break;
                 case 1:
-                    frag = new SearchFragment();
+                    if(_searchFragment == null)
+                    {
+                        _searchFragment = new SearchFragment();
+                    }
+                    frag = _searchFragment;
                     break;
                 case 2:
-                    frag = new SettingFragment();
+                    if(_settingFragment == null)
+                    {
+                        _settingFragment = new SettingFragment();
+                    }
+                    frag = _settingFragment;
                     break;
                 case 3:
-                    frag = new AboutUsFragment();
+                    if(_aboutUsFragment == null)
+                    {
+                        _aboutUsFragment = new AboutUsFragment();
+                    }
+                    frag = _aboutUsFragment;
                     break;
             }
             return frag;

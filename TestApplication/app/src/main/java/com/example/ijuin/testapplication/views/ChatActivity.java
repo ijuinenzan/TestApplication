@@ -11,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.databinding.DataBindingUtil;
@@ -19,6 +21,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -27,14 +30,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.Layout;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.databinding.ActivityChatBinding;
 import com.example.ijuin.testapplication.interfaces.Observer;
@@ -75,7 +83,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     private LinearLayout _layoutChat;
 
     // ====== Floating Action Button =============================================================
-    FloatingActionButton _fabPlus, _fabLocation, _fabCamera, _fabGallery;
+    FloatingActionButton _fabPlus, _fabLocation, _fabCamera, _fabGallery, _fabInfo;
     boolean _isOpen = false;
     // ===========================================================================================
 
@@ -97,19 +105,27 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
 
     // ====== Audio ==============================================================================
-
     private Button _btnStartStopRecorder;
     private MediaRecorder _recorder;
+    private File _audioRecordFile;
     // ===========================================================================================
 
     // ====== Location ===========================================================================
     private LocationManager _locationManager;
-    private double _lattitude;
-    private double _longitude;
-    private boolean _isGetLocationSucess = false;
     // ===========================================================================================
 
-
+    private ScrollView _scrollView;
+    private GridLayout _grid;
+    private ImageView _sticker1;
+    private ImageView _sticker2;
+    private ImageView _sticker3;
+    private ImageView _sticker4;
+    private ImageView _sticker5;
+    private ImageView _sticker6;
+    private ImageView _sticker7;
+    private ImageView _sticker8;
+    private ImageView _sticker9;
+    private boolean _isOpenSticker = false;
     //endregion
 
     private String getRealPathFromURI(Uri contentURI) {
@@ -123,6 +139,10 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         }
     }
 
+    public ChatViewModel getViewModel()
+    {
+        return mViewModel;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,7 +157,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         Drawable d = Drawable.createFromPath(f.getAbsolutePath());
         _layoutChat.setBackground(d);
 
-
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
         mViewModel = new ChatViewModel();
         mBinding.setViewModel(mViewModel);
@@ -146,22 +165,39 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         mBinding.recyclerView.setAdapter(new ChatAdapter(this,  mViewModel.getMessages()));
         mViewModel.addObserver(this);
 
-        _fabPlus = (FloatingActionButton) findViewById(R.id.fab_plus);
-        _fabLocation = (FloatingActionButton) findViewById(R.id.fab_location);
-        _fabCamera = (FloatingActionButton) findViewById(R.id.fab_camera);
-        _fabGallery = (FloatingActionButton) findViewById(R.id.fab_gallery);
+        _fabPlus = findViewById(R.id.fab_plus);
+        _fabInfo = findViewById(R.id.fab_info);
+        _fabLocation = findViewById(R.id.fab_location);
+        _fabCamera = findViewById(R.id.fab_camera);
+        _fabGallery = findViewById(R.id.fab_gallery);
 
         _animOpen = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_fab_open);
         _animClose = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_fab_close);
         _animClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_rotate_clockwise);
         _animAntiClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_rotate_anticlockwise);
 
-
         _btnRecorder = (Button) findViewById(R.id.btn_recorder);
         _btnVideo = (Button) findViewById(R.id.btn_video);
         _btnStartStopRecorder = (Button) findViewById(R.id.btn_start_stop_recorder);
         _edtEmoji = (EditText) findViewById(R.id.editEmojicon);
+        _scrollView = (ScrollView) findViewById(R.id.scrollView_stickers);
+        _scrollView.setVisibility(View.GONE);
+        _grid = (GridLayout) findViewById(R.id.gridlayout_stickers);
+        _sticker1 = (ImageView) findViewById(R.id.sticker1);
+        _sticker2 = (ImageView) findViewById(R.id.sticker2);
+        _sticker3 = (ImageView) findViewById(R.id.sticker3);
+        _sticker4 = (ImageView) findViewById(R.id.sticker4);
+        _sticker5 = (ImageView) findViewById(R.id.sticker5);
+        _sticker6 = (ImageView) findViewById(R.id.sticker6);
+        _sticker7 = (ImageView) findViewById(R.id.sticker7);
+        _sticker8 = (ImageView) findViewById(R.id.sticker8);
+        _sticker9 = (ImageView) findViewById(R.id.sticker9);
+        _btnRecorder = findViewById(R.id.btn_recorder);
+        _btnVideo = findViewById(R.id.btn_video);
+        _btnStartStopRecorder = findViewById(R.id.btn_start_stop_recorder);
+        _edtEmoji = findViewById(R.id.editEmojicon);
 
+        _audioRecordFile = new File((new ContextWrapper(this)).getDir("audio", Context.MODE_PRIVATE).getAbsolutePath().concat("record.3gp"));
 
         _edtEmoji.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -181,30 +217,154 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
             }
         });
+
+        _sticker1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker1));
+            }
+        });
+
+        _sticker2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker2));
+            }
+        });
+
+        _sticker3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker3));
+            }
+        });
+
+        _sticker4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker4));
+            }
+        });
+
+        _sticker5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker5));
+            }
+        });
+
+        _sticker6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker6));
+            }
+        });
+
+        _sticker7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker7));
+            }
+        });
+
+        _sticker8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker8));
+            }
+        });
+
+        _sticker9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker9));
+            }
+        });
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(_recorder != null)
+        {
+            _recorder.stop();
+            _recorder.release();
+        }
         mViewModel.removeObserver(this);
         mViewModel.onDestroy();
     }
 
+    private Bitmap convertImageViewToBitmap(ImageView imgView)
+    {
+        _scrollView.setVisibility(View.GONE);
+        _grid.setVisibility(View.INVISIBLE);
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) imgView.getDrawable();
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        return bitmap;
+    }
 
+    private void fixSizeSticker()
+    {
+        int stickerWidth = _grid.getWidth() / 3;
 
+        GridLayout.LayoutParams g = (GridLayout.LayoutParams) _sticker1.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker1.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker2.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker2.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker3.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker3.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker4.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker4.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker5.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker5.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker6.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker6.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker7.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker7.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker8.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker8.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker9.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker9.setLayoutParams(g);
+
+    }
 
 
     public void startRecorder() throws Exception
     {
-        if(_recorder!=null)
+        if(_recorder==null)
         {
-            _recorder.release();
+            _recorder = new MediaRecorder();
         }
-
-        _recorder = new MediaRecorder();
 
         // Initial
         _recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+
 
         // Intialized
         _recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -214,7 +374,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
         String filePath = createFile("audio");
 
-        _recorder.setOutputFile(filePath + "/audiorecordtest.3gp");
+        _recorder.setOutputFile(_audioRecordFile.getPath());
 
         _recorder.prepare();
 
@@ -227,7 +387,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     {
         _recorder.stop();
         _recorder.reset();   // You can reuse the object by going back to setAudioSource() step
-        _recorder.release(); // Now the object cannot be reused
+        mViewModel.sendAudio(Uri.fromFile(_audioRecordFile));
     }
 
 
@@ -247,13 +407,16 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     }
 
 
-
     public void onClickPlus()
     {
         _edtEmoji.clearFocus();
         if (_isOpen)
         {
             _fabPlus.startAnimation(_animAntiClockwise);
+
+            _fabInfo.startAnimation(_animClose);
+            _fabInfo.setClickable(false);
+            _fabInfo.setVisibility(View.INVISIBLE);
 
             _fabLocation.startAnimation(_animClose);
             _fabLocation.setClickable(false);
@@ -272,6 +435,10 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         else
         {
             _fabPlus.startAnimation(_animClockwise);
+
+            _fabInfo.startAnimation(_animOpen);
+            _fabInfo.setClickable(true);
+            _fabInfo.setVisibility(View.VISIBLE);
 
             _fabLocation.startAnimation(_animOpen);
             _fabLocation.setClickable(true);
@@ -354,32 +521,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
                 mViewModel.sendVideo(videoUri);
             }
         }
-
-    }
-
-    private void getLocation()
-    {
-        if(ActivityCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                &&
-                ActivityCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(ChatActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        }
-        else {
-            Location location = _locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            Location location1 = _locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (location != null)
-            {
-                _lattitude = location.getLatitude();
-                _longitude = location.getLongitude();
-                // up lattitude va longitude len fb
-            }
-            else if (location1 != null) {
-                // can not get location;
-            }
-        }
     }
 
     private void alertTurnOnLocation()
@@ -424,31 +565,56 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         alert.show();
     }
 
-    public void sendLocation()
+    public void alertInfo()
     {
-        onClickLocation();
-        if(_isGetLocationSucess)
-        {
-            mViewModel.sendLocation(_lattitude,_longitude);
-        }
-
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to know your partner's infomation?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialogInterface, int i) {
+                        mViewModel.sendInfoRequest();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
-    public void onClickLocation()
+    public void sendLocation()
     {
         _locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
         if(!_locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
         {
             // failed
             alertTurnOnLocation();
-            _isGetLocationSucess = false;
         }
         else
         {
             // success
-            getLocation();
-            _isGetLocationSucess = true;
+            if(ActivityCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED
+                    &&
+                    ActivityCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                            != PackageManager.PERMISSION_GRANTED)
+            {
+                ActivityCompat.requestPermissions(ChatActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+            }
+            else {
+                Location location = _locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                Location location1 = _locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (location != null)
+                {
+                    mViewModel.sendLocation(location.getLatitude(),location.getLongitude());
+                }
+            }
         }
+
     }
 
     public void sendVideo()
@@ -473,16 +639,33 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         _btnStartStopRecorder.setVisibility(View.VISIBLE);
     }
 
+    public void onClickInfo()
+    {
+        alertInfo();
+    }
+
+    public void onClickStickerIcon()
+    {
+        if(_isOpenSticker)
+        {
+            _scrollView.setVisibility(View.GONE);
+            _grid.setVisibility(View.INVISIBLE);
+            _isOpenSticker = false;
+        }
+        else
+        {
+            _scrollView.setVisibility(View.VISIBLE);
+            _grid.setVisibility(View.VISIBLE);
+            fixSizeSticker();
+            _isOpenSticker = true;
+        }
+    }
     @Override
     public void onObserve(int event, ArrayList<MessageItemModel> eventMessage) {
 
         if(event == EXIT_ROOM)
         {
             super.onBackPressed();
-        }
-        else if(event == UPDATE_MESSAGES)
-        {
-            mBinding.recyclerView.scrollToPosition(eventMessage.size()-1);
         }
     }
 

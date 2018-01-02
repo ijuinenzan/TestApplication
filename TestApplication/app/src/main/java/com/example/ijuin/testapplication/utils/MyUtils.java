@@ -3,37 +3,35 @@ package com.example.ijuin.testapplication.utils;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.databinding.BindingAdapter;
-import android.databinding.InverseBindingAdapter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.MediaController;
-import android.widget.TextView;
-import android.widget.VideoView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.models.MessageItemModel;
+import com.example.ijuin.testapplication.views.ChatActivity;
 import com.example.ijuin.testapplication.views.ChatAdapter;
+import com.github.foolish314159.mediaplayerview.MediaPlayerView;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.security.spec.ECField;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
+
+import cn.jzvd.JZVideoPlayerStandard;
 
 
 /**
@@ -44,12 +42,15 @@ public class MyUtils
 {
     public static String MESSAGE_AUTHENTICATION_FAILED = "Firebase authentication failed, please check your internet connection";
 
+    public static String GREET_TYPE = "GREET";
     public static String TEXT_TYPE = "TEXT";
     public static String VIDEO_TYPE = "VIDEO";
     public static String AUDIO_TYPE = "AUDIO";
     public static String LOCATION_TYPE = "LOCATION";
     public static String IMAGE_TYPE = "IMAGE";
     public static String SETTINGS = "SETTINGS";
+    public static String INFO_REQUEST_TYPE = "INFO-REQUEST";
+    public static String INFO_ACCEPT_TYPE = "INFO-ACCEPT";
 
     public static final int SELECT_FILE = 410;
     public static final int OPEN_ACTIVITY = 1;
@@ -75,85 +76,39 @@ public class MyUtils
         recyclerView.scrollToPosition(messages.size()-1);
     }
 
-    @BindingAdapter({"app:image_url"})
-    public static void loadImage(ImageView imageView, final String url)
+
+    @BindingAdapter({"app:profile_image_url"})
+    public static void loadProfileImage(ImageView imageView,String url)
     {
-        Glide.with(imageView.getContext()).load(url).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
-
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String filename = "filename.jpg";
-                String downloadUrlOfImage = url;
-                File direct =
-                        new File(Environment
-                                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                                .getAbsolutePath() + "/" + "AppChat" + "/");
-
-
-                if (!direct.exists()) {
-                    direct.mkdir();
-                }
-
-                DownloadManager dm = (DownloadManager) view.getContext().getSystemService(view.getContext().DOWNLOAD_SERVICE);
-                Uri downloadUri = Uri.parse(downloadUrlOfImage);
-                DownloadManager.Request request = new DownloadManager.Request(downloadUri);
-                request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
-                        .setAllowedOverRoaming(false)
-                        .setTitle(filename)
-                        .setMimeType("image/jpeg")
-                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                        .setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES,
-                                File.separator + "AppChat" + File.separator + filename);
-
-                dm.enqueue(request);
-            }
-        });
+        Glide.with(imageView.getContext()).load(url).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView)
     }
 
-//    @BindingAdapter({"app:audio"})
-//    public static void loadAudio(MediaPlayer player, String url)
-//    {
-//        player = new MediaPlayer();
-//        if(player!=null)
-//        {
-//            player.stop();
-//            player.release();
-//        }
-//        player = new MediaPlayer();
-//        try {
-//            player.setDataSource(url);
-//            player.prepare();
-//            player.start();
-//            setEndTimeAudio(player.getDuration());
-//        }
-//        catch (IOException e)
-//        {
-//
-//        }
-//    }
+    @BindingAdapter({"app:image_url"})
+    public static void loadImage(ImageView imageView,final String url)
+    {
+        Glide.with(imageView.getContext()).load(url).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
+    }
+
+    @BindingAdapter({"app:audio_url"})
+    public static void loadAudio(MediaPlayerView player, String url)
+    {
+        try
+        {
+            player.setupPlayer(url);
+            player.setUrl(url);
+        }
+        catch(Exception e)
+        {
+
+        }
+    }
+
+
 
     @BindingAdapter({"app:video_url"})
-    public static void loadVideo(final VideoView videoView, String url)
+    public static void loadVideo(final JZVideoPlayerStandard jzVideoPlayerStandard, String url)
     {
-        videoView.setVideoURI(Uri.parse(url));
-        //videoView.requestFocus();
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-
-                mediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
-                    @Override
-                    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-                        MediaController mediacontroller = new MediaController(videoView.getContext());
-                        mediacontroller.setAnchorView(videoView);
-                        videoView.setMediaController(mediacontroller);
-                    }
-                });
-            }
-        });
-
-        videoView.start();
+        jzVideoPlayerStandard.setUp(url, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "");
     }
 
     @BindingAdapter({"app:location"})
@@ -189,8 +144,89 @@ public class MyUtils
             }
         });
     }
+    private static ArrayList<String> selectedFields = new ArrayList<>();
+    public static void acceptInfo(final View v)
+    {
+        MaterialDialog md = new MaterialDialog.Builder(v.getContext())
+                .iconRes(R.drawable.ic_launcher)
+                .limitIconToDefaultSize()
+                .title("title")
+                .items(R.array.list_info)
+                .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        selectedFields.clear();
+                        String temp = "";
+                        for(int i = 0; i <= which.length - 1; i++) {
+                            switch (which[i]) {
+                                case 0: {
+                                    temp = "Name:";
+                                    break;
+                                }
+                                case 1: {
+                                    temp = "Yearborn:";
+                                    break;
+                                }
+                                case 2: {
+                                    temp = "Gender:";
+                                    break;
+                                }
+                                case 3: {
+                                    temp = "Phone:";
+                                    break;
+                                }
+                                case 4: {
+                                    temp = "Address:";
+                                    break;
+                                }
+                                case 5: {
+                                    temp = "Company:";
+                                    break;
+                                }
+                                case 6: {
+                                    temp = "City:";
+                                    break;
+                                }
+                                case 7: {
+                                    temp = "Country:";
+                                    break;
+                                }
+                                case 8: {
+                                    temp = "Weight:";
+                                    break;
+                                }
+                                case 9: {
+                                    temp = "Height:";
+                                    break;
+                                }
+                                case 10: {
+                                    temp = "Link Facebook:";
+                                    break;
+                                }
+                                case 11: {
+                                    temp = "Link Twitter:";
+                                    break;
+                                }
+                                default:
+                                    break;
 
+                            }
+                            selectedFields.add(temp);
+                        }
 
+                        return true;
+                    }
+                })
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        ((ChatActivity)v.getContext()).getViewModel().sendInfoAccept(selectedFields);
+                    }
+                })
+                .alwaysCallMultiChoiceCallback()
+                .positiveText("choose")
+                .show();
+    }
 
 
 }

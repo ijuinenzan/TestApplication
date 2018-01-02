@@ -73,6 +73,10 @@ public class ChatViewModel extends BaseObservable implements FirebaseCallbacks {
     {
         FirebaseManager.getInstance().sendVideoMessage(uri);
     }
+    public void sendAudio(Uri uri)
+    {
+        FirebaseManager.getInstance().sendAudioMessage(uri);
+    }
 
     public void sendImageUri(Uri uri)
     {
@@ -82,6 +86,16 @@ public class ChatViewModel extends BaseObservable implements FirebaseCallbacks {
     public void sendImageBitmap(Bitmap bitmap)
     {
         FirebaseManager.getInstance().sendImageBitmap(bitmap);
+    }
+
+    public void sendInfoRequest()
+    {
+        FirebaseManager.getInstance().sendMessage(MessageFactory.createInfoRequestMessage());
+    }
+
+    public void sendInfoAccept(ArrayList<String> selectFields)
+    {
+        FirebaseManager.getInstance().sendMessage(MessageFactory.createInfoAcceptMessage(selectFields));
     }
 
     public void setListener()
@@ -133,7 +147,6 @@ public class ChatViewModel extends BaseObservable implements FirebaseCallbacks {
     @Override
     public void onChatroom(String roomName)
     {
-
     }
 
     public void exitRoom()

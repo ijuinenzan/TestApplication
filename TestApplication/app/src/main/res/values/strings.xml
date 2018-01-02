@@ -75,7 +75,26 @@
     <string name="typehere">[Type Here&#8230;]</string>
 
 
-
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="exit_room">EXIT ROOM</string>
+    <string name="ask_info">Your partner asks for your infomation!</string>
+    <string name="year_born">Year Born</string>
+
+    <string name="dont_ask_again">Don\'t ask again</string>
+
+
+    <array name="list_info">
+        <item name="name">Name</item>
+        <item name="yearborn"> Year Born </item>
+        <item name="gender"> Gender </item>
+        <item name="phone"> Phone </item>
+        <item name="address"> Address </item>
+        <item name="company"> Company </item>
+        <item name="city"> City </item>
+        <item name="country"> Country </item>
+        <item name="weight"> Weight </item>
+        <item name="height"> Height </item>
+        <item name="linkFB"> Link Facebook </item>
+        <item name="linkTW"> Link Twitter </item>
+    </array>
 </resources>

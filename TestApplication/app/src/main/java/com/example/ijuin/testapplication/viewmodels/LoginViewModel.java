@@ -1,27 +1,15 @@
 package com.example.ijuin.testapplication.viewmodels;
 
-import android.content.SharedPreferences;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.ijuin.testapplication.factories.UserFactory;
 import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.utils.FirebaseManager;
 import com.example.ijuin.testapplication.utils.MyUtils;
-import com.example.ijuin.testapplication.utils.TextWatcherAdapter;
-import com.facebook.AccessToken;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -38,15 +26,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.Twitter;
-import com.twitter.sdk.android.core.TwitterAuthToken;
-import com.twitter.sdk.android.core.TwitterCore;
-import com.twitter.sdk.android.core.TwitterException;
-import com.twitter.sdk.android.core.TwitterSession;
-import com.twitter.sdk.android.core.identity.TwitterAuthClient;
-import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 /**
  * Created by ijuin on 11/12/2017.
