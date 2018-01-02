@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -21,6 +22,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.views.ChatAdapter;
+import com.github.foolish314159.mediaplayerview.MediaPlayerView;
 
 import java.io.IOException;
 import java.net.URL;
@@ -76,27 +78,18 @@ public class MyUtils
         Glide.with(imageView.getContext()).load(url).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
     }
 
-//    @BindingAdapter({"app:audio"})
-//    public static void loadAudio(MediaPlayer player, String url)
-//    {
-//        player = new MediaPlayer();
-//        if(player!=null)
-//        {
-//            player.stop();
-//            player.release();
-//        }
-//        player = new MediaPlayer();
-//        try {
-//            player.setDataSource(url);
-//            player.prepare();
-//            player.start();
-//            setEndTimeAudio(player.getDuration());
-//        }
-//        catch (IOException e)
-//        {
-//
-//        }
-//    }
+    @BindingAdapter({"app:audio_url"})
+    public static void loadAudio(MediaPlayerView player, String url)
+    {
+        try
+        {
+            player.setupPlayer(url);
+        }
+        catch(Exception e)
+        {
+
+        }
+    }
 
     @BindingAdapter({"app:video_url"})
     public static void loadVideo(final VideoView videoView, String url)

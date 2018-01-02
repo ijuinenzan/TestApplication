@@ -44,6 +44,16 @@ public class MessageFactory
         return messageItemModel;
     }
 
+    public static MessageItemModel createAudioMessage(String audioUrl)
+    {
+        MessageItemModel messageItemModel = new MessageItemModel();
+        messageItemModel.setMessage(audioUrl);
+        messageItemModel.setSenderId(FirebaseAuth.getInstance().getUid());
+        messageItemModel.setTimeStamp(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+        messageItemModel.setType(MyUtils.AUDIO_TYPE);
+        return messageItemModel;
+    }
+
     public static MessageItemModel createImageMessage(String imageUrl)
     {
         MessageItemModel messageItemModel = new MessageItemModel();

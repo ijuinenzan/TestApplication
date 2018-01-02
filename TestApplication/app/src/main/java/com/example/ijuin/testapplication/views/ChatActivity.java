@@ -57,7 +57,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     private ChatViewModel mViewModel;
     private final int PLACE_PICKER_REQUEST = 2000;
     private static final int REQUEST_LOCATION = 1997;
-    private final int SELECT_FILE = 123456789;
+    private final int SELECT_FILE = 1234;
     private final int REQUEST_CAMERA = 2468;
 
     // ====== Floating Action Button =============================================================
@@ -83,16 +83,13 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
 
     // ====== Audio ==============================================================================
-
     private Button _btnStartStopRecorder;
     private MediaRecorder _recorder;
+    private File _audioRecordFile;
     // ===========================================================================================
 
     // ====== Location ===========================================================================
     private LocationManager _locationManager;
-    private double _lattitude;
-    private double _longitude;
-    private boolean _isGetLocationSucess = false;
     // ===========================================================================================
 
 
@@ -127,6 +124,8 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         _btnStartStopRecorder = (Button) findViewById(R.id.btn_start_stop_recorder);
         _edtEmoji = (EditText) findViewById(R.id.editEmojicon);
 
+        _audioRecordFile = new File((new ContextWrapper(this)).getDir("audio", Context.MODE_PRIVATE).getAbsolutePath().concat("record.3gp"));
+
 
         _edtEmoji.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -151,6 +150,8 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        _recorder.stop();
+        _recorder.release();
         mViewModel.removeObserver(this);
         mViewModel.onDestroy();
     }
@@ -161,15 +162,14 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
     public void startRecorder() throws Exception
     {
-        if(_recorder!=null)
+        if(_recorder==null)
         {
-            _recorder.release();
+            _recorder = new MediaRecorder();
         }
-
-        _recorder = new MediaRecorder();
 
         // Initial
         _recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+
 
         // Intialized
         _recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -179,7 +179,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
         String filePath = createFile("audio");
 
-        _recorder.setOutputFile(filePath + "/audiorecordtest.3gp");
+        _recorder.setOutputFile(_audioRecordFile.getPath());
 
         _recorder.prepare();
 
@@ -192,7 +192,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     {
         _recorder.stop();
         _recorder.reset();   // You can reuse the object by going back to setAudioSource() step
-        _recorder.release(); // Now the object cannot be reused
+        mViewModel.sendAudio(Uri.fromFile(_audioRecordFile));
     }
 
 
@@ -311,32 +311,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
                 mViewModel.sendImageUri(selectedImageUri);
             }
         }
-
-    }
-
-    private void getLocation()
-    {
-        if(ActivityCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                &&
-                ActivityCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(ChatActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        }
-        else {
-            Location location = _locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            Location location1 = _locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (location != null)
-            {
-                _lattitude = location.getLatitude();
-                _longitude = location.getLongitude();
-                // up lattitude va longitude len fb
-            }
-            else if (location1 != null) {
-                // can not get location;
-            }
-        }
     }
 
     private void alertTurnOnLocation()
@@ -362,29 +336,35 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
     public void sendLocation()
     {
-        onClickLocation();
-        if(_isGetLocationSucess)
-        {
-            mViewModel.sendLocation(_lattitude,_longitude);
-        }
-
-    }
-
-    public void onClickLocation()
-    {
         _locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
         if(!_locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
         {
             // failed
             alertTurnOnLocation();
-            _isGetLocationSucess = false;
         }
         else
         {
             // success
-            getLocation();
-            _isGetLocationSucess = true;
+            if(ActivityCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED
+                    &&
+                    ActivityCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                            != PackageManager.PERMISSION_GRANTED)
+            {
+                ActivityCompat.requestPermissions(ChatActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+            }
+            else {
+                Location location = _locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                Location location1 = _locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (location != null)
+                {
+                    mViewModel.sendLocation(location.getLatitude(),location.getLongitude());
+                }
+                else if (location1 != null) {
+                }
+            }
         }
+
     }
 
     public void sendVideo()
@@ -416,10 +396,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         if(event == EXIT_ROOM)
         {
             super.onBackPressed();
-        }
-        else if(event == UPDATE_MESSAGES)
-        {
-            mBinding.recyclerView.scrollToPosition(eventMessage.size()-1);
         }
     }
 
