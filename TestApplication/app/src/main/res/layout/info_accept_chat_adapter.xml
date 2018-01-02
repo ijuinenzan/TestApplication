@@ -19,10 +19,15 @@
             android:layout_width="wrap_content"
             android:layout_height="95dp"
             android:layout_marginTop="@dimen/margin_small"
-            android:background="@drawable/left_node_bg"
             android:orientation="vertical"
             android:visibility="@{chatMessage.isMine ? View.GONE : View.VISIBLE}">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_average"
+                android:background="@drawable/left_node_bg"
+                android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txt_info_accept_left"
@@ -32,6 +37,7 @@
                 android:layout_marginTop="@dimen/margin_average"
                 android:text="@={chatMessage.message}"/>
 
+            </LinearLayout>
 
             <TextView
                 style="@style/info_textviews"
@@ -48,10 +54,15 @@
             android:layout_width="wrap_content"
             android:layout_height="95dp"
             android:layout_gravity="end"
-            android:background="@drawable/right_node_bg"
             android:orientation="vertical"
             android:visibility="@{chatMessage.isMine ? View.GONE: View.GONE}">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_average"
+                android:background="@drawable/right_node_bg"
+                android:orientation="horizontal">
             <TextView
                 android:id="@+id/txt_info_accept_right"
                 android:layout_width="wrap_content"
@@ -59,7 +70,7 @@
                 android:layout_marginStart="@dimen/margin_average"
                 android:layout_marginTop="@dimen/margin_average" />
 
-
+            </LinearLayout>
             <TextView
                 style="@style/info_textviews"
                 android:layout_width="wrap_content"

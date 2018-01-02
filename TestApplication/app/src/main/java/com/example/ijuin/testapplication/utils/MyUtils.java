@@ -50,6 +50,7 @@ public class MyUtils
 {
     public static String MESSAGE_AUTHENTICATION_FAILED = "Firebase authentication failed, please check your internet connection";
 
+    public static String GREET_TYPE = "GREET";
     public static String TEXT_TYPE = "TEXT";
     public static String VIDEO_TYPE = "VIDEO";
     public static String AUDIO_TYPE = "AUDIO";

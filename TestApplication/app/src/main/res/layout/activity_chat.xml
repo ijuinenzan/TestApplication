@@ -31,7 +31,7 @@
                 android:textSize="12sp"
                 android:textColor="@color/white"
                 android:background="@drawable/btn_exit_room"
-                android:onClick="@{()-> activity.onClickAcceptInfo()}"
+                android:onClick="@{()-> activity.alertExit()}"
                 emojicon:ignore="SmallSp" />
 
             <TextView
