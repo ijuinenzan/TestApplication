@@ -4,11 +4,9 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.example.ijuin.testapplication.BR;
-import com.example.ijuin.testapplication.interfaces.FirebaseCallbacks;
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.utils.FirebaseManager;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 

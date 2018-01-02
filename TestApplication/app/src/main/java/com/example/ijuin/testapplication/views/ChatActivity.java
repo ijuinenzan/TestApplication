@@ -7,7 +7,6 @@ import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
@@ -43,8 +42,6 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import javax.security.auth.callback.CallbackHandler;
 
 import static com.example.ijuin.testapplication.utils.MyUtils.EXIT_ROOM;
 
@@ -116,11 +113,11 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         mBinding.recyclerView.setAdapter(new ChatAdapter(this,  mViewModel.getMessages()));
         mViewModel.addObserver(this);
 
-        _fabPlus = (FloatingActionButton) findViewById(R.id.fab_plus);
-        _fabInfo = (FloatingActionButton) findViewById(R.id.fab_info);
-        _fabLocation = (FloatingActionButton) findViewById(R.id.fab_location);
-        _fabCamera = (FloatingActionButton) findViewById(R.id.fab_camera);
-        _fabGallery = (FloatingActionButton) findViewById(R.id.fab_gallery);
+        _fabPlus = findViewById(R.id.fab_plus);
+        _fabInfo = findViewById(R.id.fab_info);
+        _fabLocation = findViewById(R.id.fab_location);
+        _fabCamera = findViewById(R.id.fab_camera);
+        _fabGallery = findViewById(R.id.fab_gallery);
 
         _animOpen = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_fab_open);
         _animClose = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_fab_close);
@@ -128,10 +125,10 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         _animAntiClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_rotate_anticlockwise);
 
 
-        _btnRecorder = (Button) findViewById(R.id.btn_recorder);
-        _btnVideo = (Button) findViewById(R.id.btn_video);
-        _btnStartStopRecorder = (Button) findViewById(R.id.btn_start_stop_recorder);
-        _edtEmoji = (EditText) findViewById(R.id.editEmojicon);
+        _btnRecorder = findViewById(R.id.btn_recorder);
+        _btnVideo = findViewById(R.id.btn_video);
+        _btnStartStopRecorder = findViewById(R.id.btn_start_stop_recorder);
+        _edtEmoji = findViewById(R.id.editEmojicon);
 
         _audioRecordFile = new File((new ContextWrapper(this)).getDir("audio", Context.MODE_PRIVATE).getAbsolutePath().concat("record.3gp"));
 
@@ -429,8 +426,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
                 if (location != null)
                 {
                     mViewModel.sendLocation(location.getLatitude(),location.getLongitude());
-                }
-                else if (location1 != null) {
                 }
             }
         }

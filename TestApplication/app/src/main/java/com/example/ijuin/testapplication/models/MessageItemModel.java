@@ -1,19 +1,10 @@
 package com.example.ijuin.testapplication.models;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import com.example.ijuin.testapplication.BR;
-import com.example.ijuin.testapplication.utils.FirebaseManager;
-import com.example.ijuin.testapplication.utils.MyUtils;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-
-import java.util.HashMap;
 
 /**
  * Created by ijuin on 11/11/2017.

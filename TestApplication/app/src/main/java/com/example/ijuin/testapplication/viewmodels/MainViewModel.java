@@ -1,7 +1,6 @@
 package com.example.ijuin.testapplication.viewmodels;
 
 import android.databinding.BaseObservable;
-import android.graphics.Bitmap;
 
 import com.example.ijuin.testapplication.interfaces.FirebaseCallbacks;
 import com.example.ijuin.testapplication.interfaces.Observer;

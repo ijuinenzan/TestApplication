@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -21,16 +19,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
@@ -42,13 +35,11 @@ import com.example.ijuin.testapplication.databinding.ProfileFragmentBinding;
 import com.example.ijuin.testapplication.databinding.SearchFragmentBinding;
 
 import com.example.ijuin.testapplication.interfaces.Observer;
-import com.example.ijuin.testapplication.utils.FirebaseManager;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.viewmodels.MainViewModel;
 import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
 
 import com.example.ijuin.testapplication.viewmodels.SearchViewModel;
-import com.google.firebase.auth.FirebaseAuth;
 
 import org.xdty.preference.colorpicker.ColorPickerDialog;
 import org.xdty.preference.colorpicker.ColorPickerSwatch;
@@ -58,9 +49,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Set;
 
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
 import static com.example.ijuin.testapplication.utils.MyUtils.REQUEST_CAMERA;
 import static com.example.ijuin.testapplication.utils.MyUtils.SELECT_FILE_FROM_GALLERY;
 
@@ -115,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
     {
         _pagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
-        _viewPager = (ViewPager) findViewById(R.id.viewPagerContainer);
+        _viewPager = findViewById(R.id.viewPagerContainer);
         _viewPager.setAdapter(_pagerAdapter) ;
 
         ViewPager.PageTransformer transformer = new ViewPager.PageTransformer() {
@@ -127,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
 
         _viewPager.setPageTransformer(true,transformer);
 
-        _customTab = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        _customTab = findViewById(R.id.tabs);
         _customTab.setViewPager(_viewPager);
 
     }
@@ -200,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             mViewModel= new SearchViewModel();
             binding.setViewModel(mViewModel);
 
-            final BubbleThumbRangeSeekbar rangeSeekbar = (BubbleThumbRangeSeekbar) view.findViewById(R.id.rangeSeekbar);
+            final BubbleThumbRangeSeekbar rangeSeekbar = view.findViewById(R.id.rangeSeekbar);
 
             rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                 @Override
@@ -234,8 +223,8 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                     R.layout.profile_fragment, container, false);
             View view = binding.getRoot();
 
-            _imgProfile = (ImageView) view.findViewById(R.id.img_UserIcon);
-            _btnChangeProfileImg = (Button) view.findViewById(R.id.btn_ChangeUserImg);
+            _imgProfile = view.findViewById(R.id.img_UserIcon);
+            _btnChangeProfileImg = view.findViewById(R.id.btn_ChangeUserImg);
 
             mViewModel= new ProfileViewModel();
             mViewModel.addObserver(this);
@@ -319,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             else if (event == MyUtils.TAKE_PICTURE)
             {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                ((MainActivity)getActivity()).startActivityForResult(intent, REQUEST_CAMERA);
+                getActivity().startActivityForResult(intent, REQUEST_CAMERA);
             }
         }
 
@@ -370,13 +359,13 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                                  Bundle savedInstanceState)
         {
             final View view = inflater.inflate(R.layout.setting_fragment, container, false);
-            _txt = (TextView) view.findViewById(R.id.content);
-            _sound = (Button) view.findViewById(R.id.btn_change_sound);
-            _btnColor = (Button) view.findViewById(R.id.btn_bg_color);
-            _btnImage = (Button) view.findViewById(R.id.btn_change_bg_image);
-            _imgView = (ImageView) view.findViewById(R.id.bg_img_selected) ;
-            _main = (View) view.findViewById(R.id.mainPercentRelativeLayout);
-            _btnRecorderAndPlay = (View) view.findViewById(R.id.btn_record_and_play) ;
+            _txt = view.findViewById(R.id.content);
+            _sound = view.findViewById(R.id.btn_change_sound);
+            _btnColor = view.findViewById(R.id.btn_bg_color);
+            _btnImage = view.findViewById(R.id.btn_change_bg_image);
+            _imgView = view.findViewById(R.id.bg_img_selected) ;
+            _main = view.findViewById(R.id.mainPercentRelativeLayout);
+            _btnRecorderAndPlay = view.findViewById(R.id.btn_record_and_play) ;
 
             _sound.setOnClickListener(new View.OnClickListener() {
                 @Override

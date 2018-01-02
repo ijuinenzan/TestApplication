@@ -2,7 +2,6 @@ package com.example.ijuin.testapplication.models;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.net.Uri;
 
 import com.example.ijuin.testapplication.BR;
 

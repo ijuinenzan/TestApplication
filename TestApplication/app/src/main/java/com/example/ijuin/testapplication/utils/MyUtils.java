@@ -1,26 +1,15 @@
 package com.example.ijuin.testapplication.utils;
 
-import android.app.Activity;
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.databinding.BindingAdapter;
-import android.databinding.InverseBindingAdapter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.MediaController;
-import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -28,18 +17,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.views.ChatAdapter;
 import com.github.foolish314159.mediaplayerview.MediaPlayerView;
-import com.itheima.library.PhotoView;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.security.spec.ECField;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import cn.jzvd.JZVideoPlayerStandard;
 
