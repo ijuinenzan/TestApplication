@@ -66,6 +66,11 @@ public class SearchViewModel extends BaseObservable
             _newUser.setState("Finding");
             notifyPropertyChanged(BR.finding);
         }
+        else if(_newUser.getState().equals("Chatting"))
+        {
+            _newUser.setState("Not Finding");
+            notifyPropertyChanged(BR.finding);
+        }
 
         UserModel currentUser = FirebaseManager.getInstance().getUser();
 
