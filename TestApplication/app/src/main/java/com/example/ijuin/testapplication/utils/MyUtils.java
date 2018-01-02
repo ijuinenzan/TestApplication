@@ -1,26 +1,17 @@
 package com.example.ijuin.testapplication.utils;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.databinding.BindingAdapter;
-import android.databinding.InverseBindingAdapter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.MediaController;
-import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -33,16 +24,10 @@ import com.example.ijuin.testapplication.views.ChatActivity;
 import com.example.ijuin.testapplication.views.ChatAdapter;
 import com.github.foolish314159.mediaplayerview.MediaPlayerView;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.security.spec.ECField;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import cn.jzvd.JZVideoPlayerStandard;
 
@@ -87,40 +72,16 @@ public class MyUtils
         recyclerView.scrollToPosition(messages.size()-1);
     }
 
+    @BindingAdapter({"app:profile_image_url"})
+    public static void loadProfileImage(ImageView imageView,String url)
+    {
+        Glide.with(imageView.getContext()).load(url).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
+    }
+
     @BindingAdapter({"app:image_url"})
     public static void loadImage(ImageView imageView,final String url)
     {
         Glide.with(imageView.getContext()).load(url).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
-
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String filename = "filename.jpg";
-//                String downloadUrlOfImage = url;
-//                File direct =
-//                        new File(Environment
-//                                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-//                                .getAbsolutePath() + "/" + "AppChat" + "/");
-//
-//
-//                if (!direct.exists()) {
-//                    direct.mkdir();
-//                }
-//
-//                DownloadManager dm = (DownloadManager) view.getContext().getSystemService(view.getContext().DOWNLOAD_SERVICE);
-//                Uri downloadUri = Uri.parse(downloadUrlOfImage);
-//                DownloadManager.Request request = new DownloadManager.Request(downloadUri);
-//                request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
-//                        .setAllowedOverRoaming(false)
-//                        .setTitle(filename)
-//                        .setMimeType("image/jpeg")
-//                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-//                        .setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES,
-//                                File.separator + "AppChat" + File.separator + filename);
-//
-//                dm.enqueue(request);
-//
-//       });
     }
 
     @BindingAdapter({"app:audio_url"})
@@ -142,27 +103,7 @@ public class MyUtils
     @BindingAdapter({"app:video_url"})
     public static void loadVideo(final JZVideoPlayerStandard jzVideoPlayerStandard, String url)
     {
-        jzVideoPlayerStandard.setUp(url, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "Video");
-//        mVideoView = (UniversalVideoView) findViewById(R.id.videoView);
-//        videoView.setVideoURI(Uri.parse(url));
-//        //videoView.requestFocus();
-//        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//            @Override
-//            public void onPrepared(MediaPlayer mediaPlayer) {
-//
-//                mediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
-//                    @Override
-//                    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-//                        MediaController mediacontroller = new MediaController(videoView.getContext());
-//                        mediacontroller.setAnchorView(videoView);
-//                        videoView.setMediaController(mediacontroller);
-//                    }
-//                });
-//            }
-//        });
-//
-//        videoView.start();
-
+        jzVideoPlayerStandard.setUp(url, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "");
     }
 
     @BindingAdapter({"app:location"})

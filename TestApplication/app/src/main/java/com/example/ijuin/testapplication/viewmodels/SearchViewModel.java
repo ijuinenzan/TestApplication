@@ -4,11 +4,9 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.example.ijuin.testapplication.BR;
-import com.example.ijuin.testapplication.interfaces.FirebaseCallbacks;
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.utils.FirebaseManager;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -66,6 +64,11 @@ public class SearchViewModel extends BaseObservable
         else if(_newUser.getState().equals("Not Finding"))
         {
             _newUser.setState("Finding");
+            notifyPropertyChanged(BR.finding);
+        }
+        else if(_newUser.getState().equals("Chatting"))
+        {
+            _newUser.setState("Not Finding");
             notifyPropertyChanged(BR.finding);
         }
 
@@ -139,6 +142,6 @@ public class SearchViewModel extends BaseObservable
     @Bindable
     public boolean isFinding()
     {
-        return _newUser.getState().equals("Finding");
+        return FirebaseManager.getInstance().getUser().getState().equals("Finding");
     }
 }

@@ -7,7 +7,6 @@ import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -49,8 +48,6 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import javax.security.auth.callback.CallbackHandler;
 
 import static com.example.ijuin.testapplication.utils.MyUtils.EXIT_ROOM;
 
@@ -136,11 +133,11 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         mBinding.recyclerView.setAdapter(new ChatAdapter(this,  mViewModel.getMessages()));
         mViewModel.addObserver(this);
 
-        _fabPlus = (FloatingActionButton) findViewById(R.id.fab_plus);
-        _fabInfo = (FloatingActionButton) findViewById(R.id.fab_info);
-        _fabLocation = (FloatingActionButton) findViewById(R.id.fab_location);
-        _fabCamera = (FloatingActionButton) findViewById(R.id.fab_camera);
-        _fabGallery = (FloatingActionButton) findViewById(R.id.fab_gallery);
+        _fabPlus = findViewById(R.id.fab_plus);
+        _fabInfo = findViewById(R.id.fab_info);
+        _fabLocation = findViewById(R.id.fab_location);
+        _fabCamera = findViewById(R.id.fab_camera);
+        _fabGallery = findViewById(R.id.fab_gallery);
 
         _animOpen = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_fab_open);
         _animClose = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_fab_close);
@@ -148,6 +145,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         _animAntiClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_rotate_anticlockwise);
 
 
+<<<<<<< HEAD
         _btnRecorder = (Button) findViewById(R.id.btn_recorder);
         _btnVideo = (Button) findViewById(R.id.btn_video);
         _btnStartStopRecorder = (Button) findViewById(R.id.btn_start_stop_recorder);
@@ -163,6 +161,12 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         _sticker7 = (ImageView) findViewById(R.id.sticker7);
         _sticker8 = (ImageView) findViewById(R.id.sticker8);
         _sticker9 = (ImageView) findViewById(R.id.sticker9);
+=======
+        _btnRecorder = findViewById(R.id.btn_recorder);
+        _btnVideo = findViewById(R.id.btn_video);
+        _btnStartStopRecorder = findViewById(R.id.btn_start_stop_recorder);
+        _edtEmoji = findViewById(R.id.editEmojicon);
+>>>>>>> 50979883765f2dbac916a60e2b1a0b62d9099ad7
 
         _audioRecordFile = new File((new ContextWrapper(this)).getDir("audio", Context.MODE_PRIVATE).getAbsolutePath().concat("record.3gp"));
 
@@ -252,8 +256,11 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        _recorder.stop();
-        _recorder.release();
+        if(_recorder != null)
+        {
+            _recorder.stop();
+            _recorder.release();
+        }
         mViewModel.removeObserver(this);
         mViewModel.onDestroy();
     }
@@ -576,8 +583,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
                 {
                     mViewModel.sendLocation(location.getLatitude(),location.getLongitude());
                 }
-                else if (location1 != null) {
-                }
             }
         }
 
@@ -626,7 +631,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
             _isOpenSticker = true;
         }
     }
-
     @Override
     public void onObserve(int event, ArrayList<MessageItemModel> eventMessage) {
 

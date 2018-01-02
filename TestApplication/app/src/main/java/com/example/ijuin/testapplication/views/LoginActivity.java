@@ -2,13 +2,10 @@ package com.example.ijuin.testapplication.views;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.hardware.input.InputManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.CountDownTimer;
@@ -18,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
@@ -33,7 +29,6 @@ import com.daasuu.ei.EasingInterpolator;
 import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.databinding.ActivityLoginBinding;
 import com.example.ijuin.testapplication.interfaces.Observer;
-import com.example.ijuin.testapplication.models.UserModel;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.example.ijuin.testapplication.viewmodels.LoginViewModel;
 
@@ -41,7 +36,6 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -54,8 +48,6 @@ import com.twitter.sdk.android.core.TwitterConfig;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class LoginActivity extends AppCompatActivity implements Observer<Object>  {
 
@@ -127,8 +119,8 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         activityLoginBinding.setViewModel(mViewModel);
         activityLoginBinding.setActivity(this);
 
-        _facebookFirebaseLoginButton = (Button) findViewById(R.id.btnFirebaseFacebookLogin);
-        _facebookLoginButon = (LoginButton)findViewById(R.id.btnFacebookLogin);
+        _facebookFirebaseLoginButton = findViewById(R.id.btnFirebaseFacebookLogin);
+        _facebookLoginButon = findViewById(R.id.btnFacebookLogin);
 
         _facebookFirebaseLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,8 +156,8 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
             }
         });
 
-        _twitterFirebaseLoginButton = (Button) findViewById(R.id.btnFirebaseTwitterLogin);
-        _twitterLoginButton = (TwitterLoginButton)findViewById(R.id.btnTwitterLogin);
+        _twitterFirebaseLoginButton = findViewById(R.id.btnFirebaseTwitterLogin);
+        _twitterLoginButton = findViewById(R.id.btnTwitterLogin);
 
 
         _twitterFirebaseLoginButton.setOnClickListener(new View.OnClickListener() {
@@ -195,15 +187,15 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
 
 
 
-        _btnAnonymousLogin = (Button)  findViewById(R.id.btnAnonymousLogin);
+        _btnAnonymousLogin = findViewById(R.id.btnAnonymousLogin);
 
         //region new Login page
-        _pBar = (ProgressBar) findViewById(R.id.mainProgressBar);
-        _imgView = (ImageView) findViewById(R.id.button_icon);
-        _txtLogin = (TextView) findViewById(R.id.button_label);
+        _pBar = findViewById(R.id.mainProgressBar);
+        _imgView = findViewById(R.id.button_icon);
+        _txtLogin = findViewById(R.id.button_label);
 
         dm=getResources().getDisplayMetrics();
-        _layoutLogin = (RelativeLayout) findViewById(R.id.button_login);
+        _layoutLogin = findViewById(R.id.button_login);
         _layoutLogin.setTag(0);
         _button_login_lp = (RelativeLayout.LayoutParams) _layoutLogin.getLayoutParams();
         _old_button_login_lp = _button_login_lp;

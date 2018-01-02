@@ -2,7 +2,7 @@ package com.example.ijuin.testapplication.interfaces;
 
 import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.models.UserModel;
-import com.google.firebase.database.DataSnapshot;
+
 /**
  * Created by Khanh on 11/11/2017.
  */

@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center">
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_UserIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
                     android:minHeight="100dp"
                     android:maxWidth="100dp"
                     android:maxHeight="100dp"
-                    app:image_url="@{viewModel.user.imageUrl.value}"/>
+                    app:profile_image_url="@{viewModel.user.imageUrl.value}"/>
 
                 <Button
                     android:layout_width="wrap_content"

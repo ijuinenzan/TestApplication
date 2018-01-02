@@ -1,40 +1,31 @@
 package com.example.ijuin.testapplication.views;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.MediaController;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.example.ijuin.testapplication.BR;
 import com.example.ijuin.testapplication.R;
-import com.example.ijuin.testapplication.databinding.TextChatAdapterBinding;
 import com.example.ijuin.testapplication.models.MessageItemModel;
-import com.example.ijuin.testapplication.utils.MapBuilder;
-import com.example.ijuin.testapplication.utils.MarkerBuilder;
 import com.example.ijuin.testapplication.utils.MyUtils;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by ijuin on 11/12/2017.
@@ -109,6 +100,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
 
     public void setChatList(ArrayList<MessageItemModel> chatList){
         _chatList = chatList;
+        Collections.sort(_chatList, new Comparator<MessageItemModel>() {
+            @Override
+            public int compare(MessageItemModel message1, MessageItemModel message2) {
+                DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy/MM/dd HH:mm:ss");
+                DateTime dt1 = formatter.parseDateTime(message1.getTimeStamp());
+                DateTime dt2 = formatter.parseDateTime(message2.getTimeStamp());
+                return dt1.compareTo(dt2);
+            }
+        });
         notifyDataSetChanged();
     }
 
@@ -126,99 +126,5 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
             _binding.executePendingBindings();
         }
     }
-
-
-    // region AUDIO
-    private MediaPlayer _player;
-    private TextView _startTimeAudio;
-    private TextView _endTimeAudio;
-    private Button _btnPlayAudio;
-    private SeekBar _seekbar;
-    private boolean _isPlay = false;  // check audio is played or not
-
-
-    private String createFile(String fileDirName) {
-        ContextWrapper cw = new ContextWrapper(_context);
-
-        File directory = cw.getDir(fileDirName, Context.MODE_PRIVATE);
-        if (!directory.exists())
-        {
-            // the directory was created
-            if (directory.mkdir()) {
-                //Toast.makeText(this, "Created directory", Toast.LENGTH_LONG).show();
-            }
-        }
-        return directory.getAbsolutePath();
-    }
-
-
-
-
-    public void setEndTimeAudio(int timeInMilliSeconds)
-    {
-        int timeInSeconds = timeInMilliSeconds/1000;
-        int timeInMinute = timeInSeconds/60;
-
-        if (timeInSeconds < 10)
-        {
-            _endTimeAudio.setText(String.valueOf(timeInMinute) +":0" + String.valueOf(timeInSeconds-timeInMinute*60));
-        }
-        else
-        {
-            _endTimeAudio.setText(String.valueOf(timeInMinute) +":" + String.valueOf(timeInSeconds-timeInMinute*60));
-        }
-    }
-
-    public void stopPlayback()
-    {
-        _player.stop();
-        _player.release();
-    }
-
-    public void pauseAndResume()
-    {
-        if(_isPlay)
-        {
-            _player.pause();
-        }
-        else
-        {
-            _player.reset();
-            // can not resume ???
-        }
-    }
-
-    private void onClickPlayAudio()
-    {
-        if (_isPlay)
-        {
-            pauseAndResume();
-            _btnPlayAudio.setBackgroundResource(R.drawable.ic_play_48dp);
-            _isPlay = false;
-        }
-        else
-        {
-            try {
-               // startPlayback();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            _btnPlayAudio.setBackgroundResource(R.drawable.ic_pause_48dp);
-            _isPlay = true;
-        }
-    }
-    // endregion
-
-
-
-
-
-
-
-
-    // endregion
-    // ================================================================================
-    // ================================================================================
-    // ================================================================================
 }
 

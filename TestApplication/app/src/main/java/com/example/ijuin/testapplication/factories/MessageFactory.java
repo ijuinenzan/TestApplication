@@ -78,7 +78,7 @@ public class MessageFactory
 
     public static MessageItemModel createInfoAcceptMessage(ArrayList<String> selectFields)
     {
-        String message = "";
+        StringBuilder message = new StringBuilder();
         MessageItemModel messageItemModel = new MessageItemModel();
         UserModel currentUser = FirebaseManager.getInstance().getUser();
         for (String select: selectFields)
@@ -86,58 +86,58 @@ public class MessageFactory
             switch (select)
             {
                 case "Name:": {
-                    message += select + "\t" + currentUser.getDisplayName().getValue() + "\n";
+                    message.append(select).append("\t").append(currentUser.getDisplayName().getValue()).append("\n");
                     break;
                 }
                 case "Yearborn:": {
-                    message += select + "\t" + currentUser.getYearBorn().getValue() + "\n";
+                    message.append(select).append("\t").append(currentUser.getYearBorn().getValue()).append("\n");
                     break;
                 }
                 case "Gender:": {
-                    message += select + "\t" + currentUser.getGender().getValue() + "\n";
+                    message.append(select).append("\t").append(currentUser.getGender().getValue()).append("\n");
                     break;
                 }
                 case "Phone:": {
-                    message += select + "\t" + currentUser.getPhoneNumber().getValue() + "\n";
+                    message.append(select).append("\t").append(currentUser.getPhoneNumber().getValue()).append("\n");
                     break;
                 }
                 case "Address:": {
-                    message += select + "\t" + currentUser.getAddress().getValue() + "\n";
+                    message.append(select).append("\t").append(currentUser.getAddress().getValue()).append("\n");
                     break;
                 }
                 case "Company:": {
-                    message += select + "\t" + currentUser.getJob().getValue() + "\n";
+                    message.append(select).append("\t").append(currentUser.getJob().getValue()).append("\n");
                     break;
                 }
                 case "City:": {
-                    message += select + "\t" + currentUser.getCity().getValue() + "\n";
+                    message.append(select).append("\t").append(currentUser.getCity().getValue()).append("\n");
                     break;
                 }
                 case "Country:": {
-                    message += select + "\t" + currentUser.getCountry().getValue() + "\n";
+                    message.append(select).append("\t").append(currentUser.getCountry().getValue()).append("\n");
                     break;
                 }
                 case "Weight:": {
-                    message += select + "\t" + currentUser.getWeight().getValue() + "\n";
+                    message.append(select).append("\t").append(currentUser.getWeight().getValue()).append("\n");
                     break;
                 }
                 case "Height:": {
-                    message += select + "\t" + currentUser.getHeight().getValue() + "\n";
+                    message.append(select).append("\t").append(currentUser.getHeight().getValue()).append("\n");
                     break;
                 }
                 case "Link Facebook:": {
-                    message += select + "\t" + currentUser.getFacebook().getValue() + "\n";
+                    message.append(select).append("\t").append(currentUser.getFacebook().getValue()).append("\n");
                     break;
                 }
                 case "Link Twitter:": {
-                    message += select + "\t" + currentUser.getTwitter().getValue() + "\n";
+                    message.append(select).append("\t").append(currentUser.getTwitter().getValue()).append("\n");
                     break;
                 }
                 default:
                     break;
             }
         }
-        messageItemModel.setMessage(message);
+        messageItemModel.setMessage(message.toString());
         messageItemModel.setSenderId(FirebaseAuth.getInstance().getUid());
         messageItemModel.setTimeStamp(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
         messageItemModel.setType(MyUtils.INFO_ACCEPT_TYPE);

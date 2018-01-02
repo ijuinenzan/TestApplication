@@ -2,7 +2,6 @@ package com.example.ijuin.testapplication.models;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.net.Uri;
 
 import com.example.ijuin.testapplication.BR;
 
@@ -147,6 +146,7 @@ public class UserModel extends BaseObservable implements Serializable {
     public void setState(String _state) {
         this._state = _state;
         notifyPropertyChanged(BR.state);
+        notifyPropertyChanged(BR.finding);
     }
 
     @Bindable
