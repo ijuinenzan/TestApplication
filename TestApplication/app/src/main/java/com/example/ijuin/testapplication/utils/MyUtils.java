@@ -80,7 +80,7 @@ public class MyUtils
     @BindingAdapter({"app:profile_image_url"})
     public static void loadProfileImage(ImageView imageView,String url)
     {
-        Glide.with(imageView.getContext()).load(url).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView)
+        Glide.with(imageView.getContext()).load(url).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
     }
 
     @BindingAdapter({"app:image_url"})
