@@ -30,7 +30,7 @@
 
                 <com.github.foolish314159.mediaplayerview.MediaPlayerView
                     android:id="@+id/mediaPlayerView_left"
-                    android:layout_width="wrap_content"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/darker_gray"
                     app:audio_url="@{chatMessage.message}"/>
@@ -60,7 +60,7 @@
 
                 <com.github.foolish314159.mediaplayerview.MediaPlayerView
                     android:id="@+id/mediaPlayerView_right"
-                    android:layout_width="wrap_content"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/darker_gray"
                     app:audio_url="@{chatMessage.message}"/>

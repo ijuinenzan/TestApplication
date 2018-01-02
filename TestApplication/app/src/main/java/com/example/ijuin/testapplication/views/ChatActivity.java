@@ -149,6 +149,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         _btnStartStopRecorder = (Button) findViewById(R.id.btn_start_stop_recorder);
         _edtEmoji = (EditText) findViewById(R.id.editEmojicon);
         _scrollView = (ScrollView) findViewById(R.id.scrollView_stickers);
+        _scrollView.setVisibility(View.GONE);
         _grid = (GridLayout) findViewById(R.id.gridlayout_stickers);
         _sticker1 = (ImageView) findViewById(R.id.sticker1);
         _sticker2 = (ImageView) findViewById(R.id.sticker2);
