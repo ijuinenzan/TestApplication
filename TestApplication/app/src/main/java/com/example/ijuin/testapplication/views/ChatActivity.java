@@ -63,7 +63,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
 
     // ====== Floating Action Button =============================================================
-    FloatingActionButton _fabPlus, _fabLocation, _fabCamera, _fabGallery;
+    FloatingActionButton _fabPlus, _fabLocation, _fabCamera, _fabGallery, _fabInfo;
     boolean _isOpen = false;
     // ===========================================================================================
 
@@ -114,6 +114,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         mViewModel.addObserver(this);
 
         _fabPlus = (FloatingActionButton) findViewById(R.id.fab_plus);
+        _fabInfo = (FloatingActionButton) findViewById(R.id.fab_info);
         _fabLocation = (FloatingActionButton) findViewById(R.id.fab_location);
         _fabCamera = (FloatingActionButton) findViewById(R.id.fab_camera);
         _fabGallery = (FloatingActionButton) findViewById(R.id.fab_gallery);
@@ -222,6 +223,10 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         {
             _fabPlus.startAnimation(_animAntiClockwise);
 
+            _fabInfo.startAnimation(_animClose);
+            _fabInfo.setClickable(false);
+            _fabInfo.setVisibility(View.INVISIBLE);
+
             _fabLocation.startAnimation(_animClose);
             _fabLocation.setClickable(false);
             _fabLocation.setVisibility(View.INVISIBLE);
@@ -239,6 +244,10 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         else
         {
             _fabPlus.startAnimation(_animClockwise);
+
+            _fabInfo.startAnimation(_animOpen);
+            _fabInfo.setClickable(true);
+            _fabInfo.setVisibility(View.VISIBLE);
 
             _fabLocation.startAnimation(_animOpen);
             _fabLocation.setClickable(true);
@@ -391,6 +400,27 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         alert.show();
     }
 
+    public void alertInfo()
+    {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to know your partner's infomation?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialogInterface, int i) {
+                        mViewModel.sendInfoRequest();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     public void sendLocation()
     {
         onClickLocation();
@@ -438,6 +468,11 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     public void onClickRecorder()
     {
         _btnStartStopRecorder.setVisibility(View.VISIBLE);
+    }
+
+    public void onClickInfo()
+    {
+        alertInfo();
     }
 
     @Override

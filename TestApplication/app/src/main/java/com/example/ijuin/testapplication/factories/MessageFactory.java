@@ -1,7 +1,6 @@
 package com.example.ijuin.testapplication.factories;
 
 import com.example.ijuin.testapplication.models.MessageItemModel;
-import com.example.ijuin.testapplication.utils.FirebaseManager;
 import com.example.ijuin.testapplication.utils.MyUtils;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -51,6 +50,26 @@ public class MessageFactory
         messageItemModel.setSenderId(FirebaseAuth.getInstance().getUid());
         messageItemModel.setTimeStamp(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
         messageItemModel.setType(MyUtils.IMAGE_TYPE);
+        return messageItemModel;
+    }
+
+    public static MessageItemModel createInfoRequestMessage()
+    {
+        MessageItemModel messageItemModel = new MessageItemModel();
+        messageItemModel.setMessage("Your partner asks to know your infomation!");
+        messageItemModel.setSenderId(FirebaseAuth.getInstance().getUid());
+        messageItemModel.setTimeStamp(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+        messageItemModel.setType(MyUtils.INFO_REQUEST_TYPE);
+        return messageItemModel;
+    }
+
+    public static MessageItemModel createInfoAcceptMessage()
+    {
+        MessageItemModel messageItemModel = new MessageItemModel();
+        messageItemModel.setMessage("");
+        messageItemModel.setSenderId(FirebaseAuth.getInstance().getUid());
+        messageItemModel.setTimeStamp(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+        messageItemModel.setType(MyUtils.INFO_ACCEPT_TYPE);
         return messageItemModel;
     }
 }

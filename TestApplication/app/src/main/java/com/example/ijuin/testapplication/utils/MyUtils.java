@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -46,6 +47,8 @@ public class MyUtils
     public static String AUDIO_TYPE = "AUDIO";
     public static String LOCATION_TYPE = "LOCATION";
     public static String IMAGE_TYPE = "IMAGE";
+    public static String INFO_REQUEST_TYPE = "INFO-REQUEST";
+    public static String INFO_ACCEPT_TYPE = "INFO-ACCEPT";
 
     public static final int OPEN_ACTIVITY = 1;
     public static final int SHOW_TOAST = 2;
@@ -97,6 +100,8 @@ public class MyUtils
 //
 //        }
 //    }
+
+
 
     @BindingAdapter({"app:video_url"})
     public static void loadVideo(final VideoView videoView, String url)

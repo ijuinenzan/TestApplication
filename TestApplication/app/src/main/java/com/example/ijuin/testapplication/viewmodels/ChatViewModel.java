@@ -84,6 +84,16 @@ public class ChatViewModel extends BaseObservable implements FirebaseCallbacks {
         FirebaseManager.getInstance().sendImageBitmap(bitmap);
     }
 
+    public void sendInfoRequest()
+    {
+        FirebaseManager.getInstance().sendMessage(MessageFactory.createInfoRequestMessage());
+    }
+
+    public void sendInfoAccept()
+    {
+        FirebaseManager.getInstance().sendMessage(MessageFactory.createInfoAcceptMessage());
+    }
+
     public void setListener()
     {
         FirebaseManager.getInstance().addMessageListener();
