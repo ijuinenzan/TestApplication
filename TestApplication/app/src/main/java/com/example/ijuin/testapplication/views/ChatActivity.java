@@ -7,6 +7,7 @@ import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
@@ -21,21 +22,19 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.databinding.ActivityChatBinding;
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.viewmodels.ChatViewModel;
-import com.example.ijuin.testapplication.views.Dialog.DialogChooseInfoToSend;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
@@ -43,8 +42,9 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.security.auth.callback.CallbackHandler;
+
 import static com.example.ijuin.testapplication.utils.MyUtils.EXIT_ROOM;
-import static com.example.ijuin.testapplication.utils.MyUtils.UPDATE_MESSAGES;
 
 
 /**
@@ -95,7 +95,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     private LocationManager _locationManager;
     // ===========================================================================================
 
-
+    MaterialDialog md;
     //endregion
 
     @Override
@@ -458,7 +458,32 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
     public void onClickAcceptInfo()
     {
-        startActivity(new Intent(this, DialogChooseInfoToSend.class));
+        md = new MaterialDialog.Builder(this)
+                .iconRes(R.drawable.ic_launcher)
+                .limitIconToDefaultSize()
+                .title("title")
+                .items(R.array.list_info)
+                .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        /**
+                         * If you use alwaysCallMultiChoiceCallback(), which is discussed below,
+                         * returning false here won't allow the newly selected check box to actually be selected
+                         * (or the newly unselected check box to be unchecked).
+                         * See the limited multi choice dialog example in the sample project for details.
+                         **/
+                        md.setSelectedIndices(which);
+                        return true;
+                    }
+                })
+                .alwaysCallMultiChoiceCallback()
+                .positiveText("choose")
+                .show();
+
+
+        Integer[] a = md.getSelectedIndices();
+
+        mViewModel.sendInfoAccept(md.getSelectedIndices());
     }
 
     @Override

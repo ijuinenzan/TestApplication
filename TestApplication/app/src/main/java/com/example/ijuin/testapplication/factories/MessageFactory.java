@@ -73,13 +73,20 @@ public class MessageFactory
         return messageItemModel;
     }
 
-    public static MessageItemModel createInfoAcceptMessage()
+    public static MessageItemModel createInfoAcceptMessage(Integer[] integers)
     {
+        String temp = "";
+        StringBuilder builder = new StringBuilder("");
         MessageItemModel messageItemModel = new MessageItemModel();
-        messageItemModel.setMessage("");
+        for (int item:integers)
+        {
+            temp += String.valueOf(item) + " ";
+            builder.append(temp);
+        }
+        messageItemModel.setMessage(builder.toString());
         messageItemModel.setSenderId(FirebaseAuth.getInstance().getUid());
         messageItemModel.setTimeStamp(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
-        messageItemModel.setType(MyUtils.INFO_ACCEPT_TYPE);
+        messageItemModel.setType(MyUtils.TEXT_TYPE);
         return messageItemModel;
     }
 }
