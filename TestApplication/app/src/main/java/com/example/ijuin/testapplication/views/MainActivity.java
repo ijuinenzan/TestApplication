@@ -12,6 +12,7 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.ColorInt;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -41,8 +42,8 @@ import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
 
 import com.example.ijuin.testapplication.viewmodels.SearchViewModel;
 
-import org.xdty.preference.colorpicker.ColorPickerDialog;
-import org.xdty.preference.colorpicker.ColorPickerSwatch;
+import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
+import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -379,30 +380,39 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                 @Override
                 public void onClick(View view)
                 {
-                    int[] arr_colors = getResources().getIntArray(R.array.arr_colors);
-                    selectedColor = R.color.red;
-                    ColorPickerDialog colorPickerDialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title,
-                            arr_colors,
-                            selectedColor,
-                            5, // Number of columns
-                            ColorPickerDialog.SIZE_SMALL,
-                            true // True or False to enable or disable the serpentine effect
-                            //0, // stroke width
-                            //Color.BLACK // stroke color
-                    );
-
-                    colorPickerDialog.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
-
+                    final ColorPicker cp = new ColorPicker(getActivity(), 255, 255, 0, 0);
+                    cp.show();
+                    cp.setCallback(new ColorPickerCallback() {
                         @Override
-                        public void onColorSelected(int color) {
-                            selectedColor = color;
-                            String path = writeToFile(String.valueOf(selectedColor),"settings","colors");
+                        public void onColorChosen(@ColorInt int color) {
+                            String path = writeToFile(String.valueOf(color),"settings","colors");
                             _main.setBackgroundColor(readFromFile_int(path,"colors"));
                         }
-
                     });
 
-                    colorPickerDialog.show(getActivity().getFragmentManager(), "color_dialog_test");
+
+//                    ColorPickerDialog colorPickerDialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title,
+//                            arr_colors,
+//                            selectedColor,
+//                            5, // Number of columns
+//                            ColorPickerDialog.SIZE_SMALL,
+//                            true // True or False to enable or disable the serpentine effect
+//                            //0, // stroke width
+//                            //Color.BLACK // stroke color
+//                    );
+//
+//                    colorPickerDialog.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
+//
+//                        @Override
+//                        public void onColorSelected(int color) {
+//                    selectedColor = color
+//                    String path = writeToFile(String.valueOf(color),"settings","colors");
+//                    _main.setBackgroundColor(readFromFile_int(path,"colors"));
+//                        }
+//
+//                    });
+//
+//                    colorPickerDialog.show(getActivity().getFragmentManager(), "color_dialog_test");
                 }
             });
 
