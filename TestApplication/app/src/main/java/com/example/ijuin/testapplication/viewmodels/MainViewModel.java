@@ -1,8 +1,12 @@
 package com.example.ijuin.testapplication.viewmodels;
 
 import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.text.style.BackgroundColorSpan;
 
+import com.example.ijuin.testapplication.BR;
 import com.example.ijuin.testapplication.interfaces.FirebaseCallbacks;
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.models.MessageItemModel;
@@ -19,6 +23,7 @@ import java.util.ArrayList;
 public class MainViewModel extends BaseObservable implements FirebaseCallbacks
 {
     public ArrayList<Observer> _observers;
+    private int _backgroundColor;
 
     public MainViewModel()
     {
@@ -80,5 +85,15 @@ public class MainViewModel extends BaseObservable implements FirebaseCallbacks
         for (int i=0; i< _observers.size(); i++) {
             _observers.get(i).onObserve(eventType, chatroom);
         }
+    }
+
+    @Bindable
+    public int getBackgroundColor() {
+        return _backgroundColor;
+    }
+
+    public void setBackgroundColor(int backgroundColor) {
+        this._backgroundColor = backgroundColor;
+        notifyPropertyChanged(BR.backgroundColor);
     }
 }

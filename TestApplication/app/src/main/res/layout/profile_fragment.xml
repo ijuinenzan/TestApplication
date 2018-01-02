@@ -5,13 +5,15 @@
 
     <data>
         <variable name="viewModel" type="com.example.ijuin.testapplication.viewmodels.ProfileViewModel"/>
+        <variable name="mainViewModel" type="com.example.ijuin.testapplication.viewmodels.MainViewModel"/>
         <variable name="activity" type="com.example.ijuin.testapplication.views.MainActivity"/>
         <import type="android.view.View"/>
     </data>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@{mainViewModel.backgroundColor}">
 
 
         <LinearLayout

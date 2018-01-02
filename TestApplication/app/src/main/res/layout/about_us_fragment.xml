@@ -1,74 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/searchFragment"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_gravity="center"
-    tools:context="com.example.ijuin.testapplication.views.MainActivity$AboutUsFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_our_logo_1"
-        android:minWidth="150dp"
-        android:minHeight="150dp"
-        android:adjustViewBounds="true"
-        android:maxWidth="150dp"
-        android:maxHeight="150dp"
-        android:scaleType="fitCenter"
-        android:layout_gravity="center"/>
+    <data>
+        <variable name="mainViewModel" type="com.example.ijuin.testapplication.viewmodels.MainViewModel"/>
+    </data>
 
     <LinearLayout
+        android:background="@{mainViewModel.backgroundColor}"
+        android:id="@+id/searchFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="20dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center">
 
-        <TextView
-            android:id="@+id/txtVersion"
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/version"
-            android:layout_gravity="center"
-            android:textSize="20sp"/>
+            android:src="@drawable/ic_our_logo_1"
+            android:minWidth="150dp"
+            android:minHeight="150dp"
+            android:adjustViewBounds="true"
+            android:maxWidth="150dp"
+            android:maxHeight="150dp"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/txtVersionID"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/versionID"
-            android:layout_marginStart="20dp"
-            android:layout_gravity="center"
-            android:textSize="20sp"/>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/txtVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/version"
+                android:layout_gravity="center"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/txtVersionID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/versionID"
+                android:layout_marginStart="20dp"
+                android:layout_gravity="center"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/helpAndSupport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/helpandsupport"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/reportAndFeedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reportandfeedback"/>
+
+        <Button
+            android:id="@+id/btnDonate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/donate"/>
+
+
+
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/helpAndSupport"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/helpandsupport"
-        android:layout_marginTop="20dp"/>
-
-    <Button
-        android:id="@+id/reportAndFeedback"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/reportandfeedback"/>
-
-    <Button
-        android:id="@+id/btnDonate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/donate"/>
-
-
-
-
-</LinearLayout>
+</layout>

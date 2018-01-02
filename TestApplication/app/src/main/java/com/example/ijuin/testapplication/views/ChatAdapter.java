@@ -34,6 +34,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 /**
@@ -95,8 +97,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
         return _chatList.size();
     }
 
-    public void setChatList(ArrayList<MessageItemModel> chatList){
+    public void setChatList(final ArrayList<MessageItemModel> chatList){
         _chatList = chatList;
+        Collections.sort(chatList, new Comparator<MessageItemModel>() {
+            @Override
+            public int compare(MessageItemModel messageItemModel, MessageItemModel t1) {
+                return messageItemModel.getTimeStamp().compareTo(t1.getTimeStamp());
+            }
+        });
         notifyDataSetChanged();
     }
 

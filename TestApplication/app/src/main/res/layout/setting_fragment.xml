@@ -1,124 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentRelativeLayout
-    android:id="@+id/mainPercentRelativeLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/txt_setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/settings"
-        android:textSize="35sp"
-        android:textColor="@color/white"
-        app:layout_marginTopPercent="5%"/>
+    <data>
+        <variable name="mainViewModel" type="com.example.ijuin.testapplication.viewmodels.MainViewModel"/>
+    </data>
 
-
-    <TextView
-        android:id="@+id/txt_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/background"
-        android:layout_below="@id/txt_setting"
-        android:textSize="25sp"
-        android:textColor="@color/white"
-        app:layout_marginTopPercent="5%"/>
-
-    <LinearLayout
-        android:id="@+id/background_area"
+    <android.support.percent.PercentRelativeLayout
+        android:background="@{mainViewModel.backgroundColor}"
+        android:id="@+id/mainPercentRelativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_bg"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
-        android:background="@drawable/theme_settings"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btn_change_bg_image"
+        <TextView
+            android:id="@+id/txt_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/settings"
+            android:textSize="35sp"
+            android:textColor="@color/white"
+            app:layout_marginTopPercent="5%"/>
+
+
+        <TextView
+            android:id="@+id/txt_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/background"
+            android:layout_below="@id/txt_setting"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            app:layout_marginTopPercent="5%"/>
+
+        <LinearLayout
+            android:id="@+id/background_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/theme_btn_settings"
-            android:text="@string/change_bg_image"
-            android:textColor="@color/BLANCHEDALMOND"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:layout_below="@id/txt_bg"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/theme_settings"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_bg_color"
+            <Button
+                android:id="@+id/btn_change_bg_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/theme_btn_settings"
+                android:text="@string/change_bg_image"
+                android:textColor="@color/BLANCHEDALMOND"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/btn_bg_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/theme_btn_settings"
+                android:text="@string/change_bg_color"
+                android:textColor="@color/BLANCHEDALMOND"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_sound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sound"
+            android:layout_below="@id/background_area"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            app:layout_marginTopPercent="5%"/>
+
+        <LinearLayout
+            android:id="@+id/sound_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/theme_btn_settings"
-            android:text="@string/change_bg_color"
-            android:textColor="@color/BLANCHEDALMOND"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:layout_below="@id/txt_sound"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/theme_settings"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_change_sound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/theme_btn_settings"
+                android:text="@string/change_sound"
+                android:textColor="@color/BLANCHEDALMOND"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/txt_sound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sound"
-        android:layout_below="@id/background_area"
-        android:textSize="25sp"
-        android:textColor="@color/white"
-        app:layout_marginTopPercent="5%"/>
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/sound_area"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_sound"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
-        android:background="@drawable/theme_settings"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btn_change_sound"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/theme_btn_settings"
-            android:text="@string/change_sound"
-            android:textColor="@color/BLANCHEDALMOND"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:layout_below="@id/sound_area"
+            android:layout_centerHorizontal="true"
+            android:text="hello"
+            app:layout_marginTopPercent="5%"
+            android:textSize="20sp"/>
 
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/sound_area"
-        android:layout_centerHorizontal="true"
-        android:text="hello"
-        app:layout_marginTopPercent="5%"
-        android:textSize="20sp"/>
-
-    <ImageView
-        android:id="@+id/bg_img_selected"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="100dp"
-        android:maxHeight="100dp"
-        android:minHeight="100dp"
-        android:maxWidth="100dp"
-        android:layout_centerHorizontal="true"/>
+        <ImageView
+            android:id="@+id/bg_img_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:maxHeight="100dp"
+            android:minHeight="100dp"
+            android:maxWidth="100dp"
+            android:layout_centerHorizontal="true"/>
 
 
 
-    <Button
-        android:id="@+id/btn_record_and_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recorder"/>
-
-
-</android.support.percent.PercentRelativeLayout>
+    </android.support.percent.PercentRelativeLayout>
+</layout>

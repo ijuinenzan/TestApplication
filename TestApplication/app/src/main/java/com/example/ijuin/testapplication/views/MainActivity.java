@@ -4,17 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -36,6 +39,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
 import com.example.ijuin.testapplication.R;
+import com.example.ijuin.testapplication.databinding.AboutUsFragmentBinding;
 import com.example.ijuin.testapplication.databinding.ActivityMainBinding;
 import com.example.ijuin.testapplication.databinding.ProfileFragmentBinding;
 
@@ -61,7 +65,9 @@ import java.io.IOException;
 
 import static android.support.v4.app.ActivityCompat.startActivityForResult;
 import static com.example.ijuin.testapplication.utils.MyUtils.REQUEST_CAMERA;
+import static com.example.ijuin.testapplication.utils.MyUtils.SELECT_FILE;
 import static com.example.ijuin.testapplication.utils.MyUtils.SELECT_FILE_FROM_GALLERY;
+import static com.example.ijuin.testapplication.utils.MyUtils.SETTINGS;
 
 /**
  * Created by Khang Le on 11/21/2017.
@@ -82,10 +88,20 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
     private MediaPlayer _mediaPlayer;
 //endregion
 
+    public MainViewModel getViewModel()
+    {
+        return _viewModel;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences settings = getSharedPreferences(SETTINGS, 0);
+        int color = settings.getInt("bg_color", android.R.color.white);
 
 
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -95,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         _viewModel.addObserver(this);
         _mediaPlayer = MediaPlayer.create(this,R.raw.anh_nang_cua_anh);
         _mediaPlayer.start();
+        setBackground(color);
         addControls();
     }
 
@@ -103,6 +120,15 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         super.onDestroy();
         _viewModel.removeObserver(this);
         _viewModel.onDestroy();
+    }
+
+    public void setBackground(int color)
+    {
+        SharedPreferences settings = getSharedPreferences(SETTINGS, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("bg_color", color);
+        editor.commit();
+        _viewModel.setBackgroundColor(color);
     }
 
     public void back()
@@ -159,6 +185,14 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                     e.printStackTrace();
                 }
             }
+            else if (requestCode == SELECT_FILE)
+            {
+                Uri uri = data.getData();
+                SharedPreferences settings = getSharedPreferences(SETTINGS, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString("image_uri", uri.toString());
+                editor.commit();
+            }
         }
     }
 
@@ -210,6 +244,8 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                 }
             });
 
+            binding.setMainViewModel(((MainActivity)getActivity()).getViewModel());
+
             return view;
         }
     }
@@ -239,6 +275,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             mViewModel= new ProfileViewModel();
             mViewModel.addObserver(this);
             binding.setViewModel(mViewModel);
+            binding.setMainViewModel(((MainActivity)getActivity()).getViewModel());
 
 
             return view;
@@ -342,6 +379,10 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                                  Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.about_us_fragment, container, false);
 
+            AboutUsFragmentBinding binding = DataBindingUtil.inflate(inflater,
+                    R.layout.about_us_fragment, container, false);
+            binding.setMainViewModel(((MainActivity)getActivity()).getViewModel());
+
             return view;
         }
 
@@ -360,14 +401,15 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         ImageView _imgView;
         private int selectedColor;
         View _main;
-        private int SELECT_FILE = 410;
-        private View _btnRecorderAndPlay;
-        MediaRecorder mediaRecorder = new MediaRecorder();
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState)
         {
+            SharedPreferences settings = getActivity().getSharedPreferences(SETTINGS, 0);
+            int color = settings.getInt("bg_color", android.R.color.white);
+
             final View view = inflater.inflate(R.layout.setting_fragment, container, false);
             _txt = (TextView) view.findViewById(R.id.content);
             _sound = (Button) view.findViewById(R.id.btn_change_sound);
@@ -375,7 +417,8 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             _btnImage = (Button) view.findViewById(R.id.btn_change_bg_image);
             _imgView = (ImageView) view.findViewById(R.id.bg_img_selected) ;
             _main = (View) view.findViewById(R.id.mainPercentRelativeLayout);
-            _btnRecorderAndPlay = (View) view.findViewById(R.id.btn_record_and_play) ;
+            _main.setBackgroundColor(color);
+
 
             _sound.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -406,10 +449,9 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                         @Override
                         public void onColorSelected(int color) {
                             selectedColor = color;
-                            String path = writeToFile(String.valueOf(selectedColor),"settings","colors");
-                            _main.setBackgroundColor(readFromFile_int(path,"colors"));
+                            ((MainActivity)getActivity()).setBackground(color);
+                            _main.setBackgroundColor(selectedColor);
                         }
-
                     });
 
                     colorPickerDialog.show(getActivity().getFragmentManager(), "color_dialog_test");
@@ -424,19 +466,6 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                     intent.setType("image/*");
                     startActivityForResult(intent.createChooser(intent, "Select File"), SELECT_FILE);
                 }
-            });
-
-
-
-
-
-
-            _btnRecorderAndPlay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                }
-
             });
 
 
@@ -576,10 +605,11 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                     frag = new SearchFragment();
                     break;
                 case 2:
-                    frag = new AboutUsFragment();
+                    frag = new SettingFragment();
                     break;
                 case 3:
-                    frag = new SettingFragment();
+                    frag = new AboutUsFragment();
+                    break;
             }
             return frag;
         }
@@ -608,9 +638,9 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                 case 1:
                     return R.drawable.ic_heart;
                 case 2:
-                    return R.drawable.ic_logo;
-                case 3:
                     return R.drawable.ic_settings;
+                case 3:
+                    return R.drawable.ic_logo;
                 default:
                     return -1;
             }
