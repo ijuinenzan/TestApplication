@@ -35,6 +35,7 @@ import com.example.ijuin.testapplication.databinding.ActivityChatBinding;
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.viewmodels.ChatViewModel;
+import com.example.ijuin.testapplication.views.Dialog.DialogChooseInfoToSend;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
@@ -473,6 +474,11 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     public void onClickInfo()
     {
         alertInfo();
+    }
+
+    public void onClickAcceptInfo()
+    {
+        startActivity(new Intent(this, DialogChooseInfoToSend.class));
     }
 
     @Override

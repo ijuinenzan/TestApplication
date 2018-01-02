@@ -75,8 +75,8 @@
     <string name="typehere">[Type Here&#8230;]</string>
 
 
-
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="exit_room">EXIT ROOM</string>
     <string name="ask_info">Your partner asks for your infomation!</string>
+    <string name="year_born">Year Born</string>
 </resources>
