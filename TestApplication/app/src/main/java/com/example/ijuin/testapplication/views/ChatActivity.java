@@ -154,8 +154,11 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        _recorder.stop();
-        _recorder.release();
+        if(_recorder != null)
+        {
+            _recorder.stop();
+            _recorder.release();
+        }
         mViewModel.removeObserver(this);
         mViewModel.onDestroy();
     }
@@ -454,11 +457,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     public void onClickInfo()
     {
         alertInfo();
-    }
-
-    public void onClickAcceptInfo()
-    {
-        startActivity(new Intent(this, DialogChooseInfoToSend.class));
     }
 
     @Override

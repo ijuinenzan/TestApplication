@@ -44,7 +44,7 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:text="Agree"
-                    android:onClick="@{()-> activity.onClickAcceptInfo()}"/>
+                    android:onClick="@{(v)-> MyUtils.acceptInfo(v)}"/>
             </LinearLayout>
 
             <TextView
@@ -56,47 +56,5 @@
                 android:text="@={chatMessage.timeStamp}" />
 
         </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="95dp"
-            android:layout_gravity="end"
-            android:background="@drawable/right_node_bg"
-            android:orientation="vertical"
-            android:visibility="@{chatMessage.isMine ? View.GONE: View.GONE}">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_average"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_average"
-                    android:layout_marginTop="@dimen/margin_average"
-                    android:text="@string/ask_info" />
-
-                <Button
-                    android:id="@+id/btn_agree_message_right"
-                    android:layout_width="80dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:text="Agree"
-                    android:onClick="@{()-> activity.onClickAcceptInfo()}"/>
-            </LinearLayout>
-
-            <TextView
-                style="@style/info_textviews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_average"
-                android:layout_marginTop="@dimen/margin_large"
-                android:text="@={chatMessage.timeStamp}" />
-
-        </LinearLayout>
-
     </LinearLayout>
 </layout>

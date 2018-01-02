@@ -139,6 +139,6 @@ public class SearchViewModel extends BaseObservable
     @Bindable
     public boolean isFinding()
     {
-        return _newUser.getState().equals("Finding");
+        return FirebaseManager.getInstance().getUser().getState().equals("Finding");
     }
 }

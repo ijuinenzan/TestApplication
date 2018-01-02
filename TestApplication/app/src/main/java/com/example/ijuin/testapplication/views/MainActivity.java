@@ -58,6 +58,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Set;
 
 import static android.support.v4.app.ActivityCompat.startActivityForResult;
 import static com.example.ijuin.testapplication.utils.MyUtils.REQUEST_CAMERA;
@@ -565,21 +566,42 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             super(fm);
         }
 
+        ProfileFragment _profileFragment;
+        SearchFragment _searchFragment;
+        AboutUsFragment _aboutUsFragment;
+        SettingFragment _settingFragment;
         @Override
         public Fragment getItem(int position) {
             Fragment frag = null;
             switch (position) {
                 case 0:
-                    frag = new ProfileFragment();
+                    if(_profileFragment == null)
+                    {
+                        _profileFragment = new ProfileFragment();
+                    }
+                    frag = _profileFragment;
                     break;
                 case 1:
-                    frag = new SearchFragment();
+                    if(_searchFragment == null)
+                    {
+                        _searchFragment = new SearchFragment();
+                    }
+                    frag = _searchFragment;
                     break;
                 case 2:
-                    frag = new AboutUsFragment();
+                    if(_aboutUsFragment == null)
+                    {
+                        _aboutUsFragment = new AboutUsFragment();
+                    }
+                    frag = _aboutUsFragment;
                     break;
                 case 3:
-                    frag = new SettingFragment();
+                    if(_settingFragment == null)
+                    {
+                        _settingFragment = new SettingFragment();
+                    }
+                    frag = _settingFragment;
+                    break;
             }
             return frag;
         }

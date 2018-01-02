@@ -74,6 +74,9 @@ dependencies {
 
     implementation 'com.github.foolish314159:mediaplayerview:1.0.4'
     implementation 'cn.jzvd:jiaozivideoplayer:6.2.3'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.github.open-android:PhotoImageView:0.1.0'
+
 
 
 }

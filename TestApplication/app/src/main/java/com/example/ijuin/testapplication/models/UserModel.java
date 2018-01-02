@@ -147,6 +147,7 @@ public class UserModel extends BaseObservable implements Serializable {
     public void setState(String _state) {
         this._state = _state;
         notifyPropertyChanged(BR.state);
+        notifyPropertyChanged(BR.finding);
     }
 
     @Bindable

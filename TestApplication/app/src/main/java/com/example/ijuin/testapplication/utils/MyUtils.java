@@ -1,5 +1,6 @@
 package com.example.ijuin.testapplication.utils;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;
@@ -24,7 +25,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.views.ChatAdapter;
+import com.example.ijuin.testapplication.views.Dialog.DialogChooseInfoToSend;
 import com.github.foolish314159.mediaplayerview.MediaPlayerView;
+import com.itheima.library.PhotoView;
 
 import java.io.IOException;
 import java.net.URL;
@@ -78,8 +81,14 @@ public class MyUtils
         recyclerView.scrollToPosition(messages.size()-1);
     }
 
+    @BindingAdapter({"app:profile_image_url"})
+    public static void loadProfileImage(ImageView imageView,String url)
+    {
+        Glide.with(imageView.getContext()).load(url).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
+    }
+
     @BindingAdapter({"app:image_url"})
-    public static void loadImage(ImageView imageView,String url)
+    public static void loadImage(ImageView imageView, String url)
     {
         Glide.with(imageView.getContext()).load(url).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
     }
@@ -140,6 +149,11 @@ public class MyUtils
         });
     }
 
+    public static void acceptInfo(View v)
+    {
+        Activity currentActivity = ((Activity)v.getContext());
+        currentActivity.startActivity(new Intent(currentActivity, DialogChooseInfoToSend.class));
+    }
 
 
 

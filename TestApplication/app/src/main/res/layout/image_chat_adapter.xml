@@ -29,11 +29,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <ImageView
+                <com.itheima.library.PhotoView
                     android:id="@+id/imgView_message_left"
                     android:scaleType="center"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@drawable/ic_play_48dp"
                     app:image_url='@{chatMessage.message}'/>
             </LinearLayout>
@@ -61,11 +61,11 @@
                 android:layout_marginTop="@dimen/margin_average"
                 android:orientation="horizontal">
 
-                <ImageView
+                <com.itheima.library.PhotoView
                     android:id="@+id/imgView_message_right"
                     android:scaleType="fitCenter"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@drawable/ic_play_48dp"
                     app:image_url='@{chatMessage.message}'/>
             </LinearLayout>
