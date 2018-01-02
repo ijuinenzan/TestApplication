@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,6 +35,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import cn.jzvd.JZVideoPlayerStandard;
 
 
 /**
@@ -84,6 +88,7 @@ public class MyUtils
         try
         {
             player.setupPlayer(url);
+            player.setUrl(url);
         }
         catch(Exception e)
         {
@@ -92,26 +97,29 @@ public class MyUtils
     }
 
     @BindingAdapter({"app:video_url"})
-    public static void loadVideo(final VideoView videoView, String url)
+    public static void loadVideo(final JZVideoPlayerStandard jzVideoPlayerStandard, String url)
     {
-        videoView.setVideoURI(Uri.parse(url));
-        //videoView.requestFocus();
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
+        jzVideoPlayerStandard.setUp(url, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "Video");
+//        mVideoView = (UniversalVideoView) findViewById(R.id.videoView);
+//        videoView.setVideoURI(Uri.parse(url));
+//        //videoView.requestFocus();
+//        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            @Override
+//            public void onPrepared(MediaPlayer mediaPlayer) {
+//
+//                mediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+//                    @Override
+//                    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+//                        MediaController mediacontroller = new MediaController(videoView.getContext());
+//                        mediacontroller.setAnchorView(videoView);
+//                        videoView.setMediaController(mediacontroller);
+//                    }
+//                });
+//            }
+//        });
+//
+//        videoView.start();
 
-                mediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
-                    @Override
-                    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-                        MediaController mediacontroller = new MediaController(videoView.getContext());
-                        mediacontroller.setAnchorView(videoView);
-                        videoView.setMediaController(mediacontroller);
-                    }
-                });
-            }
-        });
-
-        videoView.start();
     }
 
     @BindingAdapter({"app:location"})

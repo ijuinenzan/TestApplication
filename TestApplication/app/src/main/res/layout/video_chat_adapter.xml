@@ -26,14 +26,12 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/left_node_bg">
+                android:orientation="vertical">
 
-                <VideoView
-                    android:id="@+id/videoView_message_left"
-                    android:layout_width="200dp"
+                <cn.jzvd.JZVideoPlayerStandard
+                    android:id="@+id/videoplayer_left"
+                    android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:background="@drawable/ic_play_48dp"
                     app:video_url='@{chatMessage.message}'/>
             </LinearLayout>
             <TextView
@@ -58,14 +56,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_average"
-                android:background="@drawable/right_node_bg"
                 android:orientation="horizontal">
 
-                <VideoView
-                    android:id="@+id/videoView_message_right"
-                    android:layout_width="200dp"
+                <cn.jzvd.JZVideoPlayerStandard
+                    android:id="@+id/videoplayer_right"
+                    android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:background="@drawable/ic_play_48dp"
                     app:video_url='@{chatMessage.message}'/>
             </LinearLayout>
 
