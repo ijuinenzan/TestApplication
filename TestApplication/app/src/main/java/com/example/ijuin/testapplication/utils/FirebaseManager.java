@@ -147,6 +147,29 @@ public class FirebaseManager implements ChildEventListener
 
     }
 
+    public void sendAudioMessage(Uri uri)
+    {
+        final String key = _messageReference.push().getKey();
+        StorageReference uploadRef = _chatRoomStorageReference.child(key);
+        UploadTask uploadTask = uploadRef.putFile(uri);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                MessageItemModel message = MessageFactory.createAudioMessage(downloadUrl.toString());
+                message.setMessageKey(key);
+                _messageReference.child(key).setValue(message);
+            }
+        });
+
+    }
+
     public void sendImageBitmap(Bitmap bitmap)
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

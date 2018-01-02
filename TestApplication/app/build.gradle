@@ -72,6 +72,10 @@ dependencies {
     // gg location
     implementation 'com.google.android.gms:play-services-places:11.8.0'
 
+    implementation 'com.github.foolish314159:mediaplayerview:1.0.4'
+    implementation 'cn.jzvd:jiaozivideoplayer:6.2.3'
+
+
 }
 
 
