@@ -99,27 +99,7 @@ public class MyUtils
     @BindingAdapter({"app:video_url"})
     public static void loadVideo(final JZVideoPlayerStandard jzVideoPlayerStandard, String url)
     {
-        jzVideoPlayerStandard.setUp(url, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "Video");
-//        mVideoView = (UniversalVideoView) findViewById(R.id.videoView);
-//        videoView.setVideoURI(Uri.parse(url));
-//        //videoView.requestFocus();
-//        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//            @Override
-//            public void onPrepared(MediaPlayer mediaPlayer) {
-//
-//                mediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
-//                    @Override
-//                    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-//                        MediaController mediacontroller = new MediaController(videoView.getContext());
-//                        mediacontroller.setAnchorView(videoView);
-//                        videoView.setMediaController(mediacontroller);
-//                    }
-//                });
-//            }
-//        });
-//
-//        videoView.start();
-
+        jzVideoPlayerStandard.setUp(url, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "");
     }
 
     @BindingAdapter({"app:location"})
