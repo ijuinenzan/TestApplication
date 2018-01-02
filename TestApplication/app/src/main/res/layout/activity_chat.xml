@@ -127,6 +127,69 @@
                 android:visibility="gone"
                 android:onClick="@{()->activity.onClickStartStopRecorder()}"/>
 
+            <ScrollView
+                android:id="@+id/scrollView_stickers"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_above="@+id/layout_input">
+                <GridLayout
+                    android:id="@+id/gridlayout_stickers"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:rowCount="3"
+                    android:columnCount="3"
+                    android:orientation="horizontal"
+                    android:visibility="invisible">
+
+                    <ImageView
+                        android:id="@+id/sticker1"
+                        android:layout_columnSpan="1"
+                        android:layout_rowSpan="1"
+                        android:src="@drawable/sticker1"/>
+                    <ImageView
+                        android:id="@+id/sticker2"
+                        android:layout_columnSpan="1"
+                        android:layout_rowSpan="1"
+                        android:src="@drawable/sticker2" />
+                    <ImageView
+                        android:id="@+id/sticker3"
+                        android:layout_columnSpan="1"
+                        android:layout_rowSpan="1"
+                        android:src="@drawable/sticker3" />
+                    <ImageView
+                        android:id="@+id/sticker4"
+                        android:layout_columnSpan="1"
+                        android:layout_rowSpan="1"
+                        android:src="@drawable/sticker4"/>
+                    <ImageView
+                        android:id="@+id/sticker5"
+                        android:layout_columnSpan="1"
+                        android:layout_rowSpan="1"
+                        android:src="@drawable/sticker5" />
+                    <ImageView
+                        android:id="@+id/sticker6"
+                        android:layout_columnSpan="1"
+                        android:layout_rowSpan="1"
+                        android:src="@drawable/sticker6"/>
+                    <ImageView
+                        android:id="@+id/sticker7"
+                        android:layout_columnSpan="1"
+                        android:layout_rowSpan="1"
+                        android:src="@drawable/sticker1" />
+                    <ImageView
+                        android:id="@+id/sticker8"
+                        android:layout_columnSpan="1"
+                        android:layout_rowSpan="1"
+                        android:src="@drawable/sticker2" />
+                    <ImageView
+                        android:id="@+id/sticker9"
+                        android:layout_columnSpan="1"
+                        android:layout_rowSpan="1"
+                        android:src="@drawable/sticker3" />
+                </GridLayout>
+
+            </ScrollView>
+
             <LinearLayout
                 android:id="@+id/layout_input"
                 android:layout_width="match_parent"
@@ -171,6 +234,13 @@
                     android:hint="@string/typehere"
                     android:text="@={viewModel.typingMessage}"
                     emojicon:emojiconSize="20sp" />
+
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="-6dp"
+                    android:background="@drawable/ic_mood_white_36dp"
+                    android:onClick="@{() -> activity.onClickStickerIcon()}"/>
 
                 <Button
                     android:layout_marginStart="6dp"

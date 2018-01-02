@@ -34,7 +34,6 @@
                     android:scaleType="center"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    android:background="@drawable/ic_play_48dp"
                     app:image_url='@{chatMessage.message}'/>
             </LinearLayout>
             <TextView
@@ -65,7 +64,6 @@
                     android:scaleType="fitCenter"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    android:background="@drawable/ic_play_48dp"
                     app:image_url='@{chatMessage.message}'/>
             </LinearLayout>
 

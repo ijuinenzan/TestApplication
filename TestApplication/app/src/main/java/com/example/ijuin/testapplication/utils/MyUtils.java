@@ -10,6 +10,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,14 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.models.MessageItemModel;
+import com.example.ijuin.testapplication.views.ChatActivity;
 import com.example.ijuin.testapplication.views.ChatAdapter;
 import com.github.foolish314159.mediaplayerview.MediaPlayerView;
 
@@ -193,8 +198,89 @@ public class MyUtils
             }
         });
     }
+    private static ArrayList<String> selectedFields = new ArrayList<>();
+    public static void acceptInfo(final View v)
+    {
+        MaterialDialog md = new MaterialDialog.Builder(v.getContext())
+                .iconRes(R.drawable.ic_launcher)
+                .limitIconToDefaultSize()
+                .title("title")
+                .items(R.array.list_info)
+                .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        selectedFields.clear();
+                        String temp = "";
+                        for(int i = 0; i <= which.length - 1; i++) {
+                            switch (which[i]) {
+                                case 0: {
+                                    temp = "Name:";
+                                    break;
+                                }
+                                case 1: {
+                                    temp = "Yearborn:";
+                                    break;
+                                }
+                                case 2: {
+                                    temp = "Gender:";
+                                    break;
+                                }
+                                case 3: {
+                                    temp = "Phone:";
+                                    break;
+                                }
+                                case 4: {
+                                    temp = "Address:";
+                                    break;
+                                }
+                                case 5: {
+                                    temp = "Company:";
+                                    break;
+                                }
+                                case 6: {
+                                    temp = "City:";
+                                    break;
+                                }
+                                case 7: {
+                                    temp = "Country:";
+                                    break;
+                                }
+                                case 8: {
+                                    temp = "Weight:";
+                                    break;
+                                }
+                                case 9: {
+                                    temp = "Height:";
+                                    break;
+                                }
+                                case 10: {
+                                    temp = "Link Facebook:";
+                                    break;
+                                }
+                                case 11: {
+                                    temp = "Link Twitter:";
+                                    break;
+                                }
+                                default:
+                                    break;
 
+                            }
+                            selectedFields.add(temp);
+                        }
 
+                        return true;
+                    }
+                })
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        ((ChatActivity)v.getContext()).getViewModel().sendInfoAccept(selectedFields);
+                    }
+                })
+                .alwaysCallMultiChoiceCallback()
+                .positiveText("choose")
+                .show();
+    }
 
 
 }

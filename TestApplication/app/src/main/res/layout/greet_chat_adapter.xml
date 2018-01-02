@@ -11,7 +11,7 @@
         <import type="android.view.View"/>
     </data>
 
-    
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

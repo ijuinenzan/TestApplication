@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.databinding.DataBindingUtil;
@@ -24,10 +26,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -97,16 +103,30 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     private LocationManager _locationManager;
     // ===========================================================================================
 
-    MaterialDialog md;
-    ArrayList<String> _selectedFields;
+    private ScrollView _scrollView;
+    private GridLayout _grid;
+    private ImageView _sticker1;
+    private ImageView _sticker2;
+    private ImageView _sticker3;
+    private ImageView _sticker4;
+    private ImageView _sticker5;
+    private ImageView _sticker6;
+    private ImageView _sticker7;
+    private ImageView _sticker8;
+    private ImageView _sticker9;
+    private boolean _isOpenSticker = false;
     //endregion
 
+    public ChatViewModel getViewModel()
+    {
+        return mViewModel;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        _selectedFields = new ArrayList<>();
+
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
         mViewModel = new ChatViewModel();
@@ -132,9 +152,19 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         _btnVideo = (Button) findViewById(R.id.btn_video);
         _btnStartStopRecorder = (Button) findViewById(R.id.btn_start_stop_recorder);
         _edtEmoji = (EditText) findViewById(R.id.editEmojicon);
+        _scrollView = (ScrollView) findViewById(R.id.scrollView_stickers);
+        _grid = (GridLayout) findViewById(R.id.gridlayout_stickers);
+        _sticker1 = (ImageView) findViewById(R.id.sticker1);
+        _sticker2 = (ImageView) findViewById(R.id.sticker2);
+        _sticker3 = (ImageView) findViewById(R.id.sticker3);
+        _sticker4 = (ImageView) findViewById(R.id.sticker4);
+        _sticker5 = (ImageView) findViewById(R.id.sticker5);
+        _sticker6 = (ImageView) findViewById(R.id.sticker6);
+        _sticker7 = (ImageView) findViewById(R.id.sticker7);
+        _sticker8 = (ImageView) findViewById(R.id.sticker8);
+        _sticker9 = (ImageView) findViewById(R.id.sticker9);
 
         _audioRecordFile = new File((new ContextWrapper(this)).getDir("audio", Context.MODE_PRIVATE).getAbsolutePath().concat("record.3gp"));
-
 
         _edtEmoji.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -154,6 +184,69 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
             }
         });
+
+        _sticker1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker1));
+            }
+        });
+
+        _sticker2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker2));
+            }
+        });
+
+        _sticker3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker3));
+            }
+        });
+
+        _sticker4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker4));
+            }
+        });
+
+        _sticker5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker5));
+            }
+        });
+
+        _sticker6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker6));
+            }
+        });
+
+        _sticker7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker7));
+            }
+        });
+
+        _sticker8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker8));
+            }
+        });
+
+        _sticker9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.sendImageBitmap(convertImageViewToBitmap(_sticker9));
+            }
+        });
     }
 
     @Override
@@ -165,8 +258,65 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         mViewModel.onDestroy();
     }
 
+    private Bitmap convertImageViewToBitmap(ImageView imgView)
+    {
+        _scrollView.setVisibility(View.GONE);
+        _grid.setVisibility(View.INVISIBLE);
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) imgView.getDrawable();
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        return bitmap;
+    }
 
+    private void fixSizeSticker()
+    {
+        int stickerWidth = _grid.getWidth() / 3;
 
+        GridLayout.LayoutParams g = (GridLayout.LayoutParams) _sticker1.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker1.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker2.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker2.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker3.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker3.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker4.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker4.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker5.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker5.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker6.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker6.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker7.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker7.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker8.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker8.setLayoutParams(g);
+
+        g = (GridLayout.LayoutParams) _sticker9.getLayoutParams();
+        g.width = stickerWidth;
+        g.height = stickerWidth;
+        _sticker9.setLayoutParams(g);
+
+    }
 
 
     public void startRecorder() throws Exception
@@ -219,7 +369,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         }
         return directory.getAbsolutePath();
     }
-
 
 
     public void onClickPlus()
@@ -461,87 +610,21 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         alertInfo();
     }
 
-    public void onClickAcceptInfo()
+    public void onClickStickerIcon()
     {
-        md = new MaterialDialog.Builder(this)
-                .iconRes(R.drawable.ic_launcher)
-                .limitIconToDefaultSize()
-                .title("title")
-                .items(R.array.list_info)
-                .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
-                        _selectedFields.clear();
-                        String temp = "";
-                        for(int i = 0; i <= which.length - 1; i++) {
-                            switch (which[i]) {
-                                case 0: {
-                                    temp = "Name:";
-                                    break;
-                                }
-                                case 1: {
-                                    temp = "Yearborn:";
-                                    break;
-                                }
-                                case 2: {
-                                    temp = "Gender:";
-                                    break;
-                                }
-                                case 3: {
-                                    temp = "Phone:";
-                                    break;
-                                }
-                                case 4: {
-                                    temp = "Address:";
-                                    break;
-                                }
-                                case 5: {
-                                    temp = "Company:";
-                                    break;
-                                }
-                                case 6: {
-                                    temp = "City:";
-                                    break;
-                                }
-                                case 7: {
-                                    temp = "Country:";
-                                    break;
-                                }
-                                case 8: {
-                                    temp = "Weight:";
-                                    break;
-                                }
-                                case 9: {
-                                    temp = "Height:";
-                                    break;
-                                }
-                                case 10: {
-                                    temp = "Link Facebook:";
-                                    break;
-                                }
-                                case 11: {
-                                    temp = "Link Twitter:";
-                                    break;
-                                }
-                                default:
-                                    break;
-
-                            }
-                            _selectedFields.add(temp);
-                        }
-
-                        return true;
-                    }
-                })
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        mViewModel.sendInfoAccept(_selectedFields);
-                    }
-                })
-                .alwaysCallMultiChoiceCallback()
-                .positiveText("choose")
-                .show();
+        if(_isOpenSticker)
+        {
+            _scrollView.setVisibility(View.GONE);
+            _grid.setVisibility(View.INVISIBLE);
+            _isOpenSticker = false;
+        }
+        else
+        {
+            _scrollView.setVisibility(View.VISIBLE);
+            _grid.setVisibility(View.VISIBLE);
+            fixSizeSticker();
+            _isOpenSticker = true;
+        }
     }
 
     @Override
