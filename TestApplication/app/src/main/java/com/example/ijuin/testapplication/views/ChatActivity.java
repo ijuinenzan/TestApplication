@@ -144,8 +144,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         _animClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_rotate_clockwise);
         _animAntiClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_rotate_anticlockwise);
 
-
-<<<<<<< HEAD
         _btnRecorder = (Button) findViewById(R.id.btn_recorder);
         _btnVideo = (Button) findViewById(R.id.btn_video);
         _btnStartStopRecorder = (Button) findViewById(R.id.btn_start_stop_recorder);
@@ -161,12 +159,10 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         _sticker7 = (ImageView) findViewById(R.id.sticker7);
         _sticker8 = (ImageView) findViewById(R.id.sticker8);
         _sticker9 = (ImageView) findViewById(R.id.sticker9);
-=======
         _btnRecorder = findViewById(R.id.btn_recorder);
         _btnVideo = findViewById(R.id.btn_video);
         _btnStartStopRecorder = findViewById(R.id.btn_start_stop_recorder);
         _edtEmoji = findViewById(R.id.editEmojicon);
->>>>>>> 50979883765f2dbac916a60e2b1a0b62d9099ad7
 
         _audioRecordFile = new File((new ContextWrapper(this)).getDir("audio", Context.MODE_PRIVATE).getAbsolutePath().concat("record.3gp"));
 
