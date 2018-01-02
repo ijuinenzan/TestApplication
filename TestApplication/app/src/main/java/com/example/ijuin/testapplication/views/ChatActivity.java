@@ -7,6 +7,7 @@ import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
@@ -16,26 +17,26 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.databinding.ActivityChatBinding;
 import com.example.ijuin.testapplication.interfaces.Observer;
 import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.viewmodels.ChatViewModel;
-import com.example.ijuin.testapplication.views.Dialog.DialogChooseInfoToSend;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
@@ -43,8 +44,9 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.security.auth.callback.CallbackHandler;
+
 import static com.example.ijuin.testapplication.utils.MyUtils.EXIT_ROOM;
-import static com.example.ijuin.testapplication.utils.MyUtils.UPDATE_MESSAGES;
 
 
 /**
@@ -95,13 +97,16 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     private LocationManager _locationManager;
     // ===========================================================================================
 
-
+    MaterialDialog md;
+    ArrayList<String> _selectedFields;
     //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        _selectedFields = new ArrayList<>();
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
         mViewModel = new ChatViewModel();
@@ -459,6 +464,88 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         alertInfo();
     }
 
+    public void onClickAcceptInfo()
+    {
+        md = new MaterialDialog.Builder(this)
+                .iconRes(R.drawable.ic_launcher)
+                .limitIconToDefaultSize()
+                .title("title")
+                .items(R.array.list_info)
+                .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        _selectedFields.clear();
+                        String temp = "";
+                        for(int i = 0; i <= which.length - 1; i++) {
+                            switch (which[i]) {
+                                case 0: {
+                                    temp = "Name:";
+                                    break;
+                                }
+                                case 1: {
+                                    temp = "Yearborn:";
+                                    break;
+                                }
+                                case 2: {
+                                    temp = "Gender:";
+                                    break;
+                                }
+                                case 3: {
+                                    temp = "Phone:";
+                                    break;
+                                }
+                                case 4: {
+                                    temp = "Address:";
+                                    break;
+                                }
+                                case 5: {
+                                    temp = "Company:";
+                                    break;
+                                }
+                                case 6: {
+                                    temp = "City:";
+                                    break;
+                                }
+                                case 7: {
+                                    temp = "Country:";
+                                    break;
+                                }
+                                case 8: {
+                                    temp = "Weight:";
+                                    break;
+                                }
+                                case 9: {
+                                    temp = "Height:";
+                                    break;
+                                }
+                                case 10: {
+                                    temp = "Link Facebook:";
+                                    break;
+                                }
+                                case 11: {
+                                    temp = "Link Twitter:";
+                                    break;
+                                }
+                                default:
+                                    break;
+
+                            }
+                            _selectedFields.add(temp);
+                        }
+
+                        return true;
+                    }
+                })
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        mViewModel.sendInfoAccept(_selectedFields);
+                    }
+                })
+                .alwaysCallMultiChoiceCallback()
+                .positiveText("choose")
+                .show();
+    }
     @Override
     public void onObserve(int event, ArrayList<MessageItemModel> eventMessage) {
 

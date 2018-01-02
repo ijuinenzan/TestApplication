@@ -1,6 +1,7 @@
 package com.example.ijuin.testapplication.utils;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;
@@ -9,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +27,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.views.ChatAdapter;
-import com.example.ijuin.testapplication.views.Dialog.DialogChooseInfoToSend;
 import com.github.foolish314159.mediaplayerview.MediaPlayerView;
 import com.itheima.library.PhotoView;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.security.spec.ECField;
@@ -50,6 +52,7 @@ public class MyUtils
 {
     public static String MESSAGE_AUTHENTICATION_FAILED = "Firebase authentication failed, please check your internet connection";
 
+    public static String GREET_TYPE = "GREET";
     public static String TEXT_TYPE = "TEXT";
     public static String VIDEO_TYPE = "VIDEO";
     public static String AUDIO_TYPE = "AUDIO";
@@ -88,7 +91,7 @@ public class MyUtils
     }
 
     @BindingAdapter({"app:image_url"})
-    public static void loadImage(ImageView imageView, String url)
+    public static void loadImage(ImageView imageView,final String url)
     {
         Glide.with(imageView.getContext()).load(url).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(imageView);
     }
@@ -148,15 +151,6 @@ public class MyUtils
             }
         });
     }
-
-    public static void acceptInfo(View v)
-    {
-        Activity currentActivity = ((Activity)v.getContext());
-        currentActivity.startActivity(new Intent(currentActivity, DialogChooseInfoToSend.class));
-    }
-
-
-
 }
 
 class GetImageAsyncTask extends AsyncTask<String, Void, Bitmap> {

@@ -78,7 +78,9 @@ dependencies {
     implementation 'com.github.open-android:PhotoImageView:0.1.0'
 
 
-
+    // for dialog
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
 }
 
 

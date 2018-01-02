@@ -93,10 +93,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
         {
             return R.layout.info_request_chat_adapter;
         }
-//        else if(messageType.equals(MyUtils.INFO_ACCEPT_TYPE))
-//        {
-//            return R.layout.video_chat_adapter;
-//        }
+        else if(messageType.equals(MyUtils.INFO_ACCEPT_TYPE))
+        {
+            return R.layout.info_accept_chat_adapter;
+        }
+        else if(messageType.equals(MyUtils.GREET_TYPE))
+        {
+            return R.layout.greet_chat_adapter;
+        }
         return -1;
     }
 
