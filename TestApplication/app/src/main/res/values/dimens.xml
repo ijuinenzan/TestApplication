@@ -9,6 +9,7 @@
     <dimen name="large_font_size">16sp</dimen>
     <dimen name="standard_radius">5dp</dimen>
 
+
     <dimen name="small_image">10dp</dimen>
 
     <dimen name="standard_small">45dp</dimen>
@@ -37,6 +38,8 @@
     <dimen name="marginStart_col1">2%</dimen>
     <dimen name="marginStart_col2">26%</dimen>
     <dimen name="marginStart_col3">89%</dimen>
+    <dimen name="dialog_textview">10%</dimen>
+    <dimen name="dialog_checkbox">70%</dimen>
     <dimen name="widthContent">230dp</dimen>
 
     <dimen name="login_button_radius">30dp</dimen>
