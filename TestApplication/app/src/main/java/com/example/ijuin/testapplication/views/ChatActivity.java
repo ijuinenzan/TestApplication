@@ -11,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -21,16 +20,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.Layout;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -41,8 +36,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.databinding.ActivityChatBinding;
 import com.example.ijuin.testapplication.interfaces.Observer;
@@ -53,15 +46,10 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 
 import java.io.File;
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.stream.Stream;
-
-import io.reactivex.annotations.Nullable;
 
 import static com.example.ijuin.testapplication.utils.MyUtils.EXIT_ROOM;
 import static com.example.ijuin.testapplication.utils.MyUtils.SETTINGS;
-import static com.example.ijuin.testapplication.utils.MyUtils.UPDATE_MESSAGES;
 
 
 /**

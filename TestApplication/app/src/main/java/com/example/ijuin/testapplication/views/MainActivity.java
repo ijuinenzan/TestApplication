@@ -1,25 +1,16 @@
 package com.example.ijuin.testapplication.views;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.databinding.DataBindingUtil;
 import android.media.MediaPlayer;
-import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.ColorInt;
-import android.support.design.widget.TabLayout;
-import android.support.percent.PercentRelativeLayout;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -52,10 +43,6 @@ import com.example.ijuin.testapplication.viewmodels.SearchViewModel;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import static com.example.ijuin.testapplication.utils.MyUtils.REQUEST_CAMERA;
@@ -72,11 +59,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
 
 //region DECLARE VARIABLE
     private PagerAdapter _pagerAdapter;
-    private ViewPager _viewPager;
-    private TabLayout tabLayout;
-    private PagerSlidingTabStrip _customTab;
 
-    private ActivityMainBinding _binding;
     private MainViewModel _viewModel;
 
     private MediaPlayer _mediaPlayer;
@@ -98,10 +81,10 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         int color = settings.getInt("bg_color", android.R.color.white);
 
 
-        _binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         _viewModel = new MainViewModel();
-        _binding.setViewModel(_viewModel);
-        _binding.setActivity(this);
+        binding.setViewModel(_viewModel);
+        binding.setActivity(this);
         _viewModel.addObserver(this);
         _mediaPlayer = MediaPlayer.create(this,R.raw.anh_nang_cua_anh);
         _mediaPlayer.start();
@@ -134,20 +117,20 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
     {
         _pagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
-        _viewPager = findViewById(R.id.viewPagerContainer);
-        _viewPager.setAdapter(_pagerAdapter) ;
+        ViewPager viewPager = findViewById(R.id.viewPagerContainer);
+        viewPager.setAdapter(_pagerAdapter) ;
 
         ViewPager.PageTransformer transformer = new ViewPager.PageTransformer() {
             @Override
-            public void transformPage(View page, float position) {
+            public void transformPage(@NonNull View page, float position) {
                 page.findViewById(R.id.profileFragment);
             }
         };
 
-        _viewPager.setPageTransformer(true,transformer);
+        viewPager.setPageTransformer(true,transformer);
 
-        _customTab = findViewById(R.id.tabs);
-        _customTab.setViewPager(_viewPager);
+        PagerSlidingTabStrip customTab = findViewById(R.id.tabs);
+        customTab.setViewPager(viewPager);
 
     }
 
@@ -175,6 +158,13 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                 Uri uri = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    for(int i = 0; i < _pagerAdapter.getCount(); ++i)
+                    {
+                        if(_pagerAdapter.getItem(i) instanceof ProfileFragment)
+                        {
+                            ((ProfileFragment)_pagerAdapter.getItem(i)).mViewModel.uploadProfileImage(bitmap);
+                        }
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -218,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         private SearchViewModel mViewModel;
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
            SearchFragmentBinding binding = DataBindingUtil.inflate(inflater,
                     R.layout.search_fragment, container, false);
@@ -253,18 +243,13 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         public ProfileFragment() {        }
 
         private ProfileViewModel mViewModel;
-        private Button _btnChangeProfileImg;
-        private ImageView _imgProfile;
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             ProfileFragmentBinding binding = DataBindingUtil.inflate(inflater,
                     R.layout.profile_fragment, container, false);
             View view = binding.getRoot();
-
-            _imgProfile = view.findViewById(R.id.img_UserIcon);
-            _btnChangeProfileImg = view.findViewById(R.id.btn_ChangeUserImg);
 
             mViewModel= new ProfileViewModel();
             mViewModel.addObserver(this);
@@ -273,65 +258,6 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
 
 
             return view;
-        }
-
-        // ============================================================================================
-        //  Create a directory with name is "imageDir" then get a file with name "khangdeptrai" in "imageDir" directory and save a bitmap to this link
-        //  PARAMS: a bitmap
-        //  RETURN: a path link to "imageDir"
-        // ============================================================================================
-        private String saveImage(Bitmap bitmapImage)
-        {
-            ContextWrapper cw = new ContextWrapper(getContext()); // or getApplicationContext()
-            // path to /data/data/yourapp/app_data/imageDir
-            File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-            // Create imageDir
-            File mypath=new File(directory,"khangdeptrai.jpg");
-
-            FileOutputStream fos = null;
-            try
-            {
-                fos = new FileOutputStream(mypath);
-                // Use the compress method on the BitMap object to write image to the OutputStream
-                bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-            finally
-            {
-                try
-                {
-                    fos.close();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            return directory.getAbsolutePath();
-        }
-
-
-        // ============================================================================================
-        //  To load an image from specified path
-        //  PARAMS: a (String) path
-        //  RETURN: non
-        // ============================================================================================
-        private void loadImage(String path)
-        {
-            try
-            {
-                File f=new File(path, "khangdeptrai.jpg");
-                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-                _imgProfile.setImageBitmap(b);
-            }
-            catch (FileNotFoundException e)
-            {
-                e.printStackTrace();
-            }
-
         }
 
         @Override
@@ -369,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         public AboutUsFragment() {        }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.about_us_fragment, container, false);
 
@@ -388,48 +314,33 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
     public static class SettingFragment extends Fragment {
 
         public SettingFragment() {        }
-        TextView _txt;
-        Button _sound;
         Button _btnColor;
         Button _btnImage;
         ImageView _imgView;
-        private int selectedColor;
-        View _main;
+        ColorPicker _colorPicker;
 
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState)
         {
-            SharedPreferences settings = getActivity().getSharedPreferences(SETTINGS, 0);
-            int color = settings.getInt("bg_color", android.R.color.white);
-
             final View view = inflater.inflate(R.layout.setting_fragment, container, false);
 
-            _txt = view.findViewById(R.id.content);
-            _sound = view.findViewById(R.id.btn_change_sound);
             _btnColor = view.findViewById(R.id.btn_bg_color);
             _btnImage = view.findViewById(R.id.btn_change_bg_image);
             _imgView = view.findViewById(R.id.bg_img_selected) ;
-            _main = view.findViewById(R.id.mainPercentRelativeLayout);
-			
-            _sound.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view)
-                {
-                    _txt.setText(readFromFile_string(writeToFile("Khang Dep Trai","settings", "users"),"users"));
-                }
-            });
+
+            _colorPicker = new ColorPicker(getActivity(), 255, 255, 255, 255);
 
             _btnColor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view)
                 {
-                    final ColorPicker cp = new ColorPicker(getActivity(), 255, 255, 0, 0);
-                    cp.show();
-                    cp.setCallback(new ColorPickerCallback() {
+                    _colorPicker.show();
+                    _colorPicker.setCallback(new ColorPickerCallback() {
                         public void onColorChosen(@ColorInt int color) {
                             ((MainActivity)getActivity()).setBackground(color);
+                            _colorPicker.hide();
                         }
                     });
                 }
@@ -445,119 +356,8 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                 }
             });
 
-
-
             return view;
         }
-
-
-//        @Override
-//        public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//            super.onActivityResult(requestCode, resultCode, data);
-//            if (resultCode == Activity.RESULT_OK)
-//            {
-//                if (requestCode == SELECT_FILE)
-//                {
-//                    Uri selectedImageUri = data.getData();
-//                    _imgView.setImageURI(selectedImageUri);
-//                }
-//            }
-//        }
-
-        private String writeToFile(String content, String fileDirName, String fileName) {
-            ContextWrapper cw = new ContextWrapper(getContext());
-
-            File directory = cw.getDir(fileDirName, Context.MODE_PRIVATE);
-
-            File mypath = new File(directory,fileName + ".txt");
-
-            FileOutputStream fos = null;
-            try
-            {
-                fos = new FileOutputStream(mypath);
-                fos.write(content.getBytes());
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-            finally
-            {
-                try
-                {
-                    fos.close();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            return directory.getAbsolutePath();
-        }
-
-
-        private String readFromFile_string(String filePath, String fileName) {
-
-            String content = "";
-            FileInputStream fis = null;
-            try
-            {
-                File f = new File(filePath, fileName+".txt");
-                fis = new FileInputStream(f);
-                int size = fis.available();
-                byte[] buffer = new byte[size];
-                fis.read(buffer);
-                content = new String(buffer);
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-            finally
-            {
-                try
-                {
-                    fis.close();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            return content;
-        }
-
-        private int readFromFile_int(String filePath, String fileName) {
-
-            String content = "";
-            FileInputStream fis = null;
-            try
-            {
-                File f = new File(filePath, fileName+".txt");
-                fis = new FileInputStream(f);
-                int size = fis.available();
-                byte[] buffer = new byte[size];
-                fis.read(buffer);
-                content = new String(buffer);
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-            finally
-            {
-                try
-                {
-                    fis.close();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            return Integer.parseInt(content);
-        }
-
     }
 
 
@@ -626,9 +426,6 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
 
         @Override
         public int getPageIconResId(int position) {
-            // List<Tab> tabs;
-            // return tabs.get(position).icon;
-
             switch (position) {
                 case 0:
                     return R.drawable.ic_profile;
