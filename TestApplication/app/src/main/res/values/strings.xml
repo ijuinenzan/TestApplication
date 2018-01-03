@@ -6,7 +6,7 @@
     <string name="com.twitter.sdk.android.CONSUMER_KEY">KjADn4MrcfK0XYbKcVKoE9FxF</string>
     <string name="com.twitter.sdk.android.CONSUMER_SECRET">3zl23fWPHAY3XJxcZsyf9SdHjiKGSP9pvHqI2GPHeJOppiQ19T</string>
 
-    <string name="app_name">Chat Application</string>
+    <string name="app_name">iMate</string>
     <string name="chats_heading">Messages</string>
 
     <string name="login">Login</string>
