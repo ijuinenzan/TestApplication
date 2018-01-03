@@ -352,7 +352,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                 public void onClick(View view) {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     intent.setType("image/*");
-                    startActivityForResult(intent.createChooser(intent, "Select File"), SELECT_FILE);
+                    getActivity().startActivityForResult(intent.createChooser(intent, "Select File"), SELECT_FILE);
                 }
             });
 
