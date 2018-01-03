@@ -9,7 +9,7 @@ android {
             storePassword 'thaoAnh1510'
         }
     }
-    compileSdkVersion 26
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.ijuin.testapplication"
         minSdkVersion 23
@@ -35,7 +35,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:27.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.google.firebase:firebase-database:11.8.0'
     implementation 'com.google.firebase:firebase-auth:11.8.0'
@@ -43,8 +43,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.0.2'
+    implementation 'com.android.support:recyclerview-v7:27.0.2'
     implementation 'com.twitter.sdk.android:twitter:3.1.1'
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
@@ -53,13 +53,13 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.3.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
     implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
-    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:design:27.0.2'
     // Custom Seekbar
     implementation 'com.crystal:crystalrangeseekbar:1.0.0'
     // Login page
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
     // per
-    implementation 'com.android.support:percent:26.1.0'
+    implementation 'com.android.support:percent:27.0.2'
     // for login page
     implementation 'com.daasuu:EasingInterpolator:1.0.0'
     // for progress bar in Search
@@ -78,6 +78,8 @@ dependencies {
     implementation 'com.github.open-android:PhotoImageView:0.1.0'
     implementation 'joda-time:joda-time:2.9.9'
     implementation 'com.pes.materialcolorpicker:library:1.2.0'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.10'
+
 
 
 

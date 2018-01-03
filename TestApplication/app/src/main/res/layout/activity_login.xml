@@ -23,7 +23,7 @@
         <com.flaviofaria.kenburnsview.KenBurnsView
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:src="@drawable/hihi"
+            android:src="@drawable/bg_image"
             android:id="@+id/fragmentloginKenBurnsView1"/>
 
         <View
@@ -33,13 +33,15 @@
             android:background="#000000"
             android:alpha="0"/>
 
-        <ImageView
+        <pl.droidsonroids.gif.GifImageView
             app:layout_heightPercent="35%"
             app:layout_widthPercent="35%"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/paper_plane"
             android:id="@+id/fragmentloginLogo"
-            android:alpha="100"/>
+            android:alpha="100"
+            android:src="@drawable/dating_app_logo"
+            />
+
 
         <RelativeLayout
             android:layout_height="wrap_content"
