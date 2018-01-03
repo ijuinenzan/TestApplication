@@ -30,17 +30,16 @@ import java.util.ArrayList;
 public class FirebaseManager implements ChildEventListener
 {
     private volatile static FirebaseManager sFirebaseManager;
-    private FirebaseDatabase _database;
-    private FirebaseStorage _storage;
-    private StorageReference _profileImageReference;
+    private final FirebaseStorage _storage;
+    private final StorageReference _profileImageReference;
     private StorageReference _chatRoomStorageReference;
-    private DatabaseReference _userReference;
+    private final DatabaseReference _userReference;
     private DatabaseReference _messageReference;
-    private DatabaseReference _chatRoomsReference;
+    private final DatabaseReference _chatRoomsReference;
     private DatabaseReference _currentChatRoomReference;
-    private ArrayList<FirebaseCallbacks> _callbacks;
+    private final ArrayList<FirebaseCallbacks> _callbacks;
 
-    private FirebaseAuth _auth;
+    private final FirebaseAuth _auth;
 
     private UserModel _user;
 
@@ -59,9 +58,9 @@ public class FirebaseManager implements ChildEventListener
     }
 
     private FirebaseManager(){
-        _database = FirebaseDatabase.getInstance();
-        _userReference = _database.getReference().child("users");
-        _chatRoomsReference = _database.getReference().child("chatrooms");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        _userReference = database.getReference().child("users");
+        _chatRoomsReference = database.getReference().child("chatrooms");
         _auth = FirebaseAuth.getInstance();
         _callbacks = new ArrayList<>();
         _chatRoom = "";
@@ -281,7 +280,7 @@ public class FirebaseManager implements ChildEventListener
         }
         else if(root.equals("chatrooms") && dataSnapshot.getKey().equals(_chatRoom))
         {
-            if((boolean)dataSnapshot.child("isAvailable").getValue() == false)
+            if(!((boolean) dataSnapshot.child("isAvailable").getValue()))
             {
                 for(FirebaseCallbacks callback: _callbacks)
                 {
@@ -353,9 +352,4 @@ public class FirebaseManager implements ChildEventListener
         _messageReference = _currentChatRoomReference.child("messages");
         _chatRoomStorageReference = _storage.getReference().child(_chatRoom);
     }
-    public void destroy() {
-        sFirebaseManager=null;
-    }
-
-
 }

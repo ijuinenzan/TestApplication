@@ -2,6 +2,7 @@ package com.example.ijuin.testapplication.views;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
@@ -17,11 +18,13 @@ import android.location.LocationManager;
 import android.databinding.DataBindingUtil;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,21 +61,22 @@ import static com.example.ijuin.testapplication.utils.MyUtils.SETTINGS;
 
 public class ChatActivity extends AppCompatActivity implements Observer<ArrayList<MessageItemModel>>
 {
-    //region DECLARE VARIABLE
-    private ActivityChatBinding mBinding;
     private ChatViewModel mViewModel;
     private final int PLACE_PICKER_REQUEST = 2000;
     private static final int REQUEST_LOCATION = 1997;
     private final int SELECT_FILE = 1234;
     private final int REQUEST_CAMERA = 2468;
     private final int REQUEST_VIDEO = 1357;
+    private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 9324;
 
-
-    private LinearLayout _layoutChat;
 
     // ====== Floating Action Button =============================================================
-    FloatingActionButton _fabPlus, _fabLocation, _fabCamera, _fabGallery, _fabInfo;
-    boolean _isOpen = false;
+    private FloatingActionButton _fabPlus;
+    private FloatingActionButton _fabLocation;
+    private FloatingActionButton _fabCamera;
+    private FloatingActionButton _fabGallery;
+    private FloatingActionButton _fabInfo;
+    private boolean _isOpen = false;
     // ===========================================================================================
 
     // ====== Animation ==========================================================================
@@ -98,8 +102,6 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     private File _audioRecordFile;
     // ===========================================================================================
 
-    // ====== Location ===========================================================================
-    private LocationManager _locationManager;
     // ===========================================================================================
 
     private ScrollView _scrollView;
@@ -127,6 +129,77 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         }
     }
 
+    public void showDialog(final String msg, final Context context,
+                           final String permission) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        alertBuilder.setCancelable(true);
+        alertBuilder.setTitle("Permission necessary");
+        alertBuilder.setMessage(msg + " permission is necessary");
+        alertBuilder.setPositiveButton(android.R.string.yes,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        ActivityCompat.requestPermissions((Activity) context,
+                                new String[] { permission },
+                                MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    }
+                });
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    LinearLayout layoutChat = findViewById(R.id.layout_chat);
+                    SharedPreferences settings = getSharedPreferences(SETTINGS, 0);
+                    String image_uri =settings.getString("image_uri","");
+                    Uri imageUri = Uri.parse(image_uri);
+                    File f = new File(getRealPathFromURI(imageUri));
+                    Drawable d = Drawable.createFromPath(f.getAbsolutePath());
+                    layoutChat.setBackground(d);
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions,
+                        grantResults);
+        }
+    }
+
+
+
+    public boolean checkPermissionREAD_EXTERNAL_STORAGE(
+            final Context context) {
+        int currentAPIVersion = Build.VERSION.SDK_INT;
+        if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(context,
+                    Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        (Activity) context,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    showDialog("External storage", context,
+                            Manifest.permission.READ_EXTERNAL_STORAGE);
+
+                } else {
+                    ActivityCompat
+                            .requestPermissions(
+                                    (Activity) context,
+                                    new String[] { Manifest.permission.READ_EXTERNAL_STORAGE },
+                                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                }
+                return false;
+            } else {
+                return true;
+            }
+
+        } else {
+            return true;
+        }
+    }
+
+
     public ChatViewModel getViewModel()
     {
         return mViewModel;
@@ -137,20 +210,25 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         setContentView(R.layout.activity_chat);
 
         //set background
-        _layoutChat = (LinearLayout) findViewById(R.id.layout_chat);
-        SharedPreferences settings = getSharedPreferences(SETTINGS, 0);
-        String image_uri =settings.getString("image_uri","");
-        Uri imageUri = Uri.parse(image_uri);
-        File f = new File(getRealPathFromURI(imageUri));
-        Drawable d = Drawable.createFromPath(f.getAbsolutePath());
-        _layoutChat.setBackground(d);
 
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
+        if (checkPermissionREAD_EXTERNAL_STORAGE(this)) {
+            LinearLayout layoutChat = findViewById(R.id.layout_chat);
+            SharedPreferences settings = getSharedPreferences(SETTINGS, 0);
+            String image_uri =settings.getString("image_uri","");
+            Uri imageUri = Uri.parse(image_uri);
+            File f = new File(getRealPathFromURI(imageUri));
+            Drawable d = Drawable.createFromPath(f.getAbsolutePath());
+            layoutChat.setBackground(d);
+        }
+
+
+
+        ActivityChatBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
         mViewModel = new ChatViewModel();
-        mBinding.setViewModel(mViewModel);
-        mBinding.setActivity(this);
-        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.recyclerView.setAdapter(new ChatAdapter(this,  mViewModel.getMessages()));
+        binding.setViewModel(mViewModel);
+        binding.setActivity(this);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerView.setAdapter(new ChatAdapter(mViewModel.getMessages()));
         mViewModel.addObserver(this);
 
         _fabPlus = findViewById(R.id.fab_plus);
@@ -164,22 +242,22 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         _animClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_rotate_clockwise);
         _animAntiClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_rotate_anticlockwise);
 
-        _btnRecorder = (Button) findViewById(R.id.btn_recorder);
-        _btnVideo = (Button) findViewById(R.id.btn_video);
-        _btnStartStopRecorder = (Button) findViewById(R.id.btn_start_stop_recorder);
-        _edtEmoji = (EditText) findViewById(R.id.editEmojicon);
-        _scrollView = (ScrollView) findViewById(R.id.scrollView_stickers);
+        _btnRecorder = findViewById(R.id.btn_recorder);
+        _btnVideo = findViewById(R.id.btn_video);
+        _btnStartStopRecorder = findViewById(R.id.btn_start_stop_recorder);
+        _edtEmoji = findViewById(R.id.editEmojicon);
+        _scrollView = findViewById(R.id.scrollView_stickers);
         _scrollView.setVisibility(View.GONE);
-        _grid = (GridLayout) findViewById(R.id.gridlayout_stickers);
-        _sticker1 = (ImageView) findViewById(R.id.sticker1);
-        _sticker2 = (ImageView) findViewById(R.id.sticker2);
-        _sticker3 = (ImageView) findViewById(R.id.sticker3);
-        _sticker4 = (ImageView) findViewById(R.id.sticker4);
-        _sticker5 = (ImageView) findViewById(R.id.sticker5);
-        _sticker6 = (ImageView) findViewById(R.id.sticker6);
-        _sticker7 = (ImageView) findViewById(R.id.sticker7);
-        _sticker8 = (ImageView) findViewById(R.id.sticker8);
-        _sticker9 = (ImageView) findViewById(R.id.sticker9);
+        _grid = findViewById(R.id.gridlayout_stickers);
+        _sticker1 = findViewById(R.id.sticker1);
+        _sticker2 = findViewById(R.id.sticker2);
+        _sticker3 = findViewById(R.id.sticker3);
+        _sticker4 = findViewById(R.id.sticker4);
+        _sticker5 = findViewById(R.id.sticker5);
+        _sticker6 = findViewById(R.id.sticker6);
+        _sticker7 = findViewById(R.id.sticker7);
+        _sticker8 = findViewById(R.id.sticker8);
+        _sticker9 = findViewById(R.id.sticker9);
         _btnRecorder = findViewById(R.id.btn_recorder);
         _btnVideo = findViewById(R.id.btn_video);
         _btnStartStopRecorder = findViewById(R.id.btn_start_stop_recorder);
@@ -287,8 +365,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         _scrollView.setVisibility(View.GONE);
         _grid.setVisibility(View.INVISIBLE);
         BitmapDrawable bitmapDrawable = (BitmapDrawable) imgView.getDrawable();
-        Bitmap bitmap = bitmapDrawable.getBitmap();
-        return bitmap;
+        return bitmapDrawable.getBitmap();
     }
 
     private void fixSizeSticker()
@@ -343,7 +420,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     }
 
 
-    public void startRecorder() throws Exception
+    private void startRecorder() throws Exception
     {
         if(_recorder==null)
         {
@@ -360,7 +437,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         // DataSourceConfigured
         _recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
-        String filePath = createFile("audio");
+        createFile("audio");
 
         _recorder.setOutputFile(_audioRecordFile.getPath());
 
@@ -371,7 +448,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
     }
 
-    public void stopRecorder()
+    private void stopRecorder()
     {
         _recorder.stop();
         _recorder.reset();   // You can reuse the object by going back to setAudioSource() step
@@ -553,7 +630,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
         alert.show();
     }
 
-    public void alertInfo()
+    private void alertInfo()
     {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Do you want to know your partner's infomation?")
@@ -576,8 +653,8 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
 
     public void sendLocation()
     {
-        _locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
-        if(!_locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
         {
             // failed
             alertTurnOnLocation();
@@ -594,8 +671,8 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
                 ActivityCompat.requestPermissions(ChatActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
             }
             else {
-                Location location = _locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                Location location1 = _locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if (location != null)
                 {
                     mViewModel.sendLocation(location.getLatitude(),location.getLongitude());
@@ -614,7 +691,7 @@ public class ChatActivity extends AppCompatActivity implements Observer<ArrayLis
     {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
-        ChatActivity.this.startActivityForResult(intent.createChooser(intent, "Select File"), SELECT_FILE);
+        ChatActivity.this.startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
     }
 
     public void getImageFromCamera()

@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
     private MediaPlayer _mediaPlayer;
 //endregion
 
-    public MainViewModel getViewModel()
+    private MainViewModel getViewModel()
     {
         return _viewModel;
     }
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         _viewModel.onDestroy();
     }
 
-    public void setBackground(int color)
+    private void setBackground(int color)
     {
         SharedPreferences settings = getSharedPreferences(SETTINGS, 0);
         SharedPreferences.Editor editor = settings.edit();
@@ -108,12 +107,12 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         _viewModel.setBackgroundColor(color);
     }
 
-    public void back()
+    private void back()
     {
         super.onBackPressed();
     }
 
-    public void addControls()
+    private void addControls()
     {
         _pagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
@@ -270,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
             {
                 Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setType("image/*");
-                getActivity().startActivityForResult(intent.createChooser(intent, "Select File From Gallery"), SELECT_FILE_FROM_GALLERY);
+                getActivity().startActivityForResult(Intent.createChooser(intent, "Select File From Gallery"), SELECT_FILE_FROM_GALLERY);
             }
             else if (event == MyUtils.TAKE_PICTURE)
             {
@@ -316,7 +315,6 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
         public SettingFragment() {        }
         Button _btnColor;
         Button _btnImage;
-        ImageView _imgView;
         ColorPicker _colorPicker;
 
 
@@ -328,7 +326,6 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
 
             _btnColor = view.findViewById(R.id.btn_bg_color);
             _btnImage = view.findViewById(R.id.btn_change_bg_image);
-            _imgView = view.findViewById(R.id.bg_img_selected) ;
 
             _colorPicker = new ColorPicker(getActivity(), 255, 255, 255, 255);
 
@@ -352,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
                 public void onClick(View view) {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     intent.setType("image/*");
-                    getActivity().startActivityForResult(intent.createChooser(intent, "Select File"), SELECT_FILE);
+                    getActivity().startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
                 }
             });
 

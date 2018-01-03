@@ -16,9 +16,9 @@ import java.util.ArrayList;
 
 public class SearchViewModel extends BaseObservable
 {
-    public ArrayList<Observer> observers;
+    private final ArrayList<Observer> observers;
 
-    private UserModel _newUser;
+    private final UserModel _newUser;
 
 
     public SearchViewModel() {
@@ -34,42 +34,21 @@ public class SearchViewModel extends BaseObservable
         _newUser.setMaxAge(currentUser.getMaxAge());
     }
 
-    public void addObserver(Observer client) {
-        if (!observers.contains(client)) {
-            observers.add(client);
-        }
-    }
-
-    public void removeObserver(Observer clientToRemove) {
-        if (observers.contains(clientToRemove)) {
-            observers.remove(clientToRemove);
-        }
-    }
-
-    public void notifyObservers(int eventType, String message) {
-        for (int i=0; i< observers.size(); i++) {
-            observers.get(i).onObserve(eventType, message);
-        }
-    }
-
-
-
     public void findPartner()
     {
-        if(_newUser.getState().equals("Finding"))
-        {
-            _newUser.setState("Not Finding");
-            notifyPropertyChanged(BR.finding);
-        }
-        else if(_newUser.getState().equals("Not Finding"))
-        {
-            _newUser.setState("Finding");
-            notifyPropertyChanged(BR.finding);
-        }
-        else if(_newUser.getState().equals("Chatting"))
-        {
-            _newUser.setState("Not Finding");
-            notifyPropertyChanged(BR.finding);
+        switch (_newUser.getState()) {
+            case "Finding":
+                _newUser.setState("Not Finding");
+                notifyPropertyChanged(BR.finding);
+                break;
+            case "Not Finding":
+                _newUser.setState("Finding");
+                notifyPropertyChanged(BR.finding);
+                break;
+            case "Chatting":
+                _newUser.setState("Not Finding");
+                notifyPropertyChanged(BR.finding);
+                break;
         }
 
         UserModel currentUser = FirebaseManager.getInstance().getUser();

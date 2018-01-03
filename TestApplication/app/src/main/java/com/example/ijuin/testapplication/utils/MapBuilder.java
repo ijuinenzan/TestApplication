@@ -21,7 +21,7 @@ public class MapBuilder {
     private double mLatitude, mLongitude;
     private String mKey;
     private int mZoom;
-    private Set<MarkerBuilder> mMarkerBuilderList;
+    private final Set<MarkerBuilder> mMarkerBuilderList;
 
 
     private static final String GOOGLE_MAPS_URL = "http://maps.google.com/maps/api/staticmap?";
@@ -65,10 +65,9 @@ public class MapBuilder {
      * @param key Key.
      * @return the map builder
      */
-    public MapBuilder setKey(String key) {
+    public void setKey(String key) {
         this.mKey = key;
 
-        return this;
     }
 
     /**
@@ -89,10 +88,9 @@ public class MapBuilder {
      * @param builder Builder.
      * @return the map builder
      */
-    public MapBuilder addMarker(MarkerBuilder builder) {
+    public void addMarker(MarkerBuilder builder) {
         mMarkerBuilderList.add(builder);
 
-        return this;
     }
 
     /**

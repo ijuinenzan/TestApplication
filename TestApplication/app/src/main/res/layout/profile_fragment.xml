@@ -19,7 +19,7 @@
         <LinearLayout
             android:id="@+id/profileFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -41,7 +41,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chụp hình"
+                    android:text="@string/take_picture"
                     android:layout_marginStart="20dp"
                     android:onClick="@{() -> viewModel.TakePicture()}"/>
 
@@ -49,7 +49,7 @@
                     android:id="@+id/btn_ChangeUserImg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chọn hình"
+                    android:text="@string/select_picture"
                     android:onClick="@{() -> viewModel.Change()}"/>
 
 
@@ -65,13 +65,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="right">
+                    android:gravity="end">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/isPublic"
                         android:textStyle="bold|italic"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginEnd="10dp"/>
                 </LinearLayout>
 
                 <android.support.percent.PercentRelativeLayout
@@ -473,6 +473,7 @@
                         android:text="@={viewModel.user.facebook.value}"
                         android:textSize="@dimen/fontsize"
                         android:autoLink="web"
+                        android:focusable="true"
                         android:clickable="true"/>
 
                     <CheckBox
@@ -509,6 +510,7 @@
                         android:text="@={viewModel.user.twitter.value}"
                         android:textSize="@dimen/fontsize"
                         android:autoLink="web"
+                        android:focusable="true"
                         android:clickable="true"/>
 
                     <CheckBox

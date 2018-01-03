@@ -35,39 +35,6 @@ public class MarkerBuilder {
         return this;
     }
 
-    public MarkerBuilder size(MarkerSize size) {
-        mSize = size;
-
-        return this;
-    }
-
-    public MarkerBuilder color(int color) {
-        mColor = Integer.toHexString(color);
-
-        if (mColor.length() == 8) {
-            mColor = mColor.substring(2);
-        }
-
-        return this;
-    }
-
-    public MarkerBuilder color(String color) {
-        mColor = color;
-        return this;
-    }
-
-    public MarkerBuilder label(String label) {
-        mLabel = label.charAt(0);
-
-        return this;
-    }
-
-    public MarkerBuilder label(char label) {
-        mLabel = label;
-
-        return this;
-    }
-
     public String build() {
         StringBuilder result = new StringBuilder();
 

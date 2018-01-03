@@ -7,33 +7,16 @@
     <string name="com.twitter.sdk.android.CONSUMER_SECRET">3zl23fWPHAY3XJxcZsyf9SdHjiKGSP9pvHqI2GPHeJOppiQ19T</string>
 
     <string name="app_name">Chat Application</string>
-    <string name="authentication_label">Authentication with Firebase</string>
-    <string name="room_dialog_heading">Enter room name</string>
-    <string name="dialog_room_info">Name of the room is your token by which you can connect with the person who entered the same room name as your</string>
-    <string name="text_submit">Submit</string>
-    <string name="success_message_authentication">Authentication is successful</string>
     <string name="chats_heading">Messages</string>
-    <string name="hint_typing">Type here</string>
-    <string name="send_text">Send</string>
 
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="anonymous_login">Anonymous Login</string>
 
-    <string name="changeUserImg">Change</string>
-
     <string name="settings">Settings</string>
-    <string name="block">Block</string>
-    <string name="profile">Profile</string>
-    <string name="volume">Volume</string>
 
     <string name="background">Background</string>
     <string name="change_bg_image">Background Image</string>
     <string name="change_bg_color">Background Color</string>
-    <string name="sound">Sound</string>
-    <string name="change_sound">Change Sound</string>
 
 
     <string name="isPublic">Is Public?</string>
@@ -64,23 +47,25 @@
     <string name="hintHeight">180cm</string>
     <string name="hintFacebook">LeVoGiaKhang</string>
     <string name="hintTwitter">JaKa</string>
-    <string name="aboutUs">About Us</string>
-    <string name="helpandsupport"><![CDATA[Help & Support]]></string>
-    <string name="reportandfeedback"><![CDATA[Report & Feedback]]></string>
     <string name="version">Version</string>
     <string name="versionID">1.0.0</string>
     <string name="search">Search</string>
     <string name="agerange">Age Range</string>
-    <string name="donate">Donate</string>
     <string name="typehere">[Type Here&#8230;]</string>
 
 
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="exit_room">EXIT ROOM</string>
-    <string name="ask_info">Your partner asks for your infomation!</string>
-    <string name="year_born">Year Born</string>
+    <string name="ask_info">Your partner asks for your information!</string>
 
-    <string name="dont_ask_again">Don\'t ask again</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="select_picture">Select Picture</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="login_text">LOGIN</string>
+    <string name="sign_up_text">SIGN UP</string>
+    <string name="agree">Agree</string>
+    <string name="select_target_gender_text">Select target gender</string>
 
 
     <array name="list_info">

@@ -21,9 +21,9 @@ import java.util.ArrayList;
  */
 
 public class ChatViewModel extends BaseObservable implements FirebaseCallbacks {
-    private ArrayList<MessageItemModel> _messages;
+    private final ArrayList<MessageItemModel> _messages;
     private String _message;
-    public ArrayList<Observer> _observers;
+    public final ArrayList<Observer> _observers;
 
 
     public ChatViewModel()

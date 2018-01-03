@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3f51b5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#d7dce7</color>
 
     <color name="white">#FFFFFF</color>
@@ -9,27 +7,12 @@
 
 
     <color name="chat_sdk_button_login_button_color">#1c93db</color>
-    <color name="chat_sdk_button_login_button_color_pressed">#1874ac</color>
-
-    <color name="chat_sdk_button_register_button_color">#78b737</color>
-    <color name="chat_sdk_button_register_button_color_pressed">#59872a</color>
-
-    <color name="chat_sdk_button_anonymous_button_color">#aaaaaa</color>
-    <color name="chat_sdk_button_anonymous_button_color_pressed">#888787</color>
-
-    <color name="CORNSILK">#FFF8DC</color>
 
     <color name="BLANCHEDALMOND">#FFEBCD</color>
-
-    <color name="RED">#FF0000</color>
 
     <color name="AQUA">#00FFFF</color>
 
     <color name="YELLOW">#FFFF00</color>
-
-    <color name="LIME">#00FF00</color>
-
-    <color name="FUCHSIA">#FF00FF</color>
 
     <color name="SILVER">#C0C0C0</color>
 
@@ -38,8 +21,6 @@
     <color name="BLACK">#000000</color>
 
     <color name="TWITTER">#DB4C2C</color>
-
-    <color name="ORANGE">#FF7733</color>
 
     <color name="DARK_YELLOW">#FFD133</color>
 
@@ -52,54 +33,15 @@
     <color name="color_login_buttonpress">#EE3162</color>
     <color name="color_signup_button">#F2F2F2</color>
     <color name="color_signup_buttonpress">#EBEBEB</color>
-    <color name="color_primary_men">#00ACC1</color>
-    <color name="color_product_bottom">#ffffff</color>
-    <color name="color_edittext_hint">#999</color>
-
-    <color name="color_edittext_label">#fff</color>
 
 
     <color name="red">#F6402C</color>
-    <color name="pink">#EB1460</color>
-    <color name="purple">#9C1AB1</color>
-    <color name="deep_purple">#6633B9</color>
-    <color name="indigo">#3D4DB7</color>
     <color name="blue">#1093F5</color>
-    <color name="light_blue">#00A6F6</color>
     <color name="cyan">#00BBD5</color>
-    <color name="teal">#009687</color>
     <color name="green">#46AF4A</color>
-    <color name="light_green">#88C440</color>
-    <color name="lime">#CCDD1E</color>
     <color name="yellow">#FFEC16</color>
-    <color name="amber">#FFC100</color>
     <color name="orange">#FF9800</color>
     <color name="deep_orange">#FF5505</color>
-    <color name="brown">#7A5547</color>
-    <color name="grey">#9D9D9D</color>
-    <color name="blue_grey">#5E7C8B</color>
-
-    <array name="arr_colors">
-        <item>@color/red </item>
-        <item>@color/pink </item>
-        <item>@color/purple </item>
-        <item>@color/deep_purple </item>
-        <item>@color/indigo </item>
-        <item>@color/blue </item>
-        <item>@color/light_blue </item>
-        <item>@color/cyan </item>
-        <item>@color/teal </item>
-        <item>@color/green </item>
-        <item>@color/light_green </item>
-        <item>@color/lime </item>
-        <item>@color/yellow </item>
-        <item>@color/amber </item>
-        <item>@color/orange </item>
-        <item>@color/deep_orange </item>
-        <item>@color/brown </item>
-        <item>@color/grey </item>
-        <item>@color/blue_grey </item>
-    </array>
 
 
 </resources>

@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.provider.Settings;
-import android.support.percent.PercentRelativeLayout;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -67,11 +66,10 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
 
 
     // Login
-    ProgressBar _pBar;
-    ImageView _imgView;
-    TextView _txtLogin;
+    private ProgressBar _pBar;
+    private TextView _txtLogin;
     private DisplayMetrics dm;
-    RelativeLayout _layoutLogin;
+    private RelativeLayout _layoutLogin;
     private ValueAnimator _valueAnimator;
     private RelativeLayout.LayoutParams _button_login_lp;
     private RelativeLayout.LayoutParams _old_button_login_lp;
@@ -100,7 +98,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         }
     }
 
-    public void addControls()
+    private void addControls()
     {
         TwitterAuthConfig authConfig =  new TwitterAuthConfig(
                 getString(R.string.com_twitter_sdk_android_CONSUMER_KEY),
@@ -192,7 +190,6 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
 
         //region new Login page
         _pBar = findViewById(R.id.mainProgressBar);
-        _imgView = findViewById(R.id.button_icon);
         _txtLogin = findViewById(R.id.button_label);
 
         dm=getResources().getDisplayMetrics();
@@ -220,7 +217,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         //endregion
     }
 
-    public void startMainActivity() {
+    private void startMainActivity() {
         if((int)_layoutLogin.getTag()==1)
         {
             return;
@@ -268,7 +265,7 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
                         //_imgView.animate().setDuration(0).setStartDelay(0).rotation(85).alpha(1).start();
                         //_imgView.animate().setDuration(2000).setInterpolator(new BounceInterpolator()).setStartDelay(0).rotation(0).start();
                         _txtLogin.animate().alpha(1);
-                        _txtLogin.setText("LOGIN");
+                        _txtLogin.setText(R.string.login);
                         _old_button_login_lp.width = -1;
                         _layoutLogin.setLayoutParams(_old_button_login_lp);
                         //_layoutLogin.setTag(2);
@@ -382,8 +379,4 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
 
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
 }

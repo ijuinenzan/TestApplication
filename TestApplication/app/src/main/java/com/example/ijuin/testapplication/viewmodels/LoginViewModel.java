@@ -40,9 +40,9 @@ public class LoginViewModel extends BaseObservable
     private String _password = "";
 
 
-    private DatabaseReference _userReference;
+    private final DatabaseReference _userReference;
 
-    public ArrayList<Observer> observers;
+    private final ArrayList<Observer> observers;
 
     public LoginViewModel() {
         observers=new ArrayList<>();
@@ -55,7 +55,7 @@ public class LoginViewModel extends BaseObservable
         return _isAuthDone;
     }
 
-    public void setAuthDone(boolean authDone) {
+    private void setAuthDone(boolean authDone) {
         _isAuthDone = authDone;
         notifyPropertyChanged(BR.authDone);
     }
@@ -65,7 +65,7 @@ public class LoginViewModel extends BaseObservable
         return _isAuthInProgress;
     }
 
-    public void setAuthInProgress(boolean authInProgress) {
+    private void setAuthInProgress(boolean authInProgress) {
         _isAuthInProgress = authInProgress;
         notifyPropertyChanged(BR.authInProgress);
     }
@@ -329,14 +329,14 @@ public class LoginViewModel extends BaseObservable
         }
     }
 
-    public void notifyObservers(int eventType, UserModel userModel) {
+    private void notifyObservers(int eventType, UserModel userModel) {
         for (int i=0; i< observers.size(); i++) {
             observers.get(i).onObserve(eventType, userModel);
         }
     }
 
 
-    public void notifyObservers(int eventType, String message) {
+    private void notifyObservers(int eventType, String message) {
         for (int i=0; i< observers.size(); i++) {
             observers.get(i).onObserve(eventType, message);
         }

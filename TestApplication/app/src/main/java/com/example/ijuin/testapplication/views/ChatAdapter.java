@@ -1,17 +1,11 @@
 package com.example.ijuin.testapplication.views;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
 import com.example.ijuin.testapplication.BR;
 import com.example.ijuin.testapplication.R;
@@ -22,11 +16,9 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Locale;
 
 /**
  * Created by ijuin on 11/12/2017.
@@ -34,13 +26,10 @@ import java.util.Locale;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder> {
     private ArrayList<MessageItemModel> _chatList;
-    private Context _context;
-    private View _view;
 
-    public ChatAdapter(Context context, ArrayList<MessageItemModel> chatList)
+    public ChatAdapter(ArrayList<MessageItemModel> chatList)
     {
         this._chatList =chatList;
-        this._context =context;
     }
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -115,7 +104,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BindingHolder>
     }
 
     class BindingHolder extends RecyclerView.ViewHolder {
-        private ViewDataBinding _binding;
+        private final ViewDataBinding _binding;
 
         BindingHolder(ViewDataBinding binding) {
             super(binding.getRoot());

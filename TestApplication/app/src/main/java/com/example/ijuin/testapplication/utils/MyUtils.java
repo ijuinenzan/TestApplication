@@ -1,13 +1,11 @@
 package com.example.ijuin.testapplication.utils;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -25,7 +23,6 @@ import com.example.ijuin.testapplication.views.ChatActivity;
 import com.example.ijuin.testapplication.views.ChatAdapter;
 import com.github.foolish314159.mediaplayerview.MediaPlayerView;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,22 +37,21 @@ import cn.jzvd.JZVideoPlayerStandard;
 
 public class MyUtils
 {
-    public static String MESSAGE_AUTHENTICATION_FAILED = "Firebase authentication failed, please check your internet connection";
+    public static final String MESSAGE_AUTHENTICATION_FAILED = "Firebase authentication failed, please check your internet connection";
 
-    public static String GREET_TYPE = "GREET";
-    public static String TEXT_TYPE = "TEXT";
-    public static String VIDEO_TYPE = "VIDEO";
-    public static String AUDIO_TYPE = "AUDIO";
-    public static String LOCATION_TYPE = "LOCATION";
-    public static String IMAGE_TYPE = "IMAGE";
-    public static String SETTINGS = "SETTINGS";
-    public static String INFO_REQUEST_TYPE = "INFO-REQUEST";
-    public static String INFO_ACCEPT_TYPE = "INFO-ACCEPT";
+    public static final String GREET_TYPE = "GREET";
+    public static final String TEXT_TYPE = "TEXT";
+    public static final String VIDEO_TYPE = "VIDEO";
+    public static final String AUDIO_TYPE = "AUDIO";
+    public static final String LOCATION_TYPE = "LOCATION";
+    public static final String IMAGE_TYPE = "IMAGE";
+    public static final String SETTINGS = "SETTINGS";
+    public static final String INFO_REQUEST_TYPE = "INFO-REQUEST";
+    public static final String INFO_ACCEPT_TYPE = "INFO-ACCEPT";
 
     public static final int SELECT_FILE = 410;
     public static final int OPEN_ACTIVITY = 1;
     public static final int SHOW_TOAST = 2;
-    public static final int UPDATE_MESSAGES=3;
     public static final int SELECT_PICTURE = 4;
     public static final int LOG_OUT = 5;
     public static final int CHAT_ROOM_FOUND = 6;
@@ -64,9 +60,9 @@ public class MyUtils
     public static final int TAKE_PICTURE = 9;
     public static final int EXIT_ROOM=10;
 
-    public static Boolean MALE = true;
+    public static final Boolean MALE = true;
 
-    public static Boolean FEMALE = false;
+    public static final Boolean FEMALE = false;
 
     @BindingAdapter({"app:chat_messages"})
     public static void updateMessages(RecyclerView recyclerView, ArrayList<MessageItemModel> messages)
@@ -144,10 +140,10 @@ public class MyUtils
             }
         });
     }
-    private static ArrayList<String> selectedFields = new ArrayList<>();
+    private static final ArrayList<String> selectedFields = new ArrayList<>();
     public static void acceptInfo(final View v)
     {
-        MaterialDialog md = new MaterialDialog.Builder(v.getContext())
+        new MaterialDialog.Builder(v.getContext())
                 .iconRes(R.drawable.ic_launcher)
                 .limitIconToDefaultSize()
                 .title("title")
@@ -233,7 +229,7 @@ public class MyUtils
 
 class GetImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
 
-    ImageButton _imageButton;
+    private final ImageButton _imageButton;
 
     GetImageAsyncTask(ImageButton imageButton)
     {
@@ -243,8 +239,7 @@ class GetImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
     protected Bitmap doInBackground(String... params) {
         try {
             URL newUrl = new URL(params[0]);
-            Bitmap bitmap = BitmapFactory.decodeStream(newUrl.openConnection().getInputStream());
-            return bitmap;
+            return BitmapFactory.decodeStream(newUrl.openConnection().getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -254,7 +249,7 @@ class GetImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
-        super.onPostExecute(bitmap);;
+        super.onPostExecute(bitmap);
         _imageButton.setImageBitmap(bitmap);
     }
 }
