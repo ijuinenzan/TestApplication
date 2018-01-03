@@ -1,5 +1,6 @@
 package com.example.ijuin.testapplication.views;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,10 +40,13 @@ import com.example.ijuin.testapplication.viewmodels.ProfileViewModel;
 
 import com.example.ijuin.testapplication.viewmodels.SearchViewModel;
 
+import com.example.ijuin.testapplication.views.particle.ParticleView;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
 
 import java.io.IOException;
+
+import mehdi.sakout.fancybuttons.FancyButton;
 
 import static com.example.ijuin.testapplication.utils.MyUtils.REQUEST_CAMERA;
 import static com.example.ijuin.testapplication.utils.MyUtils.SELECT_FILE;
@@ -185,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
     }
 
     @Override
-    public void onObserve(int event, String chatRoom) {
+    public void onObserve(int event, final String chatRoom) {
         Intent chatIntent = new Intent(MainActivity.this, ChatActivity.class);
         chatIntent.putExtra("RoomName", chatRoom);
         startActivity(chatIntent);
@@ -313,8 +317,8 @@ public class MainActivity extends AppCompatActivity implements Observer<String>
     public static class SettingFragment extends Fragment {
 
         public SettingFragment() {        }
-        Button _btnColor;
-        Button _btnImage;
+        FancyButton _btnColor;
+        FancyButton _btnImage;
         ColorPicker _colorPicker;
 
 

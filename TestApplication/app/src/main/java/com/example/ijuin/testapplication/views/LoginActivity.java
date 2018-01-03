@@ -226,7 +226,6 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
         {
             _layoutLogin.animate().x(dm.widthPixels/2).y(dm.heightPixels/2).setInterpolator(new EasingInterpolator(Ease.CUBIC_IN)).setListener(null).setDuration(1000).setStartDelay(0).start();
             _layoutLogin.animate().setStartDelay(600).setDuration(1000).scaleX(40).scaleY(40).setInterpolator(new EasingInterpolator(Ease.CUBIC_IN_OUT)).start();
-            //_imgView.animate().alpha(0).rotation(90).setStartDelay(0).setDuration(800).start();
         }
         _layoutLogin.setTag(1);
         _valueAnimator.setFloatValues(_layoutLogin.getMeasuredWidth(), _layoutLogin.getMeasuredHeight());
@@ -262,13 +261,10 @@ public class LoginActivity extends AppCompatActivity implements Observer<Object>
 
                     @Override
                     public void onAnimationEnd(Animator p1) {
-                        //_imgView.animate().setDuration(0).setStartDelay(0).rotation(85).alpha(1).start();
-                        //_imgView.animate().setDuration(2000).setInterpolator(new BounceInterpolator()).setStartDelay(0).rotation(0).start();
                         _txtLogin.animate().alpha(1);
                         _txtLogin.setText(R.string.login);
                         _old_button_login_lp.width = -1;
                         _layoutLogin.setLayoutParams(_old_button_login_lp);
-                        //_layoutLogin.setTag(2);
                     }
 
                     @Override

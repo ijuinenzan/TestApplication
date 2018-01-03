@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable name="viewModel" type="com.example.ijuin.testapplication.viewmodels.ProfileViewModel"/>
@@ -529,7 +530,7 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <Button
+                    <mehdi.sakout.fancybuttons.FancyButton
                         android:id="@+id/btn_LogOut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -539,9 +540,11 @@
                         android:background="@drawable/theme_btn_profile"
                         android:backgroundTint="@color/TWITTER"
                         android:textSize="17sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        fancy:fb_radius="30dp"
+                        />
 
-                    <Button
+                    <mehdi.sakout.fancybuttons.FancyButton
                         android:id="@+id/btn_Save"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -552,7 +555,9 @@
                         android:text="@string/save"
                         android:textSize="17sp"
                         android:textStyle="bold"
-                        android:layout_marginStart="20dp"/>
+                        android:layout_marginStart="20dp"
+                        fancy:fb_radius="30dp"
+                        />
 
 
                 </LinearLayout>

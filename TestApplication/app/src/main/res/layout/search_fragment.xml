@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="viewModel" type="com.example.ijuin.testapplication.viewmodels.SearchViewModel"/>
         <variable name="mainViewModel" type="com.example.ijuin.testapplication.viewmodels.MainViewModel"/>
@@ -22,7 +23,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/select_target_gender_text"
             android:textSize="25sp"
-            android:fontFamily="@font/signature_of_the_ancient"/>
+            android:fontFamily="@font/roboto_bold_condensed_italic"/>
 
         <LinearLayout
             android:id="@+id/linearLayout_popup"
@@ -184,15 +185,21 @@
             android:layout_marginTop="20dp"
             android:visibility='@{viewModel.finding ? View.VISIBLE: View.GONE}'/>
 
-        <Button
+        <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/btnSearch"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/search"
             android:background="@drawable/theme1"
             android:layout_marginTop="20dp"
             android:textStyle="bold"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="#7ab800"
+            fancy:fb_focusColor="#9bd823"
+            fancy:fb_radius="30dp"
+            fancy:fb_text="@string/search"
+            fancy:fb_textColor="#FFFFFF"
             android:onClick="@{() -> viewModel.findPartner()}"/>
 
 

@@ -12,214 +12,239 @@
             type="com.example.ijuin.testapplication.views.LoginActivity" />
         <import type="android.view.View" />
     </data>
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <android.support.percent.PercentRelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
-
-
-
-        <com.flaviofaria.kenburnsview.KenBurnsView
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:src="@drawable/bg_image"
-            android:id="@+id/fragmentloginKenBurnsView1"/>
-
-        <View
-            android:id="@+id/fragmentloginView1"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:background="#000000"
-            android:alpha="0"/>
-
-        <pl.droidsonroids.gif.GifImageView
-            app:layout_heightPercent="35%"
-            app:layout_widthPercent="35%"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/fragmentloginLogo"
-            android:alpha="100"
-            android:src="@drawable/logo_login"
-            />
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
 
-        <RelativeLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            app:layout_marginTopPercent="35%"
-            android:id="@+id/form_login"
-            android:padding="30dp"
-            android:focusableInTouchMode="false"
-            android:alpha="100">
 
-            <ImageView
-                android:layout_height="@dimen/login_holder_height"
-                android:layout_width="@dimen/login_holder_height"
-                android:tint="#ffffff"
-                android:src="@drawable/user_icon"
-                android:id="@+id/mainImageView1"
-                android:layout_marginBottom="30dp"/>
 
-            <ImageView
-                android:layout_height="@dimen/login_holder_height"
-                android:layout_width="@dimen/login_holder_height"
-                android:layout_marginTop="20dp"
-                android:tint="#ffffff"
-                android:src="@drawable/password_icon"
-                android:layout_below="@id/mainImageView1"
-                android:id="@+id/mainImageView2"/>
 
-            <EditText
-                android:inputType="textEmailAddress"
-                android:layout_width="match_parent"
-                android:ems="10"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/mainImageView1"
-                android:layout_marginStart="20dp"
-                android:background="@null"
-                android:textSize="20sp"
-                android:layout_alignTop="@id/mainImageView1"
-                android:layout_alignBottom="@id/mainImageView1"
-                android:textColor="#FFFFFF"
-                android:id="@+id/mainEditText1"
-                android:hint="@string/hint_email"
-                android:typeface="serif"
-                android:text="@={viewModel.email}"/>
-
-            <View
-                android:layout_height="1dp"
-                android:layout_width="match_parent"
-                android:layout_below="@id/mainEditText1"
-                android:background="#FFFFFF"
-                android:layout_marginTop="@dimen/login_horizontalline_spacing"/>
-
-            <EditText
-                android:inputType="textPassword"
-                android:layout_width="match_parent"
-                android:ems="10"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/mainImageView2"
-                android:layout_marginStart="20dp"
-                android:background="@null"
-                android:textSize="20sp"
-                android:layout_alignTop="@id/mainImageView2"
-                android:layout_alignBottom="@id/mainImageView2"
-                android:textColor="#FFFFFF"
-                android:id="@+id/mainEditText2"
-                android:hint="@string/hint_password"
-                android:typeface="serif"
-                android:text="@={viewModel.password}"/>
-
-            <View
-                android:layout_height="1dp"
-                android:layout_width="match_parent"
-                android:layout_below="@id/mainEditText2"
-                android:background="#FFFFFF"
-                android:layout_marginTop="@dimen/login_horizontalline_spacing"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:background="@drawable/selector_login_button"
-            android:layout_height="@dimen/login_button_height"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            app:layout_marginTopPercent="65%"
-            android:layout_centerHorizontal="true"
-            android:onClick="@{() -> viewModel.loginWithEmail()}"
-            android:id="@+id/button_login">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/login_text"
-                android:layout_centerInParent="true"
-                android:textStyle="bold"
-                android:typeface="serif"
-                android:textColor="#FFFFFF"
-                android:id="@+id/button_label"/>
-
-            <ImageView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:src="@drawable/ic_plus"
-                android:layout_centerInParent="true"
-                android:id="@+id/button_icon"
-                android:alpha="0"/>
-
-            <ProgressBar
-                android:layout_height="40dp"
-                android:layout_width="40dp"
-                android:layout_centerInParent="true"
-                android:id="@+id/mainProgressBar"
-                android:alpha="0"/>
-
-            <Button
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
+            <com.flaviofaria.kenburnsview.KenBurnsView
                 android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="384dp"
-                android:layout_marginEnd="29dp"
-                android:background="@drawable/button_signup"
-                android:text="@string/sign_up_text"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#0A0A0A"
-                android:onClick="@{() -> viewModel.loginWithEmail()}"/>
-        </RelativeLayout>
+                android:layout_width="match_parent"
+                android:src="@drawable/bg_image"
+                android:id="@+id/fragmentloginKenBurnsView1"/>
 
-        <Button
-            android:id="@+id/btnAnonymousLogin"
-            style="@style/LoginButtonsStyle"
-            android:background="@drawable/btn_anonymous"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.firebaseAnonymousAuth()}"
-            android:text="@string/anonymous_login"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_marginTopPercent="80%"/>
+            <View
+                android:id="@+id/fragmentloginView1"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="#000000"
+                android:alpha="0"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_marginTopPercent="90%"
-            android:gravity="center">
+            <pl.droidsonroids.gif.GifImageView
+                app:layout_heightPercent="35%"
+                app:layout_widthPercent="35%"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/fragmentloginLogo"
+                android:alpha="100"
+                android:src="@drawable/logo_login"
+                />
 
-            <com.twitter.sdk.android.core.identity.TwitterLoginButton
-                android:id="@+id/btnTwitterLogin"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:visibility="gone"/>
+
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                app:layout_marginTopPercent="35%"
+                android:id="@+id/form_login"
+                android:padding="30dp"
+                android:focusableInTouchMode="false"
+                android:alpha="100">
+
+                <ImageView
+                    android:layout_height="@dimen/login_holder_height"
+                    android:layout_width="@dimen/login_holder_height"
+                    android:tint="#ffffff"
+                    android:src="@drawable/user_icon"
+                    android:id="@+id/mainImageView1"
+                    android:layout_marginBottom="30dp"/>
+
+                <ImageView
+                    android:layout_height="@dimen/login_holder_height"
+                    android:layout_width="@dimen/login_holder_height"
+                    android:layout_marginTop="20dp"
+                    android:tint="#ffffff"
+                    android:src="@drawable/password_icon"
+                    android:layout_below="@id/mainImageView1"
+                    android:id="@+id/mainImageView2"/>
+
+                <EditText
+                    android:inputType="textEmailAddress"
+                    android:layout_width="match_parent"
+                    android:ems="10"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/mainImageView1"
+                    android:layout_marginStart="20dp"
+                    android:background="@null"
+                    android:textSize="20sp"
+                    android:layout_alignTop="@id/mainImageView1"
+                    android:layout_alignBottom="@id/mainImageView1"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/mainEditText1"
+                    android:hint="@string/hint_email"
+                    android:typeface="serif"
+                    android:text="@={viewModel.email}"/>
+
+                <View
+                    android:layout_height="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/mainEditText1"
+                    android:background="#FFFFFF"
+                    android:layout_marginTop="@dimen/login_horizontalline_spacing"/>
+
+                <EditText
+                    android:inputType="textPassword"
+                    android:layout_width="match_parent"
+                    android:ems="10"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/mainImageView2"
+                    android:layout_marginStart="20dp"
+                    android:background="@null"
+                    android:textSize="20sp"
+                    android:layout_alignTop="@id/mainImageView2"
+                    android:layout_alignBottom="@id/mainImageView2"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/mainEditText2"
+                    android:hint="@string/hint_password"
+                    android:typeface="serif"
+                    android:text="@={viewModel.password}"/>
+
+                <View
+                    android:layout_height="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/mainEditText2"
+                    android:background="#FFFFFF"
+                    android:layout_marginTop="@dimen/login_horizontalline_spacing"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:background="@drawable/selector_login_button"
+                android:layout_height="@dimen/login_button_height"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                app:layout_marginTopPercent="65%"
+                android:layout_centerHorizontal="true"
+                android:onClick="@{() -> viewModel.loginWithEmail()}"
+                android:id="@+id/button_login">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/login_text"
+                    android:layout_centerInParent="true"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/button_label"/>
+
+                <ImageView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_plus"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/button_icon"
+                    android:alpha="0"/>
+
+                <ProgressBar
+                    android:layout_height="40dp"
+                    android:layout_width="40dp"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/mainProgressBar"
+                    android:alpha="0"/>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="384dp"
+                    android:layout_marginEnd="29dp"
+                    android:background="@drawable/button_signup"
+                    android:text="@string/sign_up_text"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#0A0A0A"
+                    android:onClick="@{() -> viewModel.loginWithEmail()}"/>
+            </RelativeLayout>
 
             <Button
-                android:id="@+id/btnFirebaseTwitterLogin"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="0dp"
-                android:background="@drawable/ic_twitter" />
+                android:id="@+id/btnAnonymousLogin"
+                style="@style/LoginButtonsStyle"
+                android:background="@drawable/btn_anonymous"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.firebaseAnonymousAuth()}"
+                android:text="@string/anonymous_login"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_marginTopPercent="80%"/>
 
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/btnFacebookLogin"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:visibility="gone"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_marginTopPercent="90%"
+                android:gravity="center">
 
-            <Button
-                android:id="@+id/btnFirebaseFacebookLogin"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginStart="30dp"
-                android:background="@drawable/ic_facebook" />
+                <com.twitter.sdk.android.core.identity.TwitterLoginButton
+                    android:id="@+id/btnTwitterLogin"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:visibility="gone"/>
 
-        </LinearLayout>
+                <Button
+                    android:id="@+id/btnFirebaseTwitterLogin"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="0dp"
+                    android:visibility="@{viewModel.authInProgress? View.GONE: View.VISIBLE}"
+                    android:background="@drawable/ic_twitter" />
+
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/btnFacebookLogin"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/btnFirebaseFacebookLogin"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginStart="30dp"
+                    android:visibility="@{viewModel.authInProgress? View.GONE: View.VISIBLE}"
+                    android:background="@drawable/ic_facebook" />
+
+            </LinearLayout>
 
 
-    </android.support.percent.PercentRelativeLayout>
+        </android.support.percent.PercentRelativeLayout>
+        <com.jetradarmobile.snowfall.SnowfallView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:snowflakesNum="250"
+            app:snowflakeAlphaMin="150"
+            app:snowflakeAlphaMax="255"
+            app:snowflakeAngleMax="5"
+            app:snowflakeSizeMin="8dp"
+            app:snowflakeSizeMax="32dp"
+            app:snowflakeSpeedMin="4"
+            app:snowflakeSpeedMax="12"
+            app:snowflakesFadingEnabled="true"
+            app:snowflakesAlreadyFalling="true"
+            app:snowflakeImage="@drawable/snowflake"/>
+    </FrameLayout>
+
+
 </layout>
 
 
