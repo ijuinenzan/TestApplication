@@ -24,7 +24,6 @@ import com.example.ijuin.testapplication.R;
 import com.example.ijuin.testapplication.models.MessageItemModel;
 import com.example.ijuin.testapplication.views.ChatActivity;
 import com.example.ijuin.testapplication.views.ChatAdapter;
-import com.example.ijuin.testapplication.views.customs.AnimCheckBox;
 import com.github.foolish314159.mediaplayerview.MediaPlayerView;
 
 import java.io.IOException;
@@ -100,41 +99,6 @@ public class MyUtils
         catch(Exception e)
         {
 
-        }
-    }
-
-    @InverseBindingAdapter(attribute = "checked")
-    public static boolean isChecked(AnimCheckBox view) {
-        return view.isChecked();
-    }
-
-    @BindingAdapter("checked")
-    public static void setChecked(AnimCheckBox view, boolean checked) {
-        if(view.isChecked() != checked)
-        {
-            view.setChecked(checked, true);
-        }
-    }
-
-    @BindingAdapter(value = {"onCheckedChange", "checkedAttrChanged"},
-            requireAll = false)
-    public static void setCheckedListeners(AnimCheckBox view,
-                                    final AnimCheckBox.OnCheckedChangeListener onCheckedChangeListener,
-                                    final InverseBindingListener inverseBindingListener) {
-        AnimCheckBox.OnCheckedChangeListener newListener;
-        if (inverseBindingListener == null) {
-            newListener = onCheckedChangeListener;
-        } else {
-            newListener = new AnimCheckBox.OnCheckedChangeListener() {
-                @Override
-                public void onChange(AnimCheckBox view, boolean checked) {
-                    if (onCheckedChangeListener != null) {
-                        onCheckedChangeListener.onChange(view,
-                                checked);
-                    }
-                    inverseBindingListener.onChange();
-                }
-            };
         }
     }
 
