@@ -39,7 +39,7 @@
             android:layout_centerHorizontal="true"
             android:id="@+id/fragmentloginLogo"
             android:alpha="100"
-            android:src="@drawable/dating_app_logo"
+            android:src="@drawable/logo_login"
             />
 
 

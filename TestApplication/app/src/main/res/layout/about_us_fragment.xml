@@ -26,6 +26,15 @@
             android:scaleType="fitCenter"
             android:layout_gravity="center"/>
 
+        <TextView
+            android:id="@+id/teamName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Made by Team Cầu Vồng"
+            android:layout_marginStart="20dp"
+            android:layout_gravity="center"
+            android:textSize="20sp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +60,74 @@
                 android:textSize="20sp"/>
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/khanh_UserIcon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:minWidth="20dp"
+                android:minHeight="20dp"
+                android:maxWidth="200dp"
+                android:maxHeight="200dp"
+                android:src="@drawable/khanh_image"/>
 
-
+            <TextView
+                android:id="@+id/khanh_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text="Lê Phương Khanh"
+                android:textSize="25dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/khang_UserIcon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:minWidth="20dp"
+                android:minHeight="20dp"
+                android:maxWidth="200dp"
+                android:maxHeight="200dp"
+                android:src="@drawable/khang_image"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/khang_text"
+                android:layout_marginStart="30dp"
+                android:text="Lê Võ Gia Khang"
+                android:textSize="25dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/kien_UserIcon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:minWidth="20dp"
+                android:minHeight="20dp"
+                android:maxWidth="200dp"
+                android:maxHeight="200dp"
+                android:src="@drawable/kien_image"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/kien_text"
+                android:layout_marginStart="30dp"
+                android:text="Ngô Minh Kiên"
+                android:textSize="25dp"/>
+        </LinearLayout>
     </LinearLayout>
 </layout>
